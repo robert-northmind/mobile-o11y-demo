@@ -6,24 +6,36 @@ const port = 3000;
 // Middleware to parse JSON request bodies
 app.use(express.json());
 
-// Initialize the car door status
-let carDoorStatus = 'locked';
-
 // Endpoint to set the car door status
-app.post('/set-door-status', (req, res) => {
+app.post('/set-door-status', async (req, res) => {
     const { status } = req.body;
 
     if (status !== 'locked' && status !== 'unlocked') {
         return res.status(400).send('Invalid status. Please use "locked" or "unlocked".');
     }
 
-    carDoorStatus = status;
-    res.send(`${status}`);
+    try {
+        const response = await fetch('http://localhost:3001/set-door-status', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status })
+        });
+        const data = await response.text();
+        res.send(`${data}`);
+      } catch (error) {
+        res.status(500).send(`Error: ${error.message}`);
+      }
 });
 
 // Endpoint to check the current door status
-app.get('/door-status', (req, res) => {
-    res.send(`${carDoorStatus}`);
+app.get('/door-status', async (req, res) => {
+    try {
+        const response = await fetch('http://localhost:3001/door-status');
+        const data = await response.text();
+        res.send(`${data}`);
+      } catch (error) {
+        res.status(500).send(`Error: ${error.message}`);
+    }
 });
 
 // Start the server
