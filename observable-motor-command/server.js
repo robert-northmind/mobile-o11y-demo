@@ -1,4 +1,5 @@
-const express = require('express');
+import express from 'express';
+
 const app = express();
 const port = 3000;
 
@@ -27,5 +28,5 @@ app.get('/door-status', (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`OMC Server running at http://localhost:${port}`);
 });
