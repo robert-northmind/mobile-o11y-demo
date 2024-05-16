@@ -100,5 +100,109 @@ dist
 # VS Code settings
 .vscode/
 
-# Ignore Mac system files
+# Xcode
+DerivedData/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+
+# Swift Package Manager
+.build/
+Packages
+.swiftpm/xcode/package.resolved
+
+# CocoaPods
+Pods/
+Podfile.lock
+Podfile/.lock
+Podfile/Pods/
+
+# Carthage
+Carthage/Build/
+
+# Accio dependency manager
+Dependencies/
+.accio/
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+*.ipa
+*.apk
+
+# Code Coverage
+*.xcresult
+
+# Build generated
+.build/
+*.o
+*.d
+*.dot
+*.asm
+*.lo
+*.la
+*.al
+*.libs
+*.so
+*.so.*
+*.a
+*.la
+*.lai
+*.loT
+.cproject
+.project
+.settings
 .DS_Store
+*.DS_Store
+.vscode/
+.idea/
+*.swp
+*.lock
+!README.md
+!LICENSE
+*.xcworkspace
+.xcconfig
+
+# App-specific
+*.iml
+*.dSYM.zip
+*.dSYM
+*.orig
+*.plist
+*.xcuserdatad
+
+# Playground specific
+timeline.xctimeline
+playground.xcworkspace
+
+# Generated plist files
+*.plist
+
+# Archives
+*.xcarchive
+
+# Symbols
+*.bcsymbolmap
+
+# Resource folders
+*.xcassets
+
+# General
+.DS_Store
+*.DS_Store
+*.lock
+*.xcuserstate
+*.log
+*.xcconfig
+*.xcworkspace
