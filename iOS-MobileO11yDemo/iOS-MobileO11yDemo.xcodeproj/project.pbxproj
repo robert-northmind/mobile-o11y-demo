@@ -14,6 +14,24 @@
 		6219E3642BF5F0F800B7001A /* iOS_MobileO11yDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3632BF5F0F800B7001A /* iOS_MobileO11yDemoTests.swift */; };
 		6219E36E2BF5F0F900B7001A /* iOS_MobileO11yDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E36D2BF5F0F900B7001A /* iOS_MobileO11yDemoUITests.swift */; };
 		6219E3702BF5F0F900B7001A /* iOS_MobileO11yDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E36F2BF5F0F900B7001A /* iOS_MobileO11yDemoUITestsLaunchTests.swift */; };
+		6219E37E2BF5F27E00B7001A /* OTelTraces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E37D2BF5F27E00B7001A /* OTelTraces.swift */; };
+		6219E3832BF5F3D100B7001A /* OpenTelemetryApi in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E3822BF5F3D100B7001A /* OpenTelemetryApi */; };
+		6219E3872BF5F3D100B7001A /* OpenTelemetryProtocolExporterHTTP in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E3862BF5F3D100B7001A /* OpenTelemetryProtocolExporterHTTP */; };
+		6219E3892BF5F3D100B7001A /* OpenTelemetrySdk in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E3882BF5F3D100B7001A /* OpenTelemetrySdk */; };
+		6219E38B2BF5F3D100B7001A /* ResourceExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E38A2BF5F3D100B7001A /* ResourceExtension */; };
+		6219E38D2BF5F3D100B7001A /* SignPostIntegration in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E38C2BF5F3D100B7001A /* SignPostIntegration */; };
+		6219E38F2BF5F3D100B7001A /* StdoutExporter in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E38E2BF5F3D100B7001A /* StdoutExporter */; };
+		6219E3932BF5F3D100B7001A /* URLSessionInstrumentation in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E3922BF5F3D100B7001A /* URLSessionInstrumentation */; };
+		6219E39D2BF5F41B00B7001A /* OTelConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E39C2BF5F41B00B7001A /* OTelConfig.swift */; };
+		6219E39F2BF5F53F00B7001A /* OTelResourceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E39E2BF5F53F00B7001A /* OTelResourceProvider.swift */; };
+		6219E3A12BF5F5FC00B7001A /* OTelAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3A02BF5F5FC00B7001A /* OTelAuthProvider.swift */; };
+		6219E3A32BF5F66300B7001A /* OTelLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3A22BF5F66300B7001A /* OTelLogs.swift */; };
+		6219E3A62BF5F9A600B7001A /* RemoteActionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3A52BF5F9A600B7001A /* RemoteActionService.swift */; };
+		6219E3A92BF5F9F900B7001A /* CarDoorStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3A82BF5F9F900B7001A /* CarDoorStatus.swift */; };
+		6219E3AB2BF5FC3A00B7001A /* ChangeDoorStatusRemoteAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3AA2BF5FC3A00B7001A /* ChangeDoorStatusRemoteAction.swift */; };
+		6219E3AE2BF5FD1700B7001A /* InjectedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3AD2BF5FD1700B7001A /* InjectedValues.swift */; };
+		6219E3B12BF5FD7700B7001A /* RemoteActionApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3B02BF5FD7700B7001A /* RemoteActionApiClient.swift */; };
+		6219E3B32BF6002500B7001A /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3B22BF6002500B7001A /* ApiError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +62,17 @@
 		6219E3692BF5F0F900B7001A /* iOS-MobileO11yDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-MobileO11yDemoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6219E36D2BF5F0F900B7001A /* iOS_MobileO11yDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_MobileO11yDemoUITests.swift; sourceTree = "<group>"; };
 		6219E36F2BF5F0F900B7001A /* iOS_MobileO11yDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_MobileO11yDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6219E37D2BF5F27E00B7001A /* OTelTraces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelTraces.swift; sourceTree = "<group>"; };
+		6219E39C2BF5F41B00B7001A /* OTelConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelConfig.swift; sourceTree = "<group>"; };
+		6219E39E2BF5F53F00B7001A /* OTelResourceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelResourceProvider.swift; sourceTree = "<group>"; };
+		6219E3A02BF5F5FC00B7001A /* OTelAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelAuthProvider.swift; sourceTree = "<group>"; };
+		6219E3A22BF5F66300B7001A /* OTelLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelLogs.swift; sourceTree = "<group>"; };
+		6219E3A52BF5F9A600B7001A /* RemoteActionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteActionService.swift; sourceTree = "<group>"; };
+		6219E3A82BF5F9F900B7001A /* CarDoorStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDoorStatus.swift; sourceTree = "<group>"; };
+		6219E3AA2BF5FC3A00B7001A /* ChangeDoorStatusRemoteAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeDoorStatusRemoteAction.swift; sourceTree = "<group>"; };
+		6219E3AD2BF5FD1700B7001A /* InjectedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjectedValues.swift; sourceTree = "<group>"; };
+		6219E3B02BF5FD7700B7001A /* RemoteActionApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteActionApiClient.swift; sourceTree = "<group>"; };
+		6219E3B22BF6002500B7001A /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +80,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6219E3892BF5F3D100B7001A /* OpenTelemetrySdk in Frameworks */,
+				6219E38F2BF5F3D100B7001A /* StdoutExporter in Frameworks */,
+				6219E38B2BF5F3D100B7001A /* ResourceExtension in Frameworks */,
+				6219E38D2BF5F3D100B7001A /* SignPostIntegration in Frameworks */,
+				6219E3832BF5F3D100B7001A /* OpenTelemetryApi in Frameworks */,
+				6219E3932BF5F3D100B7001A /* URLSessionInstrumentation in Frameworks */,
+				6219E3872BF5F3D100B7001A /* OpenTelemetryProtocolExporterHTTP in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +130,11 @@
 		6219E3512BF5F0F700B7001A /* iOS-MobileO11yDemo */ = {
 			isa = PBXGroup;
 			children = (
+				6219E3AF2BF5FD6100B7001A /* ApiClient */,
+				6219E3AC2BF5FD0900B7001A /* DependencyInjection */,
+				6219E3A72BF5F9E000B7001A /* Models */,
+				6219E3A42BF5F98E00B7001A /* Services */,
+				6219E37C2BF5F22D00B7001A /* OpenTelemetry */,
 				6219E3522BF5F0F700B7001A /* iOS_MobileO11yDemoApp.swift */,
 				6219E3542BF5F0F700B7001A /* ContentView.swift */,
 				6219E3562BF5F0F800B7001A /* Assets.xcassets */,
@@ -127,6 +168,52 @@
 			path = "iOS-MobileO11yDemoUITests";
 			sourceTree = "<group>";
 		};
+		6219E37C2BF5F22D00B7001A /* OpenTelemetry */ = {
+			isa = PBXGroup;
+			children = (
+				6219E37D2BF5F27E00B7001A /* OTelTraces.swift */,
+				6219E39C2BF5F41B00B7001A /* OTelConfig.swift */,
+				6219E39E2BF5F53F00B7001A /* OTelResourceProvider.swift */,
+				6219E3A02BF5F5FC00B7001A /* OTelAuthProvider.swift */,
+				6219E3A22BF5F66300B7001A /* OTelLogs.swift */,
+			);
+			path = OpenTelemetry;
+			sourceTree = "<group>";
+		};
+		6219E3A42BF5F98E00B7001A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6219E3A52BF5F9A600B7001A /* RemoteActionService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		6219E3A72BF5F9E000B7001A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6219E3A82BF5F9F900B7001A /* CarDoorStatus.swift */,
+				6219E3AA2BF5FC3A00B7001A /* ChangeDoorStatusRemoteAction.swift */,
+				6219E3B22BF6002500B7001A /* ApiError.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6219E3AC2BF5FD0900B7001A /* DependencyInjection */ = {
+			isa = PBXGroup;
+			children = (
+				6219E3AD2BF5FD1700B7001A /* InjectedValues.swift */,
+			);
+			path = DependencyInjection;
+			sourceTree = "<group>";
+		};
+		6219E3AF2BF5FD6100B7001A /* ApiClient */ = {
+			isa = PBXGroup;
+			children = (
+				6219E3B02BF5FD7700B7001A /* RemoteActionApiClient.swift */,
+			);
+			path = ApiClient;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +230,15 @@
 			dependencies = (
 			);
 			name = "iOS-MobileO11yDemo";
+			packageProductDependencies = (
+				6219E3822BF5F3D100B7001A /* OpenTelemetryApi */,
+				6219E3862BF5F3D100B7001A /* OpenTelemetryProtocolExporterHTTP */,
+				6219E3882BF5F3D100B7001A /* OpenTelemetrySdk */,
+				6219E38A2BF5F3D100B7001A /* ResourceExtension */,
+				6219E38C2BF5F3D100B7001A /* SignPostIntegration */,
+				6219E38E2BF5F3D100B7001A /* StdoutExporter */,
+				6219E3922BF5F3D100B7001A /* URLSessionInstrumentation */,
+			);
 			productName = "iOS-MobileO11yDemo";
 			productReference = 6219E34F2BF5F0F700B7001A /* iOS-MobileO11yDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +311,9 @@
 				Base,
 			);
 			mainGroup = 6219E3462BF5F0F700B7001A;
+			packageReferences = (
+				6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */,
+			);
 			productRefGroup = 6219E3502BF5F0F700B7001A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -258,7 +357,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				6219E3552BF5F0F700B7001A /* ContentView.swift in Sources */,
+				6219E39D2BF5F41B00B7001A /* OTelConfig.swift in Sources */,
+				6219E3A12BF5F5FC00B7001A /* OTelAuthProvider.swift in Sources */,
+				6219E3AB2BF5FC3A00B7001A /* ChangeDoorStatusRemoteAction.swift in Sources */,
+				6219E3A32BF5F66300B7001A /* OTelLogs.swift in Sources */,
+				6219E39F2BF5F53F00B7001A /* OTelResourceProvider.swift in Sources */,
+				6219E3AE2BF5FD1700B7001A /* InjectedValues.swift in Sources */,
 				6219E3532BF5F0F700B7001A /* iOS_MobileO11yDemoApp.swift in Sources */,
+				6219E3A92BF5F9F900B7001A /* CarDoorStatus.swift in Sources */,
+				6219E3B12BF5FD7700B7001A /* RemoteActionApiClient.swift in Sources */,
+				6219E37E2BF5F27E00B7001A /* OTelTraces.swift in Sources */,
+				6219E3B32BF6002500B7001A /* ApiError.swift in Sources */,
+				6219E3A62BF5F9A600B7001A /* RemoteActionService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +698,55 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/open-telemetry/opentelemetry-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.9.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6219E3822BF5F3D100B7001A /* OpenTelemetryApi */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = OpenTelemetryApi;
+		};
+		6219E3862BF5F3D100B7001A /* OpenTelemetryProtocolExporterHTTP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = OpenTelemetryProtocolExporterHTTP;
+		};
+		6219E3882BF5F3D100B7001A /* OpenTelemetrySdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = OpenTelemetrySdk;
+		};
+		6219E38A2BF5F3D100B7001A /* ResourceExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = ResourceExtension;
+		};
+		6219E38C2BF5F3D100B7001A /* SignPostIntegration */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = SignPostIntegration;
+		};
+		6219E38E2BF5F3D100B7001A /* StdoutExporter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = StdoutExporter;
+		};
+		6219E3922BF5F3D100B7001A /* URLSessionInstrumentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = URLSessionInstrumentation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6219E3472BF5F0F700B7001A /* Project object */;
 }

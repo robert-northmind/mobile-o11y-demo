@@ -22,6 +22,14 @@ app.post("/set-door-status", async (req, res) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
     });
+
+    // Check if the response status indicates an error
+    if (!response.ok) {
+      // Extract error message from the response
+      const errorText = await response.text();
+      throw new Error(`HTTP Error: ${response.status} - ${errorText}`);
+    }
+
     const data = await response.text();
     res.send(`${data}`);
   } catch (error) {
@@ -33,8 +41,16 @@ app.post("/set-door-status", async (req, res) => {
 app.get("/door-status", async (req, res) => {
   try {
     const response = await fetch("http://localhost:3001/door-status");
+
+    // Check if the response status indicates an error
+    if (!response.ok) {
+      // Extract error message from the response
+      const errorText = await response.text();
+      throw new Error(`HTTP Error: ${response.status} - ${errorText}`);
+    }
+
     const data = await response.text();
-    res.send(`${data}`);
+    res.send({ status: data });
   } catch (error) {
     res.status(500).send(`Error: ${error.message}`);
   }

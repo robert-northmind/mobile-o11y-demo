@@ -12,4 +12,9 @@ fi
 
 export OTEL_SERVICE_NAME="car-imitator"
 
+export OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf"
+export OTEL_TRACES_EXPORTER="otlp"
+export OTEL_METRICS_EXPORTER="otlp"
+export NODE_OPTIONS="--require @opentelemetry/auto-instrumentations-node/register"
+
 node --require @opentelemetry/auto-instrumentations-node/register server.js

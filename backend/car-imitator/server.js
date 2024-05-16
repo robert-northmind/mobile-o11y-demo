@@ -30,20 +30,32 @@ app.post("/set-door-status", async (req, res) => {
       .send('Invalid status. Please use "locked" or "unlocked".');
   }
 
-  // Introduce a fake delay between 0.5 and 4 seconds
-  await delay(500, 4000);
+  // Introduce a fake delay between 0.2 and 1 second
+  await delay(200, 1000);
 
-  // Simulate a 20% chance of returning an error
-  if (shouldError(0.2)) {
+  // Simulate a 15% chance of returning an error
+  if (shouldError(0.15)) {
     return res.status(500).send("Simulated server error");
   }
 
-  carDoorStatus = status;
+  // Add one more delay before actually updating the status of the car
+  delay(1000, 6000).then(() => {
+    carDoorStatus = status;
+  });
+
   res.send(`${status}`);
 });
 
 // Endpoint to check the current door status
-app.get("/door-status", (req, res) => {
+app.get("/door-status", async (req, res) => {
+  // Introduce a fake delay between 0.1 and 2 seconds
+  await delay(100, 2000);
+
+  // Simulate a 15% chance of returning an error
+  if (shouldError(0.15)) {
+    return res.status(500).send("Simulated server error");
+  }
+
   res.send(`${carDoorStatus}`);
 });
 
