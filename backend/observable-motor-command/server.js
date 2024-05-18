@@ -1,3 +1,4 @@
+import { log, logsAPI } from "./logger.js";
 import express from "express";
 
 const app = express();
@@ -9,14 +10,20 @@ app.use(express.json());
 // Endpoint to set the car door status
 app.post("/set-door-status", async (req, res) => {
   const { status } = req.body;
+  log("requesting /set-door-status", logsAPI.SeverityNumber.INFO);
 
   if (status !== "locked" && status !== "unlocked") {
-    return res
-      .status(400)
-      .send('Invalid status. Please use "locked" or "unlocked".');
+    const message =
+      'Invalid status. Please use "locked" or "unlocked". Returning 400';
+    log(message, logsAPI.SeverityNumber.ERROR);
+    return res.status(400).send(message);
   }
 
   try {
+    log(
+      "requesting /set-door-status from car-imitator",
+      logsAPI.SeverityNumber.INFO
+    );
     const response = await fetch("http://localhost:3001/set-door-status", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -33,12 +40,18 @@ app.post("/set-door-status", async (req, res) => {
     const data = await response.text();
     res.send(`${data}`);
   } catch (error) {
-    res.status(500).send(`Error: ${error.message}`);
+    const message = `Error in /set-door-status: ${error.message}`;
+    log(message, logsAPI.SeverityNumber.ERROR);
+    res.status(500).send(message);
   }
 });
 
 // Endpoint to check the current door status
 app.get("/door-status", async (req, res) => {
+  log(
+    "requesting /door-status  from car-imitator",
+    logsAPI.SeverityNumber.INFO
+  );
   try {
     const response = await fetch("http://localhost:3001/door-status");
 
@@ -52,11 +65,16 @@ app.get("/door-status", async (req, res) => {
     const data = await response.text();
     res.send({ status: data });
   } catch (error) {
-    res.status(500).send(`Error: ${error.message}`);
+    const message = `Error in /door-status: ${error.message}`;
+    log(message, logsAPI.SeverityNumber.ERROR);
+    res.status(500).send(message);
   }
 });
 
 // Start the server
 app.listen(port, () => {
-  console.log(`OMC Server running at http://localhost:${port}`);
+  log(
+    `OMC Server running at http://localhost:${port}`,
+    logsAPI.SeverityNumber.DEBUG
+  );
 });

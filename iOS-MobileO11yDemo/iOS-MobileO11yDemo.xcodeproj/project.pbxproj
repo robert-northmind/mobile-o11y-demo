@@ -32,6 +32,7 @@
 		6219E3AE2BF5FD1700B7001A /* InjectedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3AD2BF5FD1700B7001A /* InjectedValues.swift */; };
 		6219E3B12BF5FD7700B7001A /* RemoteActionApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3B02BF5FD7700B7001A /* RemoteActionApiClient.swift */; };
 		6219E3B32BF6002500B7001A /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3B22BF6002500B7001A /* ApiError.swift */; };
+		62656F092BF94CBE009EB228 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62656F082BF94CBE009EB228 /* Logger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		6219E3AD2BF5FD1700B7001A /* InjectedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjectedValues.swift; sourceTree = "<group>"; };
 		6219E3B02BF5FD7700B7001A /* RemoteActionApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteActionApiClient.swift; sourceTree = "<group>"; };
 		6219E3B22BF6002500B7001A /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
+		62656F082BF94CBE009EB228 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 		6219E3512BF5F0F700B7001A /* iOS-MobileO11yDemo */ = {
 			isa = PBXGroup;
 			children = (
+				62656F072BF94C9B009EB228 /* Logger */,
 				6219E3AF2BF5FD6100B7001A /* ApiClient */,
 				6219E3AC2BF5FD0900B7001A /* DependencyInjection */,
 				6219E3A72BF5F9E000B7001A /* Models */,
@@ -212,6 +215,14 @@
 				6219E3B02BF5FD7700B7001A /* RemoteActionApiClient.swift */,
 			);
 			path = ApiClient;
+			sourceTree = "<group>";
+		};
+		62656F072BF94C9B009EB228 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				62656F082BF94CBE009EB228 /* Logger.swift */,
+			);
+			path = Logger;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,6 +378,7 @@
 				6219E3A92BF5F9F900B7001A /* CarDoorStatus.swift in Sources */,
 				6219E3B12BF5FD7700B7001A /* RemoteActionApiClient.swift in Sources */,
 				6219E37E2BF5F27E00B7001A /* OTelTraces.swift in Sources */,
+				62656F092BF94CBE009EB228 /* Logger.swift in Sources */,
 				6219E3B32BF6002500B7001A /* ApiError.swift in Sources */,
 				6219E3A62BF5F9A600B7001A /* RemoteActionService.swift in Sources */,
 			);

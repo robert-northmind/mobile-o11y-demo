@@ -20,8 +20,6 @@ struct OTelConfig {
 
     let serviceName = "mobile-O11y-ios-demo-app"
     let deploymentEnvironment = "production"
-    let serviceNamespace = "mobile-O11y-demo-app-namespace"
-    let serviceInstanceId = "mobile-O11y-demo-app-id"
 
     let instrumentationScopeName = "main-instrumentation"
     let instrumentationScopeVersion = "semver:1.0.0"

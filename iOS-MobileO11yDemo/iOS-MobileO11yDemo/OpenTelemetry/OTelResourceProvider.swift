@@ -17,8 +17,7 @@ struct OTelResourceProvider {
             attributes: [
                 "service.name": AttributeValue.string(otelConfig.serviceName),
                 "deployment.environment": AttributeValue.string(otelConfig.deploymentEnvironment),
-                "service.namespace": AttributeValue.string(otelConfig.serviceNamespace),
-                "service.instance.id": AttributeValue.string(otelConfig.serviceInstanceId)
+                "service.version": AttributeValue.string("1.0.0"),
             ]
         )
         return defaultResources.merging(other: customResource)

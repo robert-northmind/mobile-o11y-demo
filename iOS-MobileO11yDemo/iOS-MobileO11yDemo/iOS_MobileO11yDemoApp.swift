@@ -18,7 +18,6 @@ struct iOS_MobileO11yDemoApp: App {
         WindowGroup {
             ContentView()
                 .onAppear {
-                    let logger = OTelLogs.instance.getLogger()
                     logger.log("IosMobileO11yDemo was started", severity: .debug)
                 }
         }

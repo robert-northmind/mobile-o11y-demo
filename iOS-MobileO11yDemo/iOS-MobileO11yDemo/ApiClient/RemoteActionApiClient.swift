@@ -16,7 +16,6 @@ protocol RemoteActionApiClientProtocol {
 
 class RemoteActionApiClient: RemoteActionApiClientProtocol {
     private let basePath = "http://localhost:3000"
-    private let logger = OTelLogs.instance.getLogger()
 
     func getDoorStatus() async throws -> CarDoorStatus {
         logger.log("Fetching doorStatus", severity: .debug)

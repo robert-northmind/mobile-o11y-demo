@@ -1,3 +1,4 @@
+import { log, logsAPI } from "./logger.js";
 import express from "express";
 
 const app = express();
@@ -23,11 +24,13 @@ function shouldError(probability) {
 // Endpoint to set the car door status
 app.post("/set-door-status", async (req, res) => {
   const { status } = req.body;
+  log("requesting /set-door-status", logsAPI.SeverityNumber.INFO);
 
   if (status !== "locked" && status !== "unlocked") {
-    return res
-      .status(400)
-      .send('Invalid status. Please use "locked" or "unlocked".');
+    const message =
+      'Invalid status. Please use "locked" or "unlocked". Returning 400';
+    log(message, logsAPI.SeverityNumber.ERROR);
+    return res.status(400).send(message);
   }
 
   // Introduce a fake delay between 0.2 and 1 second
@@ -35,11 +38,19 @@ app.post("/set-door-status", async (req, res) => {
 
   // Simulate a 15% chance of returning an error
   if (shouldError(0.15)) {
-    return res.status(500).send("Simulated server error");
+    const message = "Simulated server error in /set-door-status";
+    log(message, logsAPI.SeverityNumber.ERROR);
+    return res.status(500).send(message);
   }
 
   // Add one more delay before actually updating the status of the car
   delay(1000, 6000).then(() => {
+    log(
+      "Updating car door status after random delay",
+      logsAPI.SeverityNumber.INFO,
+      { carDoorStatus: status }
+    );
+
     carDoorStatus = status;
   });
 
@@ -48,12 +59,16 @@ app.post("/set-door-status", async (req, res) => {
 
 // Endpoint to check the current door status
 app.get("/door-status", async (req, res) => {
+  log("requesting /door-status", logsAPI.SeverityNumber.INFO);
+
   // Introduce a fake delay between 0.1 and 2 seconds
   await delay(100, 2000);
 
   // Simulate a 15% chance of returning an error
   if (shouldError(0.15)) {
-    return res.status(500).send("Simulated server error");
+    const message = "Simulated server error in /door-status";
+    log(message, logsAPI.SeverityNumber.ERROR);
+    return res.status(500).send(message);
   }
 
   res.send(`${carDoorStatus}`);
@@ -61,5 +76,8 @@ app.get("/door-status", async (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-  console.log(`car-imitator running at http://localhost:${port}`);
+  log(
+    `car-imitator running at http://localhost:${port}`,
+    logsAPI.SeverityNumber.DEBUG
+  );
 });

@@ -16,17 +16,14 @@ protocol RemoteActionServiceProtocol {
 }
 
 class RemoteActionService: RemoteActionServiceProtocol {
-    private let logger: Logger
     private let tracer: Tracer
     private let apiClient: RemoteActionApiClientProtocol
     
     init(
         apiClient: RemoteActionApiClientProtocol = InjectedValues[\.remoteActionApiClient],
-        logger: Logger = OTelLogs.instance.getLogger(),
         tracer: Tracer = OTelTraces.instance.getTracer()
     ) {
         self.apiClient = apiClient
-        self.logger = logger
         self.tracer = tracer
     }
     
@@ -73,20 +70,17 @@ class RemoteActionService: RemoteActionServiceProtocol {
             logger.log("DoorStatus failed to update with error: \(error)", severity: .error)
             setStatusSpan.status = .error(description: error.localizedDescription)
             setStatusSpan.end()
-            print("## Set Status initial failed!")
             return
         }
 
-        print("## String to poll for status changes")
+        logger.log("Start to poll for status changes", severity: .info)
         let didUpdateStatus = await pollForDoorStatus(toBe: action.status, parentSpan: setStatusSpan)
         if didUpdateStatus {
             logger.log("DoorStatus did update! It is now: \(action.status)", severity: .debug)
             setStatusSpan.status = .ok
-            print("## Set Status completed correctly!")
         } else {
             logger.log("DoorStatus did not update!", severity: .error)
             setStatusSpan.status = .error(description: "Status did not update")
-            print("## Set Status failed!")
         }
         setStatusSpan.end()
     }
@@ -99,30 +93,26 @@ class RemoteActionService: RemoteActionServiceProtocol {
    
         let checkStatusSpan = tracer.spanBuilder(spanName: "CheckDoorStatusPoller")
             .setParent(parentSpan)
-            .setSpanKind(spanKind: .server)
+            .setSpanKind(spanKind: .client)
             .startSpan()
-        defer {
-            checkStatusSpan.end()
-        }
         
         do {
             let latestDoorStatus = try await apiClient.getDoorStatus()
             checkStatusSpan.setAttribute(key: "LatestDoorStatus", value: latestDoorStatus.status.safeTracingName)
             if latestDoorStatus.status == status {
                 checkStatusSpan.status = .ok
-                print("## Got correct status")
+                logger.log("Got correct status", severity: .info)
                 return true
-            } else {
-                checkStatusSpan.status = .error(description: "Value not updated yet. We want: \(status), we got: \(latestDoorStatus.status)")
             }
         } catch {
-            checkStatusSpan.status = .error(description: error.localizedDescription)
+            logger.log("Get door status failed with error: \(error)", severity: .error)
         }
+        checkStatusSpan.end()
         
         // Wait for 2 seconds
         try? await Task.sleep(nanoseconds: 2 * 1_000_000_000)
 
-        print("## Polling again")
+        logger.log("Starting new poll", severity: .info)
         return await pollForDoorStatus(toBe: status, parentSpan: parentSpan, startTime: startTime)
     }
 }

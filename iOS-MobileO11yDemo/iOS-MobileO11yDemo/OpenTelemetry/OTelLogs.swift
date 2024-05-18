@@ -42,7 +42,7 @@ class OTelLogs {
         OpenTelemetry.registerLoggerProvider(loggerProvider: loggerProvider)
     }
 
-    func getLogger() -> Logger {
+    func getLogger() -> OpenTelemetryApi.Logger {
         let otelConfig = OTelConfig()
         return OpenTelemetry.instance.loggerProvider.loggerBuilder(
             instrumentationScopeName: otelConfig.instrumentationScopeName
@@ -50,7 +50,7 @@ class OTelLogs {
     }
 }
 
-extension Logger {
+extension OpenTelemetryApi.Logger {
     func log(
         _ message: String,
         severity: Severity,

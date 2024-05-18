@@ -11,6 +11,7 @@ if [ -f "$ENV_FILE" ]; then
 fi
 
 export OTEL_SERVICE_NAME="observable-motor-command"
+export OTEL_SERVICE_VERSION="1.0.0"
 
 export OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf"
 export OTEL_TRACES_EXPORTER="otlp"

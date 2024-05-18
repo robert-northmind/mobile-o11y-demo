@@ -12,7 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "@opentelemetry/api": "^1.8.0",
+    "@opentelemetry/api-logs": "^0.51.1",
     "@opentelemetry/auto-instrumentations-node": "^0.46.1",
+    "@opentelemetry/exporter-logs-otlp-http": "^0.51.1",
+    "@opentelemetry/sdk-logs": "^0.51.1",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2"
   }
 }
