@@ -58,10 +58,12 @@ You can find these values in the same location where you got the auth data for t
 
 ### 4. Start the fake backends
 
-You can run them locally.
-First start up the `car-imitator`. Go to `backend/car-imitator` and run `npm start`.
-Secondly start up the `observable-motor-command`. Go to `backend/observable-motor-command` and run `npm start`.
+You can run them locally. Start them by running this from the project root:
 
-### 5. Compile and run
+```sh
+make start-backends
+```
+
+### 5. Start up the iOS app
 
 Now you can build and run the iOS app. It is probably easiest to run it on the iOS Simulator (if you want to run it on a real device, then you will need to set up provisioning and signing. This is outside the scope of this example).
