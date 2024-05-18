@@ -31,6 +31,8 @@ class Logger {
         let formattedDate = dateFormatter.string(from: currentDate)
         osLogger.log("\(formattedDate): [\(severity)]: \(message)")
         
-        otelLogger.log(message, severity: severity, timestamp: timestamp, attributes: attributes)
+        var updateAttributes = attributes
+        updateAttributes["level"] = "\(severity)"
+        otelLogger.log(message, severity: severity, timestamp: timestamp, attributes: updateAttributes)
     }
 }
