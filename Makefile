@@ -10,3 +10,7 @@ start-car-imitator:
 
 start-backends: start-omc start-car-imitator
 	@echo "Both backend apps are started."
+
+update-otel-config:
+	@echo "Updating iOS OpenTelemetry configuration..."
+	Scripts/update-ios-otel-config.sh

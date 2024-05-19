@@ -8,15 +8,11 @@
 import Foundation
 
 struct OTelConfig {
-    // Put your token here
-    let token = ""
-
-    // Put your instanceId here
-    let instanceId = ""
+    // Put your Otel header here. In this format: `Basic {base64 encoded instanceId:token}`
+    let otelHeaders = ""
 
     // Put your endpoint url
-    // Like this: https://otlp-gateway-prod-eu-west-2.grafana.net/otlp
-    let endpointUrl = "https://otlp-gateway-prod-eu-west-2.grafana.net/otlp"
+    let endpointUrl = ""
 
     let serviceName = "mobile-O11y-ios-demo-app"
     let deploymentEnvironment = "production"

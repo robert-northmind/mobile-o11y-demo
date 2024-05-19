@@ -232,6 +232,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6219E3732BF5F0F900B7001A /* Build configuration list for PBXNativeTarget "iOS-MobileO11yDemo" */;
 			buildPhases = (
+				62B850802BFAA71800DB0EAE /* Update Otel Config */,
 				6219E34B2BF5F0F700B7001A /* Sources */,
 				6219E34C2BF5F0F700B7001A /* Frameworks */,
 				6219E34D2BF5F0F700B7001A /* Resources */,
@@ -361,6 +362,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		62B850802BFAA71800DB0EAE /* Update Otel Config */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Update Otel Config";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"${SRCROOT}/..\"\nmake update-otel-config\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6219E34B2BF5F0F700B7001A /* Sources */ = {
@@ -546,6 +568,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"iOS-MobileO11yDemo/Preview Content\"";
 				DEVELOPMENT_TEAM = CF67NZZ27B;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -575,6 +598,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"iOS-MobileO11yDemo/Preview Content\"";
 				DEVELOPMENT_TEAM = CF67NZZ27B;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
