@@ -93,7 +93,7 @@ class RemoteActionService: RemoteActionServiceProtocol {
    
         let checkStatusSpan = tracer.spanBuilder(spanName: "CheckDoorStatusPoller")
             .setParent(parentSpan)
-            .setSpanKind(spanKind: .client)
+            .setSpanKind(spanKind: .server)
             .startSpan()
         
         do {
