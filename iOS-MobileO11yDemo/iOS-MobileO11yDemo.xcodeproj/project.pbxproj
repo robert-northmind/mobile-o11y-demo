@@ -46,6 +46,7 @@
 		62994D7C2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D7B2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift */; };
 		62994D7E2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D7D2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift */; };
 		62994D802C0FA22B008D8F78 /* PhoneToCarNotConnectedActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D7F2C0FA22B008D8F78 /* PhoneToCarNotConnectedActionViewModel.swift */; };
+		62994D822C0FAA89008D8F78 /* PhoneToCarLockUnlockActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D812C0FAA89008D8F78 /* PhoneToCarLockUnlockActionViewModel.swift */; };
 		62BCDD7E2C0F28AB00DC5715 /* RemoteActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BCDD7D2C0F28AB00DC5715 /* RemoteActionView.swift */; };
 		62BCDD802C0F2E8C00DC5715 /* PhoneToCarActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */; };
 		62FDE73B2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDE73A2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift */; };
@@ -107,6 +108,7 @@
 		62994D7B2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarActionViewModel.swift; sourceTree = "<group>"; };
 		62994D7D2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarConnectedActionViewModel.swift; sourceTree = "<group>"; };
 		62994D7F2C0FA22B008D8F78 /* PhoneToCarNotConnectedActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarNotConnectedActionViewModel.swift; sourceTree = "<group>"; };
+		62994D812C0FAA89008D8F78 /* PhoneToCarLockUnlockActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarLockUnlockActionViewModel.swift; sourceTree = "<group>"; };
 		62BCDD7D2C0F28AB00DC5715 /* RemoteActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteActionView.swift; sourceTree = "<group>"; };
 		62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarActionView.swift; sourceTree = "<group>"; };
 		62FDE73A2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarConnectedActionView.swift; sourceTree = "<group>"; };
@@ -281,6 +283,18 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		62994D832C0FAA9F008D8F78 /* ConnectedViews */ = {
+			isa = PBXGroup;
+			children = (
+				62FDE73A2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift */,
+				62994D7D2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift */,
+				62FDE7412C0F44D700DCB86E /* PhoneToCarLockUnlockActionView.swift */,
+				62994D812C0FAA89008D8F78 /* PhoneToCarLockUnlockActionViewModel.swift */,
+				62994D652C0F488B008D8F78 /* PhoneToCarUpdateSoftwareActionView.swift */,
+			);
+			path = ConnectedViews;
+			sourceTree = "<group>";
+		};
 		62BCDD7A2C0F281B00DC5715 /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -342,14 +356,11 @@
 		62FDE7392C0F3CDB00DCB86E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				62994D832C0FAA9F008D8F78 /* ConnectedViews */,
 				62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */,
 				62994D7B2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift */,
-				62FDE73A2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift */,
-				62994D7D2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift */,
 				62FDE73C2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift */,
 				62994D7F2C0FA22B008D8F78 /* PhoneToCarNotConnectedActionViewModel.swift */,
-				62FDE7412C0F44D700DCB86E /* PhoneToCarLockUnlockActionView.swift */,
-				62994D652C0F488B008D8F78 /* PhoneToCarUpdateSoftwareActionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -536,6 +547,7 @@
 				6219E3AB2BF5FC3A00B7001A /* ChangeDoorStatusRemoteAction.swift in Sources */,
 				6219E3A32BF5F66300B7001A /* OTelLogs.swift in Sources */,
 				6219E39F2BF5F53F00B7001A /* OTelResourceProvider.swift in Sources */,
+				62994D822C0FAA89008D8F78 /* PhoneToCarLockUnlockActionViewModel.swift in Sources */,
 				6219E3AE2BF5FD1700B7001A /* InjectedValues.swift in Sources */,
 				62994D692C0F4EE7008D8F78 /* CarConnectionService.swift in Sources */,
 				62FDE7402C0F410200DCB86E /* DoorLockStateView.swift in Sources */,

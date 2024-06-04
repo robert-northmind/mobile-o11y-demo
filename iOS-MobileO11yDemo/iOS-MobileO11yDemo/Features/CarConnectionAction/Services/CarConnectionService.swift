@@ -26,6 +26,12 @@ class CarConnectionService: CarConnectionServiceProtocol {
     @Published var connectedCar: Car?
     var connectedCarPublisher: Published<Car?>.Publisher { $connectedCar }
     
+    private let fakeCommunicationService: CarFakeCommunicationService
+    
+    init() {
+        self.fakeCommunicationService = CarFakeCommunicationService()
+    }
+    
     func connectToCar() async -> Car {
         await updateCarConnection(shouldConnect: true)
         let car = Car()

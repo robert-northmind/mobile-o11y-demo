@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct PhoneToCarLockUnlockActionView: View {
+    @ObservedObject private var viewModel = PhoneToCarLockUnlockActionViewModel()
+    
     var body: some View {
         DoorLockStateView(
-            isLoading: false,
-            isLocked: true,
+            isLoading: viewModel.isLoading,
+            isLocked: viewModel.isLocked,
             unlockAction: {
+                viewModel.unlockAction()
             },
             lockAction: {
+                viewModel.lockAction()
             }
         )
     }

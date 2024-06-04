@@ -10,7 +10,6 @@ import Combine
 
 class PhoneToCarConnectedActionViewModel: ObservableObject {
     @Published var isLoading: Bool = false
-    
     @Published var vehicleInfo: String = ""
     
     private let carConnectionService: CarConnectionServiceProtocol
