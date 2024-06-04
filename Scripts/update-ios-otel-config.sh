@@ -17,7 +17,7 @@ fi
 FIXED_OTEL_EXPORTER_OTLP_HEADERS="${OTEL_EXPORTER_OTLP_HEADERS#Authorization=}"
 
 # File to be updated
-FILE="$SCRIPT_DIR/../iOS-MobileO11yDemo/iOS-MobileO11yDemo/OpenTelemetry/OTelConfig.swift"
+FILE="$SCRIPT_DIR/../iOS-MobileO11yDemo/iOS-MobileO11yDemo/Common/OpenTelemetry/OTelConfig.swift"
 
 # New content
 NEW_OTEL_HEADERS="    let otelHeaders = \"$FIXED_OTEL_EXPORTER_OTLP_HEADERS\""

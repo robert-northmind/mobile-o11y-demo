@@ -98,6 +98,7 @@ class RemoteActionService: RemoteActionServiceProtocol {
         
         do {
             let latestDoorStatus = try await apiClient.getDoorStatus()
+            parentSpan.addEvent(name: "GotStatusUpdate", attributes: ["LatestDoorStatus": AttributeValue.string(latestDoorStatus.status.safeTracingName)])
             checkStatusSpan.setAttribute(key: "LatestDoorStatus", value: latestDoorStatus.status.safeTracingName)
             if latestDoorStatus.status == status {
                 checkStatusSpan.status = .ok
