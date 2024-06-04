@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PhoneToCarNotConnectedActionView: View {
-    @ObservedObject private var carConnectionService = CarConnectionService.instance
+    @ObservedObject private var viewModel = PhoneToCarNotConnectedActionViewModel()
     
     var body: some View {
         VStack {
@@ -18,7 +18,7 @@ struct PhoneToCarNotConnectedActionView: View {
             
             Divider().padding(.bottom, 10)
             
-            if carConnectionService.isLoading {
+            if viewModel.isLoading {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
                     .frame(width: 50, height: 50)
@@ -31,11 +31,9 @@ struct PhoneToCarNotConnectedActionView: View {
             }
             
             Button("Connect phone directly to car") {
-                Task {
-                    await carConnectionService.connectToCar()
-                }
+                viewModel.connectToCar()
             }
-            .disabled(carConnectionService.isLoading)
+            .disabled(viewModel.isLoading)
             .padding()
         }
     }

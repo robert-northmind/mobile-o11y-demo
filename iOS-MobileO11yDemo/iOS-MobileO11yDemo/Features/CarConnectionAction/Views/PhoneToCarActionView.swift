@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct PhoneToCarActionView: View {
-    @ObservedObject private var carConnectionService = CarConnectionService.instance
+    @ObservedObject private var viewModel = PhoneToCarActionViewModel()
 
     var body: some View {
         ScrollView {
             VStack {
-                if carConnectionService.isConnected {
+                if viewModel.isConnected {
                     PhoneToCarConnectedActionView()
                 } else {
                     PhoneToCarNotConnectedActionView()

@@ -7,23 +7,35 @@
 
 import Foundation
 
-@MainActor
-class CarConnectionService: ObservableObject {
-    private init() {}
-    
-    static let instance = CarConnectionService()
-    
+protocol CarConnectionServiceProtocol {
+    var isLoadingPublisher: Published<Bool>.Publisher { get }
+    var isConnectedPublisher: Published<Bool>.Publisher { get }
+    var connectedCarPublisher: Published<Car?>.Publisher { get }
+
+    func connectToCar() async -> Car
+    func disconnectFromCar() async
+}
+
+class CarConnectionService: CarConnectionServiceProtocol {
     @Published var isLoading: Bool = false
+    var isLoadingPublisher: Published<Bool>.Publisher { $isLoading }
 
     @Published var isConnected: Bool = false
+    var isConnectedPublisher: Published<Bool>.Publisher { $isConnected }
     
-    func connectToCar() async -> CarConnection {
+    @Published var connectedCar: Car?
+    var connectedCarPublisher: Published<Car?>.Publisher { $connectedCar }
+    
+    func connectToCar() async -> Car {
         await updateCarConnection(shouldConnect: true)
-        return CarConnection()
+        let car = Car()
+        connectedCar = car
+        return car
     }
     
     func disconnectFromCar() async {
         await updateCarConnection(shouldConnect: false)
+        connectedCar = nil
     }
 
     private func updateCarConnection(shouldConnect: Bool) async {
@@ -36,5 +48,16 @@ class CarConnectionService: ObservableObject {
     private func addFakeConnectionDelay() async {
         let randomDelay = UInt64.random(in: 1_000_000_000...2_000_000_000)
         try? await Task.sleep(nanoseconds: randomDelay)
+    }
+}
+
+private struct CarConnectionServiceKey: InjectionKey {
+    static var currentValue: CarConnectionServiceProtocol = CarConnectionService()
+}
+
+extension InjectedValues {
+    var carConnectionService: CarConnectionServiceProtocol {
+        get { Self[CarConnectionServiceKey.self] }
+        set { Self[CarConnectionServiceKey.self] = newValue }
     }
 }

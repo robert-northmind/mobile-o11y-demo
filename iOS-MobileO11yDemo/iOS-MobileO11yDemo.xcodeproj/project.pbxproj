@@ -35,7 +35,7 @@
 		62656F092BF94CBE009EB228 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62656F082BF94CBE009EB228 /* Logger.swift */; };
 		62994D662C0F488B008D8F78 /* PhoneToCarUpdateSoftwareActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D652C0F488B008D8F78 /* PhoneToCarUpdateSoftwareActionView.swift */; };
 		62994D692C0F4EE7008D8F78 /* CarConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D682C0F4EE7008D8F78 /* CarConnectionService.swift */; };
-		62994D6C2C0F51B9008D8F78 /* CarConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D6B2C0F51B9008D8F78 /* CarConnection.swift */; };
+		62994D6C2C0F51B9008D8F78 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D6B2C0F51B9008D8F78 /* Car.swift */; };
 		62994D6E2C0F58E5008D8F78 /* CarInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D6D2C0F58E5008D8F78 /* CarInfo.swift */; };
 		62994D702C0F590F008D8F78 /* CarDoorActionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D6F2C0F590F008D8F78 /* CarDoorActionService.swift */; };
 		62994D722C0F5976008D8F78 /* CarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D712C0F5976008D8F78 /* CarModel.swift */; };
@@ -43,6 +43,9 @@
 		62994D762C0F59AB008D8F78 /* CarSoftwareVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D752C0F59AB008D8F78 /* CarSoftwareVersion.swift */; };
 		62994D782C0F5C1A008D8F78 /* CarFakeCommunicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D772C0F5C1A008D8F78 /* CarFakeCommunicationService.swift */; };
 		62994D7A2C0F5CFD008D8F78 /* CarCommunicationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D792C0F5CFD008D8F78 /* CarCommunicationError.swift */; };
+		62994D7C2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D7B2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift */; };
+		62994D7E2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D7D2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift */; };
+		62994D802C0FA22B008D8F78 /* PhoneToCarNotConnectedActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D7F2C0FA22B008D8F78 /* PhoneToCarNotConnectedActionViewModel.swift */; };
 		62BCDD7E2C0F28AB00DC5715 /* RemoteActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BCDD7D2C0F28AB00DC5715 /* RemoteActionView.swift */; };
 		62BCDD802C0F2E8C00DC5715 /* PhoneToCarActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */; };
 		62FDE73B2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDE73A2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift */; };
@@ -93,7 +96,7 @@
 		62656F082BF94CBE009EB228 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		62994D652C0F488B008D8F78 /* PhoneToCarUpdateSoftwareActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarUpdateSoftwareActionView.swift; sourceTree = "<group>"; };
 		62994D682C0F4EE7008D8F78 /* CarConnectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarConnectionService.swift; sourceTree = "<group>"; };
-		62994D6B2C0F51B9008D8F78 /* CarConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarConnection.swift; sourceTree = "<group>"; };
+		62994D6B2C0F51B9008D8F78 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
 		62994D6D2C0F58E5008D8F78 /* CarInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInfo.swift; sourceTree = "<group>"; };
 		62994D6F2C0F590F008D8F78 /* CarDoorActionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDoorActionService.swift; sourceTree = "<group>"; };
 		62994D712C0F5976008D8F78 /* CarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarModel.swift; sourceTree = "<group>"; };
@@ -101,6 +104,9 @@
 		62994D752C0F59AB008D8F78 /* CarSoftwareVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarSoftwareVersion.swift; sourceTree = "<group>"; };
 		62994D772C0F5C1A008D8F78 /* CarFakeCommunicationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarFakeCommunicationService.swift; sourceTree = "<group>"; };
 		62994D792C0F5CFD008D8F78 /* CarCommunicationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarCommunicationError.swift; sourceTree = "<group>"; };
+		62994D7B2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarActionViewModel.swift; sourceTree = "<group>"; };
+		62994D7D2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarConnectedActionViewModel.swift; sourceTree = "<group>"; };
+		62994D7F2C0FA22B008D8F78 /* PhoneToCarNotConnectedActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarNotConnectedActionViewModel.swift; sourceTree = "<group>"; };
 		62BCDD7D2C0F28AB00DC5715 /* RemoteActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteActionView.swift; sourceTree = "<group>"; };
 		62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarActionView.swift; sourceTree = "<group>"; };
 		62FDE73A2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarConnectedActionView.swift; sourceTree = "<group>"; };
@@ -265,7 +271,7 @@
 		62994D6A2C0F51A9008D8F78 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				62994D6B2C0F51B9008D8F78 /* CarConnection.swift */,
+				62994D6B2C0F51B9008D8F78 /* Car.swift */,
 				62994D6D2C0F58E5008D8F78 /* CarInfo.swift */,
 				62994D712C0F5976008D8F78 /* CarModel.swift */,
 				62994D732C0F598B008D8F78 /* CarColor.swift */,
@@ -337,8 +343,11 @@
 			isa = PBXGroup;
 			children = (
 				62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */,
+				62994D7B2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift */,
 				62FDE73A2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift */,
+				62994D7D2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift */,
 				62FDE73C2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift */,
+				62994D7F2C0FA22B008D8F78 /* PhoneToCarNotConnectedActionViewModel.swift */,
 				62FDE7412C0F44D700DCB86E /* PhoneToCarLockUnlockActionView.swift */,
 				62994D652C0F488B008D8F78 /* PhoneToCarUpdateSoftwareActionView.swift */,
 			);
@@ -533,9 +542,12 @@
 				62994D722C0F5976008D8F78 /* CarModel.swift in Sources */,
 				62994D6E2C0F58E5008D8F78 /* CarInfo.swift in Sources */,
 				62BCDD802C0F2E8C00DC5715 /* PhoneToCarActionView.swift in Sources */,
+				62994D802C0FA22B008D8F78 /* PhoneToCarNotConnectedActionViewModel.swift in Sources */,
 				6219E3532BF5F0F700B7001A /* iOS_MobileO11yDemoApp.swift in Sources */,
 				62FDE73D2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift in Sources */,
-				62994D6C2C0F51B9008D8F78 /* CarConnection.swift in Sources */,
+				62994D6C2C0F51B9008D8F78 /* Car.swift in Sources */,
+				62994D7E2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift in Sources */,
+				62994D7C2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift in Sources */,
 				62FDE73B2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift in Sources */,
 				62994D762C0F59AB008D8F78 /* CarSoftwareVersion.swift in Sources */,
 				6219E3A92BF5F9F900B7001A /* CarDoorStatus.swift in Sources */,

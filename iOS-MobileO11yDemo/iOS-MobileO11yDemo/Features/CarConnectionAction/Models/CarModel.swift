@@ -7,11 +7,11 @@
 
 import Foundation
 
-enum CarModel: CaseIterable {
-    case turboWombat
-    case vortexVelociraptor
-    case giggleMobile
-    case pandaProwler
-    case blizzardBison
-    case rocketRaccoon
+enum CarModel: String, CaseIterable {
+    case turboWombat = "Turbo Wombat"
+    case vortexVelociraptor = "Vortex Velociraptor"
+    case giggleMobile = "Giggle Mobile"
+    case pandaProwler = "Panda Prowler"
+    case blizzardBison = "Blizzard Bison"
+    case rocketRaccoon = "Rocket Raccoon"
 }

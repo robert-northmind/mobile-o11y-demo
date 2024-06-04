@@ -8,16 +8,16 @@
 import Foundation
 
 class CarDoorActionService {
-    private let carConnection: CarConnection
+    private let car: Car
     private let fakeCommunicationService: CarFakeCommunicationService
 
-    init(carConnection: CarConnection) {
-        self.carConnection = carConnection
+    init(car: Car) {
+        self.car = car
         self.fakeCommunicationService = CarFakeCommunicationService()
     }
 
     func getDoorStatus() async -> CarDoorStatus {
-        return carConnection.carDoorStatus
+        return car.carDoorStatus
     }
     
     func lockDoors() async {
@@ -25,7 +25,7 @@ class CarDoorActionService {
             _ = try await fakeCommunicationService.makeFakeCommunication(
                 command: CarCommunicationCommand()
             )
-            carConnection.carDoorStatus = CarDoorStatus(status: "locked")
+            car.carDoorStatus = CarDoorStatus(status: "locked")
         } catch {
             
         }
@@ -36,7 +36,7 @@ class CarDoorActionService {
             _ = try await fakeCommunicationService.makeFakeCommunication(
                 command: CarCommunicationCommand()
             )
-            carConnection.carDoorStatus = CarDoorStatus(status: "unlocked")
+            car.carDoorStatus = CarDoorStatus(status: "unlocked")
         } catch {
             
         }

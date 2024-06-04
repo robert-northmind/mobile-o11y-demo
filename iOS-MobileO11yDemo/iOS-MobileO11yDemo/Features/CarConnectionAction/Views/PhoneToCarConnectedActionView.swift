@@ -8,17 +8,15 @@
 import SwiftUI
 
 struct PhoneToCarConnectedActionView: View {
-    @ObservedObject private var carConnectionService = CarConnectionService.instance
+    @ObservedObject private var viewModel = PhoneToCarConnectedActionViewModel()
     
     var body: some View {
         VStack {
-            Text("Nice! You are connected to your car and can directly control it via your phone.")
+            Text("Connected to: \(viewModel.vehicleInfo)")
                 .multilineTextAlignment(.center)
                 .padding()
             
-            Divider().padding(.bottom, 20)
-            
-            if carConnectionService.isLoading {
+            if viewModel.isLoading {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
                     .frame(width: 50, height: 50)
@@ -31,25 +29,21 @@ struct PhoneToCarConnectedActionView: View {
             }
             
             Button("Disconnect phone from car") {
-                Task {
-                    await carConnectionService.disconnectFromCar()
-                }
+                viewModel.disconnectFromCar()
             }
-            .disabled(carConnectionService.isLoading)
             .padding()
             
             Divider()
             
-            Group {
-                PhoneToCarLockUnlockActionView()
-                    .padding()
-                
-                Divider()
-                
-                PhoneToCarUpdateSoftwareActionView()
-                    .padding()
-            }.disabled(carConnectionService.isLoading)
-        }
+            PhoneToCarLockUnlockActionView()
+                .padding()
+            
+            Divider()
+            
+            PhoneToCarUpdateSoftwareActionView()
+                .padding()
+            
+        }.disabled(viewModel.isLoading)
     }
 }
 
