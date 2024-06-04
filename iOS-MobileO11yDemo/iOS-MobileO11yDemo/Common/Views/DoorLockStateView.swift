@@ -18,11 +18,12 @@ struct DoorLockStateView: View {
             if isLoading {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
-                    .scaleEffect(1.5)
-                    .padding()
+                    .frame(width: 50, height: 50)
+                    .scaleEffect(1.2)
             } else {
                 Image(systemName: getDoorSateIcon())
-                    .imageScale(.large)
+                    .frame(width: 50, height: 50)
+                    .font(.system(size: 30))
                     .foregroundStyle(.tint)
             }
             Text("Car doors state is: \(getDoorSateText())")

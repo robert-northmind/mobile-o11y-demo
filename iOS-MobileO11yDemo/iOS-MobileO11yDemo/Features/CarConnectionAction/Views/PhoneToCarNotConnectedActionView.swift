@@ -8,21 +8,35 @@
 import SwiftUI
 
 struct PhoneToCarNotConnectedActionView: View {
+    @ObservedObject private var carConnectionService = CarConnectionService.instance
+    
     var body: some View {
         VStack {
-            Text("You are not yet connected to your car. You can connect your phone to the car and then control it directly from your phone.")
+            Text("You are not yet connected to your car. If you are next to your car you can connect your phone to it and control it directly from your phone.")
                 .multilineTextAlignment(.center)
                 .padding()
             
-            Divider()
+            Divider().padding(.bottom, 10)
             
-            Image(systemName: "car")
-                .font(.system(size: 40))
-                .foregroundStyle(.tint)
-                .padding()
+            if carConnectionService.isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .frame(width: 50, height: 50)
+                    .scaleEffect(1.5)
+            } else {
+                Image(systemName: "car")
+                    .frame(width: 50, height: 50)
+                    .font(.system(size: 40))
+                    .foregroundStyle(.tint)
+            }
             
             Button("Connect phone directly to car") {
-            }.padding()
+                Task {
+                    await carConnectionService.connectToCar()
+                }
+            }
+            .disabled(carConnectionService.isLoading)
+            .padding()
         }
     }
 }

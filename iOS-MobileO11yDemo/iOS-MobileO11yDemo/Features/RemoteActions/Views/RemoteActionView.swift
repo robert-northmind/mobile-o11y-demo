@@ -12,6 +12,8 @@ struct RemoteActionView: View {
     @State var isLoading = false
     @State private var showAlert = false
     
+    private let remoteActionService = InjectedValues[\.remoteActionService]
+    
     var body: some View {
         VStack {
             Text("Here you can control your car from anywhere in the world!")
@@ -25,13 +27,11 @@ struct RemoteActionView: View {
                 isLocked: doorStatus?.isLocked,
                 unlockAction: {
                     performRemoteAction {
-                        let remoteActionService = InjectedValues[\.remoteActionService]
                         await remoteActionService.unlockDoors()
                     }
                 },
                 lockAction: {
                     performRemoteAction {
-                        let remoteActionService = InjectedValues[\.remoteActionService]
                         await remoteActionService.lockDoors()
                     }
                 }
@@ -64,7 +64,6 @@ struct RemoteActionView: View {
     }
     
     private func updateDoorStatus() async {
-        let remoteActionService = InjectedValues[\.remoteActionService]
         let updatedDoorStatus = await remoteActionService.getDoorStatus()
         
         DispatchQueue.main.async {
