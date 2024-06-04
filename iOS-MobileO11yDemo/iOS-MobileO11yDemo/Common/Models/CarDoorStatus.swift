@@ -19,8 +19,4 @@ extension CarDoorStatus {
     var isLocked: Bool {
         return status == "locked"
     }
-    
-    var iconName: String {
-        return isLocked ? "car.side.lock" : "car.side.lock.open"
-    }
 }

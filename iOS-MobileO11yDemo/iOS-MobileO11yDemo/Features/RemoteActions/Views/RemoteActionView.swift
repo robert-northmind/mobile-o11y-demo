@@ -14,35 +14,30 @@ struct RemoteActionView: View {
     
     var body: some View {
         VStack {
-            if isLoading {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .scaleEffect(1.5)
-                    .padding()
-            } else {
-                Image(systemName: doorStatus?.iconName ?? "car.side.and.exclamationmark")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-            }
-            Text("Car doors state is: \(doorStatus?.status ?? "unknown")")
-                .padding(.bottom, 20)
-                .padding(.top, 20)
-            HStack {
-                Button("Unlock") {
+            Text("Here you can control your car from anywhere in the world!")
+                .multilineTextAlignment(.center)
+                .padding()
+            
+            Divider()
+            
+            DoorLockStateView(
+                isLoading: isLoading,
+                isLocked: doorStatus?.isLocked,
+                unlockAction: {
                     performRemoteAction {
                         let remoteActionService = InjectedValues[\.remoteActionService]
                         await remoteActionService.unlockDoors()
                     }
-                }
-                .disabled(isLoading)
-                .padding(.trailing, 20)
-                Button("Lock") {
+                },
+                lockAction: {
                     performRemoteAction {
                         let remoteActionService = InjectedValues[\.remoteActionService]
                         await remoteActionService.lockDoors()
                     }
-                }.disabled(isLoading)
-            }
+                }
+            ).padding()
+            
+            Spacer()
         }
         .padding()
         .onAppear {
@@ -63,7 +58,6 @@ struct RemoteActionView: View {
     private func performRemoteAction(action: @escaping () async -> Void) {
         isLoading = true
         Task {
-            let remoteActionService = InjectedValues[\.remoteActionService]
             await action()
             await updateDoorStatus()
         }

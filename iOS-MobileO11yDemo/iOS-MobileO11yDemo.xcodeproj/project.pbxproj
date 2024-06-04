@@ -33,8 +33,13 @@
 		6219E3B12BF5FD7700B7001A /* RemoteActionApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3B02BF5FD7700B7001A /* RemoteActionApiClient.swift */; };
 		6219E3B32BF6002500B7001A /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3B22BF6002500B7001A /* ApiError.swift */; };
 		62656F092BF94CBE009EB228 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62656F082BF94CBE009EB228 /* Logger.swift */; };
+		62994D662C0F488B008D8F78 /* PhoneToCarUpdateSoftwareActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D652C0F488B008D8F78 /* PhoneToCarUpdateSoftwareActionView.swift */; };
 		62BCDD7E2C0F28AB00DC5715 /* RemoteActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BCDD7D2C0F28AB00DC5715 /* RemoteActionView.swift */; };
 		62BCDD802C0F2E8C00DC5715 /* PhoneToCarActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */; };
+		62FDE73B2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDE73A2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift */; };
+		62FDE73D2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDE73C2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift */; };
+		62FDE7402C0F410200DCB86E /* DoorLockStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDE73F2C0F410200DCB86E /* DoorLockStateView.swift */; };
+		62FDE7422C0F44D700DCB86E /* PhoneToCarLockUnlockActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDE7412C0F44D700DCB86E /* PhoneToCarLockUnlockActionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,8 +82,13 @@
 		6219E3B02BF5FD7700B7001A /* RemoteActionApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteActionApiClient.swift; sourceTree = "<group>"; };
 		6219E3B22BF6002500B7001A /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		62656F082BF94CBE009EB228 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		62994D652C0F488B008D8F78 /* PhoneToCarUpdateSoftwareActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarUpdateSoftwareActionView.swift; sourceTree = "<group>"; };
 		62BCDD7D2C0F28AB00DC5715 /* RemoteActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteActionView.swift; sourceTree = "<group>"; };
 		62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarActionView.swift; sourceTree = "<group>"; };
+		62FDE73A2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarConnectedActionView.swift; sourceTree = "<group>"; };
+		62FDE73C2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarNotConnectedActionView.swift; sourceTree = "<group>"; };
+		62FDE73F2C0F410200DCB86E /* DoorLockStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorLockStateView.swift; sourceTree = "<group>"; };
+		62FDE7412C0F44D700DCB86E /* PhoneToCarLockUnlockActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarLockUnlockActionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,7 +256,7 @@
 		62BCDD7C2C0F284000DC5715 /* CarConnectionAction */ = {
 			isa = PBXGroup;
 			children = (
-				62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */,
+				62FDE7392C0F3CDB00DCB86E /* Views */,
 			);
 			path = CarConnectionAction;
 			sourceTree = "<group>";
@@ -254,6 +264,7 @@
 		62BCDD812C0F2F3000DC5715 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				62FDE73E2C0F40C400DCB86E /* Views */,
 				6219E3A72BF5F9E000B7001A /* Models */,
 				6219E37C2BF5F22D00B7001A /* OpenTelemetry */,
 				6219E3AC2BF5FD0900B7001A /* DependencyInjection */,
@@ -277,6 +288,26 @@
 				6219E3AA2BF5FC3A00B7001A /* ChangeDoorStatusRemoteAction.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		62FDE7392C0F3CDB00DCB86E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */,
+				62FDE73A2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift */,
+				62FDE73C2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift */,
+				62FDE7412C0F44D700DCB86E /* PhoneToCarLockUnlockActionView.swift */,
+				62994D652C0F488B008D8F78 /* PhoneToCarUpdateSoftwareActionView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		62FDE73E2C0F40C400DCB86E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				62FDE73F2C0F410200DCB86E /* DoorLockStateView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -443,6 +474,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62FDE7422C0F44D700DCB86E /* PhoneToCarLockUnlockActionView.swift in Sources */,
 				6219E3552BF5F0F700B7001A /* ContentView.swift in Sources */,
 				6219E39D2BF5F41B00B7001A /* OTelConfig.swift in Sources */,
 				6219E3A12BF5F5FC00B7001A /* OTelAuthProvider.swift in Sources */,
@@ -450,14 +482,18 @@
 				6219E3A32BF5F66300B7001A /* OTelLogs.swift in Sources */,
 				6219E39F2BF5F53F00B7001A /* OTelResourceProvider.swift in Sources */,
 				6219E3AE2BF5FD1700B7001A /* InjectedValues.swift in Sources */,
+				62FDE7402C0F410200DCB86E /* DoorLockStateView.swift in Sources */,
 				62BCDD802C0F2E8C00DC5715 /* PhoneToCarActionView.swift in Sources */,
 				6219E3532BF5F0F700B7001A /* iOS_MobileO11yDemoApp.swift in Sources */,
+				62FDE73D2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift in Sources */,
+				62FDE73B2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift in Sources */,
 				6219E3A92BF5F9F900B7001A /* CarDoorStatus.swift in Sources */,
 				6219E3B12BF5FD7700B7001A /* RemoteActionApiClient.swift in Sources */,
 				6219E37E2BF5F27E00B7001A /* OTelTraces.swift in Sources */,
 				62656F092BF94CBE009EB228 /* Logger.swift in Sources */,
 				6219E3B32BF6002500B7001A /* ApiError.swift in Sources */,
 				62BCDD7E2C0F28AB00DC5715 /* RemoteActionView.swift in Sources */,
+				62994D662C0F488B008D8F78 /* PhoneToCarUpdateSoftwareActionView.swift in Sources */,
 				6219E3A62BF5F9A600B7001A /* RemoteActionService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,7 +12,7 @@ struct ContentView: View {
         TabView {
             Group {
                 PhoneToCarActionView()
-                    .tabItem { Label("Phone2Car Actions", systemImage: "car.front.waves.down").padding() }
+                    .tabItem { Label("Phone To Car Actions", systemImage: "car.front.waves.down").padding() }
                 
                 RemoteActionView()
                     .tabItem { Label("Remote Actions", systemImage: "network").padding() }
