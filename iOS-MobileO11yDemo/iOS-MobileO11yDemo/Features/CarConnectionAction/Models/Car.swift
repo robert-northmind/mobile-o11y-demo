@@ -9,10 +9,14 @@ import Foundation
 
 struct Car {
     let info: CarInfo
-    var carDoorStatus: CarDoorStatus
-    
-    init() {
-        self.info = CarInfoFactory().getRandomCarInfo()
-        self.carDoorStatus = CarDoorStatus(status: "locked")
+    let carDoorStatus: CarDoorStatus
+}
+
+class CarFactory {
+    func getRandomCar() -> Car {
+        return Car(
+            info: CarInfoFactory().getRandomCarInfo(),
+            carDoorStatus: CarDoorStatus(status: "locked")
+        )
     }
 }

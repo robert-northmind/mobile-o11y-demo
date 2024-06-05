@@ -9,21 +9,27 @@ import Foundation
 
 protocol CarFakeCommunicationServiceProtocol {
     var connectedCarPublisher: Published<Car?>.Publisher { get }
+    var updateProgressPublisher: Published<Double>.Publisher { get }
 
     func connectToCar() async
     func disconnectFromCar() async
     
     func lockDoors() async throws
     func unlockDoors() async throws
+    
+    func updateSoftware(_ nextVersion: CarSoftwareVersion) async throws
 }
 
 class CarFakeCommunicationService: CarFakeCommunicationServiceProtocol {
     @Published var connectedCar: Car?
     var connectedCarPublisher: Published<Car?>.Publisher { $connectedCar }
     
+    @Published var updateProgress: Double = 0
+    var updateProgressPublisher: Published<Double>.Publisher { $updateProgress }
+    
     func connectToCar() async {
         await makeFakeConnectionDelay(scale: .longSeconds)
-        connectedCar = Car()
+        connectedCar = CarFactory().getRandomCar()
     }
     
     func disconnectFromCar() async {
@@ -36,9 +42,12 @@ class CarFakeCommunicationService: CarFakeCommunicationServiceProtocol {
         
         try throwFakeError10percentOfTimes()
 
-        var updatedCar = connectedCar
-        updatedCar?.carDoorStatus = CarDoorStatus(status: "locked")
-        connectedCar = updatedCar
+        if let connectedCar = connectedCar {
+            self.connectedCar = Car(
+                info: connectedCar.info,
+                carDoorStatus: CarDoorStatus(status: "locked")
+            )
+        }
     }
     
     func unlockDoors() async throws {
@@ -46,9 +55,36 @@ class CarFakeCommunicationService: CarFakeCommunicationServiceProtocol {
         
         try throwFakeError10percentOfTimes()
 
-        var updatedCar = connectedCar
-        updatedCar?.carDoorStatus = CarDoorStatus(status: "unlocked")
-        connectedCar = updatedCar
+        if let connectedCar = connectedCar {
+            self.connectedCar = Car(
+                info: connectedCar.info,
+                carDoorStatus: CarDoorStatus(status: "unlocked")
+            )
+        }
+    }
+    
+    func updateSoftware(_ nextVersion: CarSoftwareVersion) async throws {
+        updateProgress = 0
+        while updateProgress < 100 {
+            await makeFakeConnectionDelay(scale: .longSeconds)
+            updateProgress = min(updateProgress+10, 100)
+        }
+        
+        await makeFakeConnectionDelay(scale: .longSeconds)
+
+        if let connectedCar = connectedCar {
+            let updateCarInfo = CarInfo(
+                vin: connectedCar.info.vin,
+                model: connectedCar.info.model,
+                color: connectedCar.info.color,
+                productionDate: connectedCar.info.productionDate,
+                softwareVersion: nextVersion
+            )
+            self.connectedCar = Car(
+                info: updateCarInfo,
+                carDoorStatus: connectedCar.carDoorStatus
+            )
+        }
     }
 
     private func makeFakeConnectionDelay(scale: FakeDelayScale) async {
@@ -73,14 +109,6 @@ enum FakeDelayScale {
         case .longSeconds:
             return UInt64.random(in: 5_000_000...1_500_000_000)
         }
-    }
-}
-
-struct CarCommunicationCommand {
-    let percentCompleted: Int
-    
-    init(percentCompleted: Int = 0) {
-        self.percentCompleted = min(max(percentCompleted, 0), 100)
     }
 }
 

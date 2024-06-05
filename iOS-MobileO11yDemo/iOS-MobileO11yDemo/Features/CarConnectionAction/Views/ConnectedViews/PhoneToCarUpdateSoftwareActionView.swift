@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct PhoneToCarUpdateSoftwareActionView: View {
+    @ObservedObject private var viewModel = PhoneToCarUpdateSoftwareActionViewModel()
+    
     var body: some View {
         VStack {
             Text("A new software version is available for your car. You can update your car from your phone.")
                 .multilineTextAlignment(.center)
-                .padding()
+                .padding(5)
+            
+            Text("Current version: \(viewModel.currentSoftwareVersion)")
+            Text("New version: \(viewModel.nextSoftwareVersion)")
             
             HStack {
                 Image(systemName: "car.side")
@@ -24,9 +29,16 @@ struct PhoneToCarUpdateSoftwareActionView: View {
                 Image(systemName: "iphone")
                     .font(.system(size: 30))
                     .foregroundStyle(.tint)
-            }.padding()
+            }.padding(10)
             
             Button("Update car software") {
+                viewModel.updateSoftware()
+            }.disabled(viewModel.isUpdating)
+            
+            if viewModel.isUpdating {
+                ProgressView(value: viewModel.progress, total: 100)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 50)
             }
         }
     }

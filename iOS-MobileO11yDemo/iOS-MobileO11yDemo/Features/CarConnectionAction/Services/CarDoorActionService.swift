@@ -24,7 +24,6 @@ class CarDoorActionService: CarDoorActionServiceProtocol {
     var isLockedPublisher: Published<Bool?>.Publisher { $isLocked }
     
     private let fakeCommunicationService: CarFakeCommunicationServiceProtocol
-    
     private var cancellables = Set<AnyCancellable>()
 
     init(
