@@ -7,26 +7,72 @@
 
 import Foundation
 
-class CarFakeCommunicationService {
-    func makeFakeConnectionDelay() async {
-        let randomDelay = UInt64.random(in: 1_000_000...5_000_000)
-        try? await Task.sleep(nanoseconds: randomDelay)
+protocol CarFakeCommunicationServiceProtocol {
+    var connectedCarPublisher: Published<Car?>.Publisher { get }
+
+    func connectToCar() async
+    func disconnectFromCar() async
+    
+    func lockDoors() async throws
+    func unlockDoors() async throws
+}
+
+class CarFakeCommunicationService: CarFakeCommunicationServiceProtocol {
+    @Published var connectedCar: Car?
+    var connectedCarPublisher: Published<Car?>.Publisher { $connectedCar }
+    
+    func connectToCar() async {
+        await makeFakeConnectionDelay(scale: .longSeconds)
+        connectedCar = Car()
+    }
+    
+    func disconnectFromCar() async {
+        await makeFakeConnectionDelay(scale: .longSeconds)
+        connectedCar = nil
     }
 
-    func makeFakeCommunication(
-        command: CarCommunicationCommand
-    ) async throws -> CarCommunicationCommand {
-        if shouldCreateFakeError() {
+    func lockDoors() async throws {
+        await makeFakeConnectionDelay(scale: .shortSeconds)
+        
+        try throwFakeError10percentOfTimes()
+
+        var updatedCar = connectedCar
+        updatedCar?.carDoorStatus = CarDoorStatus(status: "locked")
+        connectedCar = updatedCar
+    }
+    
+    func unlockDoors() async throws {
+        await makeFakeConnectionDelay(scale: .shortSeconds)
+        
+        try throwFakeError10percentOfTimes()
+
+        var updatedCar = connectedCar
+        updatedCar?.carDoorStatus = CarDoorStatus(status: "unlocked")
+        connectedCar = updatedCar
+    }
+
+    private func makeFakeConnectionDelay(scale: FakeDelayScale) async {
+        try? await Task.sleep(nanoseconds: scale.getDelayInNanoseconds())
+    }
+    
+    private func throwFakeError10percentOfTimes() throws {
+        if Int.random(in: 1...10) == 1 {
             throw CarCommunicationError.allCases.randomElement() ?? .mysticMagicError
         }
-
-        await makeFakeConnectionDelay()
-        
-        return CarCommunicationCommand(percentCompleted: command.percentCompleted+10)
     }
+}
 
-    private func shouldCreateFakeError() -> Bool {
-        return Int.random(in: 1...10) == 1 // 10% chance
+enum FakeDelayScale {
+    case shortSeconds
+    case longSeconds
+    
+    func getDelayInNanoseconds() -> UInt64 {
+        switch self {
+        case .shortSeconds:
+            return UInt64.random(in: 5_000_000...1_000_000_000)
+        case .longSeconds:
+            return UInt64.random(in: 5_000_000...1_500_000_000)
+        }
     }
 }
 
@@ -35,5 +81,16 @@ struct CarCommunicationCommand {
     
     init(percentCompleted: Int = 0) {
         self.percentCompleted = min(max(percentCompleted, 0), 100)
+    }
+}
+
+private struct CarFakeCommunicationServiceKey: InjectionKey {
+    static var currentValue: CarFakeCommunicationServiceProtocol = CarFakeCommunicationService()
+}
+
+extension InjectedValues {
+    var carFakeCommunicationService: CarFakeCommunicationServiceProtocol {
+        get { Self[CarFakeCommunicationServiceKey.self] }
+        set { Self[CarFakeCommunicationServiceKey.self] = newValue }
     }
 }

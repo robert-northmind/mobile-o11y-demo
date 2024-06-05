@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Car {
+struct Car {
     let info: CarInfo
     var carDoorStatus: CarDoorStatus
     

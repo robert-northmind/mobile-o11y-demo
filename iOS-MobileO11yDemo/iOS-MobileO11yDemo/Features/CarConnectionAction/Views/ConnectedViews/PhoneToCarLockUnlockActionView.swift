@@ -21,6 +21,13 @@ struct PhoneToCarLockUnlockActionView: View {
                 viewModel.lockAction()
             }
         )
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(
+                title: Text("Something went wrong"),
+                message: Text(viewModel.alertMessage),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
 }
 

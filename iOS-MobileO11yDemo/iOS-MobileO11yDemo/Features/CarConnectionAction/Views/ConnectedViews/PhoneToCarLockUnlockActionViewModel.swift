@@ -8,9 +8,13 @@
 import Foundation
 import Combine
 
+@MainActor
 class PhoneToCarLockUnlockActionViewModel: ObservableObject {
     @Published var isLoading: Bool = false
-    @Published var isLocked: Bool = true
+    @Published var isLocked: Bool?
+    
+    @Published var showAlert: Bool = false
+    @Published var alertMessage: String = ""
     
     private let doorActionService: CarDoorActionServiceProtocol
     private var cancellables = Set<AnyCancellable>()
@@ -35,13 +39,23 @@ class PhoneToCarLockUnlockActionViewModel: ObservableObject {
     
     func unlockAction() {
         Task {
-            await doorActionService.unlockDoors()
+            do {
+                try await doorActionService.unlockDoors()
+            } catch {
+                alertMessage = "\(error)"
+                showAlert = true
+            }
         }
     }
     
     func lockAction() {
         Task {
-            await doorActionService.lockDoors()
+            do {
+                try await doorActionService.lockDoors()
+            } catch {
+                alertMessage = "\(error)"
+                showAlert = true
+            }
         }
     }
 }

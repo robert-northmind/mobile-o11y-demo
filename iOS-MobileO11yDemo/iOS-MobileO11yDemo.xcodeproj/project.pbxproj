@@ -252,6 +252,15 @@
 			path = ApiClient;
 			sourceTree = "<group>";
 		};
+		62524F252C0FB3C100AAAB9B /* NotConnectedViews */ = {
+			isa = PBXGroup;
+			children = (
+				62FDE73C2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift */,
+				62994D7F2C0FA22B008D8F78 /* PhoneToCarNotConnectedActionViewModel.swift */,
+			);
+			path = NotConnectedViews;
+			sourceTree = "<group>";
+		};
 		62656F072BF94C9B009EB228 /* Logger */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,11 +365,10 @@
 		62FDE7392C0F3CDB00DCB86E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				62994D832C0FAA9F008D8F78 /* ConnectedViews */,
 				62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */,
 				62994D7B2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift */,
-				62FDE73C2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift */,
-				62994D7F2C0FA22B008D8F78 /* PhoneToCarNotConnectedActionViewModel.swift */,
+				62524F252C0FB3C100AAAB9B /* NotConnectedViews */,
+				62994D832C0FAA9F008D8F78 /* ConnectedViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";

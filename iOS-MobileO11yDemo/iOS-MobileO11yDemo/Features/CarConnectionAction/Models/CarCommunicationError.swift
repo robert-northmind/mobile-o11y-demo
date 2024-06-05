@@ -7,6 +7,17 @@
 
 import Foundation
 
-enum CarCommunicationError: Error, CaseIterable {
+enum CarCommunicationError: Error, CaseIterable, CustomStringConvertible {
     case timeout, randomEcuError, mysticMagicError
+
+    var description: String {
+            switch self {
+            case .timeout:
+                return "Communication Timeout"
+            case .randomEcuError:
+                return "Random ECU Error"
+            case .mysticMagicError:
+                return "Mystic Magic Error"
+            }
+        }
 }

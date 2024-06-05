@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import Combine
 
 protocol CarConnectionServiceProtocol {
     var isLoadingPublisher: Published<Bool>.Publisher { get }
     var isConnectedPublisher: Published<Bool>.Publisher { get }
     var connectedCarPublisher: Published<Car?>.Publisher { get }
 
-    func connectToCar() async -> Car
+    func connectToCar() async
     func disconnectFromCar() async
 }
 
@@ -23,37 +24,36 @@ class CarConnectionService: CarConnectionServiceProtocol {
     @Published var isConnected: Bool = false
     var isConnectedPublisher: Published<Bool>.Publisher { $isConnected }
     
-    @Published var connectedCar: Car?
-    var connectedCarPublisher: Published<Car?>.Publisher { $connectedCar }
+    var connectedCarPublisher: Published<Car?>.Publisher
     
-    private let fakeCommunicationService: CarFakeCommunicationService
+    private let fakeCommunicationService: CarFakeCommunicationServiceProtocol
+    private var cancellables = Set<AnyCancellable>()
     
-    init() {
-        self.fakeCommunicationService = CarFakeCommunicationService()
-    }
-    
-    func connectToCar() async -> Car {
-        await updateCarConnection(shouldConnect: true)
-        let car = Car()
-        connectedCar = car
-        return car
-    }
-    
-    func disconnectFromCar() async {
-        await updateCarConnection(shouldConnect: false)
-        connectedCar = nil
+    init(
+        fakeCommunicationService: CarFakeCommunicationServiceProtocol = InjectedValues[\.carFakeCommunicationService]
+    ) {
+        self.fakeCommunicationService = fakeCommunicationService
+        self.connectedCarPublisher = fakeCommunicationService.connectedCarPublisher
+
+        fakeCommunicationService
+            .connectedCarPublisher
+            .sink { [weak self] connectedCar in
+                guard let self = self else { return }
+                self.isConnected = connectedCar != nil
+            }
+            .store(in: &cancellables)
     }
 
-    private func updateCarConnection(shouldConnect: Bool) async {
+    func connectToCar() async {
         isLoading = true
-        await addFakeConnectionDelay()
-        isConnected = shouldConnect
+        await fakeCommunicationService.connectToCar()
         isLoading = false
     }
     
-    private func addFakeConnectionDelay() async {
-        let randomDelay = UInt64.random(in: 1_000_000_000...2_000_000_000)
-        try? await Task.sleep(nanoseconds: randomDelay)
+    func disconnectFromCar() async {
+        isLoading = true
+        await fakeCommunicationService.disconnectFromCar()
+        isLoading = false
     }
 }
 
