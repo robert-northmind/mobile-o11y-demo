@@ -72,6 +72,10 @@ make stop-backends
 
 Now you can build and run the iOS app. It is probably easiest to run it on the iOS Simulator (if you want to run it on a real device, then you will need to set up provisioning and signing. This is outside the scope of this example). And you will need to make sure that the device has access to your localhost.
 
+<div align="center">
+    <img src="Docs/Resources/ios-app-demo.gif" alt="App Demo GIF">
+</div>
+
 ### 5. Collect some data
 
 Click around a bit. The app has 2 tabs, one for direct interaction from phone to car (this is all faked. Since there is no real car to interact with), and one tab for controlling the car via the local backends.
