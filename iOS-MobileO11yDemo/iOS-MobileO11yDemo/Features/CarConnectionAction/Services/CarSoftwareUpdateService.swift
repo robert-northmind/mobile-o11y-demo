@@ -67,6 +67,7 @@ class CarSoftwareUpdateService: CarSoftwareUpdateServiceProtocol {
     func updateSoftware() async throws {
         guard let nextVersion = nextVersion else { return }
         
+        logger.log("Starting to update software", severity: .debug)
         let span = tracer.startUpdateSoftwareSpan()
         updateSoftwareSpan = span
         
@@ -81,6 +82,7 @@ class CarSoftwareUpdateService: CarSoftwareUpdateServiceProtocol {
                 span.addEvent(name: "Updated! New version is: \(nextVersion)")
             }
             tracer.endUpdateSoftwareSpan(status: .ok)
+            logger.log("Completed updating software", severity: .debug)
         } catch {
             let errorMessage = "Failed to update software with error: \(error)"
             logger.log(errorMessage, severity: .error)

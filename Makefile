@@ -1,4 +1,4 @@
-.PHONY: start-omc start-car-imitator start-backends
+.PHONY: start-omc start-car-imitator start-backends stop-backends
 
 start-omc:
 	@echo "Starting OMC (observable-motor-command) Backend..."
@@ -10,6 +10,10 @@ start-car-imitator:
 
 start-backends: start-omc start-car-imitator
 	@echo "Both backend apps are started."
+
+stop-backends:
+	@echo "Stopping both backends..."
+	Scripts/stop-node-servers.sh
 
 update-otel-config:
 	@echo "Updating iOS OpenTelemetry configuration..."
