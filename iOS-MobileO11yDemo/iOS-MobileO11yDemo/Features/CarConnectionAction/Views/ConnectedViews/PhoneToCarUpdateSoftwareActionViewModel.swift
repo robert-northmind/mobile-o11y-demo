@@ -16,6 +16,9 @@ class PhoneToCarUpdateSoftwareActionViewModel: ObservableObject {
     @Published var progress: Double = 0
     @Published var isUpdating: Bool = false
     
+    @Published var showAlert: Bool = false
+    @Published var alertMessage: String = ""
+    
     private let softwareUpdateService: CarSoftwareUpdateServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
@@ -56,7 +59,12 @@ class PhoneToCarUpdateSoftwareActionViewModel: ObservableObject {
     func updateSoftware() {
         Task {
             isUpdating = true
-            await softwareUpdateService.updateSoftware()
+            do {
+                try await softwareUpdateService.updateSoftware()
+            } catch {
+                alertMessage = "\(error)"
+                showAlert = true
+            }
             isUpdating = false
         }
     }

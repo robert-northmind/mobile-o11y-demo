@@ -28,7 +28,7 @@ class RemoteActionService: RemoteActionServiceProtocol {
     }
     
     func getDoorStatus() async -> CarDoorStatus? {
-        let getStatusSpan = tracer.spanBuilder(spanName: "GetDoorStatus")
+        let getStatusSpan = tracer.spanBuilder(spanName: "Remote-GetDoorStatus")
             .setSpanKind(spanKind: .server)
             .setActive(true)
             .startSpan()
@@ -58,7 +58,7 @@ class RemoteActionService: RemoteActionServiceProtocol {
     private func changeDoorStatus(action: ChangeDoorStatusRemoteAction) async {
         logger.log("Sending request to OMC (observable-motor-command) to set door status to: \(action.status)", severity: .debug)
         
-        let setStatusSpan = tracer.spanBuilder(spanName: "SetDoorStatus")
+        let setStatusSpan = tracer.spanBuilder(spanName: "Remote-SetDoorStatus")
             .setSpanKind(spanKind: .server)
             .setActive(true)
             .startSpan()
@@ -91,7 +91,7 @@ class RemoteActionService: RemoteActionServiceProtocol {
             return false
         }
    
-        let checkStatusSpan = tracer.spanBuilder(spanName: "CheckDoorStatusPoller")
+        let checkStatusSpan = tracer.spanBuilder(spanName: "Remote-CheckDoorStatusPoller")
             .setParent(parentSpan)
             .setSpanKind(spanKind: .server)
             .startSpan()

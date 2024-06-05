@@ -41,6 +41,13 @@ struct PhoneToCarUpdateSoftwareActionView: View {
                     .padding(.horizontal, 50)
             }
         }
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(
+                title: Text("Something went wrong"),
+                message: Text(viewModel.alertMessage),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
 }
 

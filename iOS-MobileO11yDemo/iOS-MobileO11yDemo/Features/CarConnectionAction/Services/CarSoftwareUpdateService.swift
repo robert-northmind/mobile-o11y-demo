@@ -7,13 +7,14 @@
 
 import Foundation
 import Combine
+import OpenTelemetryApi
 
 protocol CarSoftwareUpdateServiceProtocol {
     var currentVersionPublisher: Published<CarSoftwareVersion?>.Publisher { get }
     var nextVersionPublisher: Published<CarSoftwareVersion?>.Publisher { get }
     var updateProgressPublisher: Published<Double>.Publisher { get }
     
-    func updateSoftware() async
+    func updateSoftware() async throws
 }
 
 class CarSoftwareUpdateService: CarSoftwareUpdateServiceProtocol {
@@ -28,10 +29,15 @@ class CarSoftwareUpdateService: CarSoftwareUpdateServiceProtocol {
     private let fakeCommunicationService: CarFakeCommunicationServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
+    private let tracer: CarConnectionTracerProtocol
+    private var updateSoftwareSpan: Span?
+    
     init(
-        fakeCommunicationService: CarFakeCommunicationServiceProtocol = InjectedValues[\.carFakeCommunicationService]
+        fakeCommunicationService: CarFakeCommunicationServiceProtocol = InjectedValues[\.carFakeCommunicationService],
+        tracer: CarConnectionTracerProtocol = InjectedValues[\.carConnectionTracer]
     ) {
         self.fakeCommunicationService = fakeCommunicationService
+        self.tracer = tracer
         self.updateProgressPublisher = fakeCommunicationService.updateProgressPublisher
         
         fakeCommunicationService
@@ -42,17 +48,46 @@ class CarSoftwareUpdateService: CarSoftwareUpdateServiceProtocol {
                 self.currentVersion = currentVersion
                 
                 if let currentVersion = currentVersion {
-                    self.nextVersion = CarSoftwareVersionFactory().getRandomNextVersion(currentVersion: currentVersion)
+                    if self.nextVersion == nil {
+                        self.nextVersion = CarSoftwareVersionFactory().getRandomNextVersion(currentVersion: currentVersion)
+                    }
                 } else {
                     self.nextVersion = nil
                 }
             }
             .store(in: &cancellables)
+
+        fakeCommunicationService.updateProgressPublisher
+            .sink { [weak self] updateProgress in
+                self?.updateSoftwareSpan?.addEvent(name: "Progress: \(updateProgress)%")
+            }
+            .store(in: &cancellables)
     }
 
-    func updateSoftware() async {
+    func updateSoftware() async throws {
         guard let nextVersion = nextVersion else { return }
-        try? await fakeCommunicationService.updateSoftware(nextVersion)
+        
+        let span = tracer.startUpdateSoftwareSpan()
+        updateSoftwareSpan = span
+        
+        do {
+            if let currentVersion = currentVersion {
+                span.addEvent(name: "Starting update! Current version is: \(currentVersion), will update to: \(nextVersion)")
+            }
+
+            try await fakeCommunicationService.updateSoftware(nextVersion)
+            if let currentVersion = currentVersion {
+                self.nextVersion = CarSoftwareVersionFactory().getRandomNextVersion(currentVersion: currentVersion)
+                span.addEvent(name: "Updated! New version is: \(nextVersion)")
+            }
+            tracer.endUpdateSoftwareSpan(status: .ok)
+        } catch {
+            let errorMessage = "Failed to update software with error: \(error)"
+            logger.log(errorMessage, severity: .error)
+            span.addEvent(name: errorMessage)
+            tracer.endUpdateSoftwareSpan(status: .error(description: errorMessage))
+            throw error
+        }
     }
 }
 

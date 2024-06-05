@@ -40,7 +40,7 @@ class CarFakeCommunicationService: CarFakeCommunicationServiceProtocol {
     func lockDoors() async throws {
         await makeFakeConnectionDelay(scale: .shortSeconds)
         
-        try throwFakeError10percentOfTimes()
+        try throwFakeError(probabilityInPercent: 10)
 
         if let connectedCar = connectedCar {
             self.connectedCar = Car(
@@ -53,7 +53,7 @@ class CarFakeCommunicationService: CarFakeCommunicationServiceProtocol {
     func unlockDoors() async throws {
         await makeFakeConnectionDelay(scale: .shortSeconds)
         
-        try throwFakeError10percentOfTimes()
+        try throwFakeError(probabilityInPercent: 10)
 
         if let connectedCar = connectedCar {
             self.connectedCar = Car(
@@ -67,9 +67,10 @@ class CarFakeCommunicationService: CarFakeCommunicationServiceProtocol {
         updateProgress = 0
         while updateProgress < 100 {
             await makeFakeConnectionDelay(scale: .longSeconds)
+            try throwFakeError(probabilityInPercent: 6)
             updateProgress = min(updateProgress+10, 100)
         }
-        
+
         await makeFakeConnectionDelay(scale: .longSeconds)
 
         if let connectedCar = connectedCar {
@@ -91,8 +92,10 @@ class CarFakeCommunicationService: CarFakeCommunicationServiceProtocol {
         try? await Task.sleep(nanoseconds: scale.getDelayInNanoseconds())
     }
     
-    private func throwFakeError10percentOfTimes() throws {
-        if Int.random(in: 1...10) == 1 {
+    private func throwFakeError(probabilityInPercent: Int) throws {
+        let safeProbability = max(min(probabilityInPercent, 100), 0)
+        let randomValue = Int.random(in: 0..<100)
+        if randomValue < safeProbability {
             throw CarCommunicationError.allCases.randomElement() ?? .mysticMagicError
         }
     }
@@ -105,9 +108,9 @@ enum FakeDelayScale {
     func getDelayInNanoseconds() -> UInt64 {
         switch self {
         case .shortSeconds:
-            return UInt64.random(in: 5_000_000...1_000_000_000)
+            return UInt64.random(in: 8_000_000...1_200_000_000)
         case .longSeconds:
-            return UInt64.random(in: 5_000_000...1_500_000_000)
+            return UInt64.random(in: 8_000_000...1_900_000_000)
         }
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import OpenTelemetryApi
 
 protocol CarConnectionServiceProtocol {
     var isLoadingPublisher: Published<Bool>.Publisher { get }
@@ -28,18 +29,26 @@ class CarConnectionService: CarConnectionServiceProtocol {
     
     private let fakeCommunicationService: CarFakeCommunicationServiceProtocol
     private var cancellables = Set<AnyCancellable>()
+    private let tracer: CarConnectionTracerProtocol
     
     init(
-        fakeCommunicationService: CarFakeCommunicationServiceProtocol = InjectedValues[\.carFakeCommunicationService]
+        fakeCommunicationService: CarFakeCommunicationServiceProtocol = InjectedValues[\.carFakeCommunicationService],
+        tracer: CarConnectionTracerProtocol = InjectedValues[\.carConnectionTracer]
     ) {
         self.fakeCommunicationService = fakeCommunicationService
+        self.tracer = tracer
         self.connectedCarPublisher = fakeCommunicationService.connectedCarPublisher
 
         fakeCommunicationService
             .connectedCarPublisher
             .sink { [weak self] connectedCar in
                 guard let self = self else { return }
-                self.isConnected = connectedCar != nil
+                if let connectedCar = connectedCar {
+                    self.isConnected = true
+                    self.tracer.updateCarAttributes(car: connectedCar)
+                } else {
+                    self.isConnected = false
+                }
             }
             .store(in: &cancellables)
     }
@@ -47,12 +56,14 @@ class CarConnectionService: CarConnectionServiceProtocol {
     func connectToCar() async {
         isLoading = true
         await fakeCommunicationService.connectToCar()
+        tracer.connectedToCar()
         isLoading = false
     }
     
     func disconnectFromCar() async {
         isLoading = true
         await fakeCommunicationService.disconnectFromCar()
+        tracer.disconnectedFromCar()
         isLoading = false
     }
 }

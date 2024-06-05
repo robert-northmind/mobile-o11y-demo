@@ -25,11 +25,15 @@ class CarDoorActionService: CarDoorActionServiceProtocol {
     
     private let fakeCommunicationService: CarFakeCommunicationServiceProtocol
     private var cancellables = Set<AnyCancellable>()
+    private let tracer: CarConnectionTracerProtocol
 
     init(
-        fakeCommunicationService: CarFakeCommunicationServiceProtocol = InjectedValues[\.carFakeCommunicationService]
+        fakeCommunicationService: CarFakeCommunicationServiceProtocol = InjectedValues[\.carFakeCommunicationService],
+        tracer: CarConnectionTracerProtocol = InjectedValues[\.carConnectionTracer]
     ) {
         self.fakeCommunicationService = fakeCommunicationService
+        self.tracer = tracer
+
         fakeCommunicationService
             .connectedCarPublisher
             .sink { [weak self] connectedCar in
@@ -41,22 +45,34 @@ class CarDoorActionService: CarDoorActionServiceProtocol {
 
     func lockDoors() async throws {
         isLoading = true
+        let span = tracer.startLockDoorsSpan()
+
         defer { isLoading = false }
         do {
             _ = try await fakeCommunicationService.lockDoors()
+            tracer.endLockDoorSpan(status: .ok)
         } catch {
-            logger.log("LockDoors failed with error: \(error)", severity: .error)
+            let errorMessage = "LockDoors failed with error: \(error)"
+            logger.log(errorMessage, severity: .error)
+            span.addEvent(name: errorMessage)
+            tracer.endLockDoorSpan(status: .error(description: errorMessage))
             throw error
         }
     }
 
     func unlockDoors() async throws {
         isLoading = true
+        let span = tracer.startUnlockDoorsSpan()
+        
         defer { isLoading = false }
         do {
             _ = try await fakeCommunicationService.unlockDoors()
+            tracer.endUnlockDoorSpan(status: .ok)
         } catch {
-            logger.log("UnlockDoors failed with error: \(error)", severity: .error)
+            let errorMessage = "UnlockDoors failed with error: \(error)"
+            logger.log(errorMessage, severity: .error)
+            span.addEvent(name: errorMessage)
+            tracer.endUnlockDoorSpan(status: .error(description: errorMessage))
             throw error
         }
     }
