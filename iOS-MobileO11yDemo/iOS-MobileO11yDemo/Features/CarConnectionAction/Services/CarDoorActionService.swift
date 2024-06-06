@@ -23,18 +23,18 @@ class CarDoorActionService: CarDoorActionServiceProtocol {
     @Published var isLocked: Bool?
     var isLockedPublisher: Published<Bool?>.Publisher { $isLocked }
     
-    private let fakeCommunicationService: CarFakeCommunicationServiceProtocol
+    private let carCommunication: CarCommunicationProtocol
     private var cancellables = Set<AnyCancellable>()
     private let tracer: CarConnectionTracerProtocol
 
     init(
-        fakeCommunicationService: CarFakeCommunicationServiceProtocol = InjectedValues[\.carFakeCommunicationService],
+        carCommunication: CarCommunicationProtocol = InjectedValues[\.carCommunication],
         tracer: CarConnectionTracerProtocol = InjectedValues[\.carConnectionTracer]
     ) {
-        self.fakeCommunicationService = fakeCommunicationService
+        self.carCommunication = carCommunication
         self.tracer = tracer
 
-        fakeCommunicationService
+        carCommunication
             .connectedCarPublisher
             .sink { [weak self] connectedCar in
                 guard let self = self else { return }
@@ -49,7 +49,7 @@ class CarDoorActionService: CarDoorActionServiceProtocol {
 
         defer { isLoading = false }
         do {
-            _ = try await fakeCommunicationService.lockDoors()
+            _ = try await carCommunication.lockDoors()
             tracer.endLockDoorSpan(status: .ok)
         } catch {
             let errorMessage = "LockDoors failed with error: \(error)"
@@ -66,7 +66,7 @@ class CarDoorActionService: CarDoorActionServiceProtocol {
         
         defer { isLoading = false }
         do {
-            _ = try await fakeCommunicationService.unlockDoors()
+            _ = try await carCommunication.unlockDoors()
             tracer.endUnlockDoorSpan(status: .ok)
         } catch {
             let errorMessage = "UnlockDoors failed with error: \(error)"

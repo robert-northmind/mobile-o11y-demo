@@ -26,21 +26,21 @@ class CarSoftwareUpdateService: CarSoftwareUpdateServiceProtocol {
     
     var updateProgressPublisher: Published<Double>.Publisher
     
-    private let fakeCommunicationService: CarFakeCommunicationServiceProtocol
+    private let carCommunication: CarCommunicationProtocol
     private var cancellables = Set<AnyCancellable>()
     
     private let tracer: CarConnectionTracerProtocol
     private var updateSoftwareSpan: Span?
     
     init(
-        fakeCommunicationService: CarFakeCommunicationServiceProtocol = InjectedValues[\.carFakeCommunicationService],
+        carCommunication: CarCommunicationProtocol = InjectedValues[\.carCommunication],
         tracer: CarConnectionTracerProtocol = InjectedValues[\.carConnectionTracer]
     ) {
-        self.fakeCommunicationService = fakeCommunicationService
+        self.carCommunication = carCommunication
         self.tracer = tracer
-        self.updateProgressPublisher = fakeCommunicationService.updateProgressPublisher
+        self.updateProgressPublisher = carCommunication.updateProgressPublisher
         
-        fakeCommunicationService
+        carCommunication
             .connectedCarPublisher
             .sink { [weak self] connectedCar in
                 guard let self = self else { return }
@@ -57,7 +57,7 @@ class CarSoftwareUpdateService: CarSoftwareUpdateServiceProtocol {
             }
             .store(in: &cancellables)
 
-        fakeCommunicationService.updateProgressPublisher
+        carCommunication.updateProgressPublisher
             .sink { [weak self] updateProgress in
                 self?.updateSoftwareSpan?.addEvent(name: "Progress: \(updateProgress)%")
             }
@@ -76,7 +76,7 @@ class CarSoftwareUpdateService: CarSoftwareUpdateServiceProtocol {
                 span.addEvent(name: "Starting update! Current version is: \(currentVersion), will update to: \(nextVersion)")
             }
 
-            try await fakeCommunicationService.updateSoftware(nextVersion)
+            try await carCommunication.updateSoftware(nextVersion)
             if let currentVersion = currentVersion {
                 self.nextVersion = CarSoftwareVersionFactory().getRandomNextVersion(currentVersion: currentVersion)
                 span.addEvent(name: "Updated! New version is: \(nextVersion)")

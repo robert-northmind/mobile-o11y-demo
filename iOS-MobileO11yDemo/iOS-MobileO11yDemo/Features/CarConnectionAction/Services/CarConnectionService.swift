@@ -27,19 +27,19 @@ class CarConnectionService: CarConnectionServiceProtocol {
     
     var connectedCarPublisher: Published<Car?>.Publisher
     
-    private let fakeCommunicationService: CarFakeCommunicationServiceProtocol
+    private let carCommunication: CarCommunicationProtocol
     private var cancellables = Set<AnyCancellable>()
     private let tracer: CarConnectionTracerProtocol
     
     init(
-        fakeCommunicationService: CarFakeCommunicationServiceProtocol = InjectedValues[\.carFakeCommunicationService],
+        carCommunication: CarCommunicationProtocol = InjectedValues[\.carCommunication],
         tracer: CarConnectionTracerProtocol = InjectedValues[\.carConnectionTracer]
     ) {
-        self.fakeCommunicationService = fakeCommunicationService
+        self.carCommunication = carCommunication
         self.tracer = tracer
-        self.connectedCarPublisher = fakeCommunicationService.connectedCarPublisher
+        self.connectedCarPublisher = carCommunication.connectedCarPublisher
 
-        fakeCommunicationService
+        carCommunication
             .connectedCarPublisher
             .sink { [weak self] connectedCar in
                 guard let self = self else { return }
@@ -55,14 +55,14 @@ class CarConnectionService: CarConnectionServiceProtocol {
 
     func connectToCar() async {
         isLoading = true
-        await fakeCommunicationService.connectToCar()
+        await carCommunication.connectToCar()
         tracer.connectedToCar()
         isLoading = false
     }
     
     func disconnectFromCar() async {
         isLoading = true
-        await fakeCommunicationService.disconnectFromCar()
+        await carCommunication.disconnectFromCar()
         tracer.disconnectedFromCar()
         isLoading = false
     }

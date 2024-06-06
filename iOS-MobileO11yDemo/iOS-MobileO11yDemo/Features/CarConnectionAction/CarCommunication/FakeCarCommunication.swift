@@ -1,5 +1,5 @@
 //
-//  CarFakeCommunicationService.swift
+//  FakeCarCommunication.swift
 //  iOS-MobileO11yDemo
 //
 //  Created by Robert Magnusson on 04.06.24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol CarFakeCommunicationServiceProtocol {
+protocol CarCommunicationProtocol {
     var connectedCarPublisher: Published<Car?>.Publisher { get }
     var updateProgressPublisher: Published<Double>.Publisher { get }
 
@@ -20,7 +20,7 @@ protocol CarFakeCommunicationServiceProtocol {
     func updateSoftware(_ nextVersion: CarSoftwareVersion) async throws
 }
 
-class CarFakeCommunicationService: CarFakeCommunicationServiceProtocol {
+class FakeCarCommunication: CarCommunicationProtocol {
     @Published var connectedCar: Car?
     var connectedCarPublisher: Published<Car?>.Publisher { $connectedCar }
     
@@ -115,13 +115,13 @@ enum FakeDelayScale {
     }
 }
 
-private struct CarFakeCommunicationServiceKey: InjectionKey {
-    static var currentValue: CarFakeCommunicationServiceProtocol = CarFakeCommunicationService()
+private struct CarCommunicationKey: InjectionKey {
+    static var currentValue: CarCommunicationProtocol = FakeCarCommunication()
 }
 
 extension InjectedValues {
-    var carFakeCommunicationService: CarFakeCommunicationServiceProtocol {
-        get { Self[CarFakeCommunicationServiceKey.self] }
-        set { Self[CarFakeCommunicationServiceKey.self] = newValue }
+    var carCommunication: CarCommunicationProtocol {
+        get { Self[CarCommunicationKey.self] }
+        set { Self[CarCommunicationKey.self] = newValue }
     }
 }

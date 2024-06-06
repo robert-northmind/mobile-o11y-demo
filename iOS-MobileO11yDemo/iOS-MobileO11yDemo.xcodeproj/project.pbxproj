@@ -44,7 +44,7 @@
 		62994D722C0F5976008D8F78 /* CarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D712C0F5976008D8F78 /* CarModel.swift */; };
 		62994D742C0F598B008D8F78 /* CarColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D732C0F598B008D8F78 /* CarColor.swift */; };
 		62994D762C0F59AB008D8F78 /* CarSoftwareVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D752C0F59AB008D8F78 /* CarSoftwareVersion.swift */; };
-		62994D782C0F5C1A008D8F78 /* CarFakeCommunicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D772C0F5C1A008D8F78 /* CarFakeCommunicationService.swift */; };
+		62994D782C0F5C1A008D8F78 /* FakeCarCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D772C0F5C1A008D8F78 /* FakeCarCommunication.swift */; };
 		62994D7A2C0F5CFD008D8F78 /* CarCommunicationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D792C0F5CFD008D8F78 /* CarCommunicationError.swift */; };
 		62994D7C2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D7B2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift */; };
 		62994D7E2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D7D2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift */; };
@@ -109,7 +109,7 @@
 		62994D712C0F5976008D8F78 /* CarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarModel.swift; sourceTree = "<group>"; };
 		62994D732C0F598B008D8F78 /* CarColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarColor.swift; sourceTree = "<group>"; };
 		62994D752C0F59AB008D8F78 /* CarSoftwareVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarSoftwareVersion.swift; sourceTree = "<group>"; };
-		62994D772C0F5C1A008D8F78 /* CarFakeCommunicationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarFakeCommunicationService.swift; sourceTree = "<group>"; };
+		62994D772C0F5C1A008D8F78 /* FakeCarCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeCarCommunication.swift; sourceTree = "<group>"; };
 		62994D792C0F5CFD008D8F78 /* CarCommunicationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarCommunicationError.swift; sourceTree = "<group>"; };
 		62994D7B2C0F9D25008D8F78 /* PhoneToCarActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarActionViewModel.swift; sourceTree = "<group>"; };
 		62994D7D2C0FA0A3008D8F78 /* PhoneToCarConnectedActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarConnectedActionViewModel.swift; sourceTree = "<group>"; };
@@ -267,6 +267,14 @@
 			path = NotConnectedViews;
 			sourceTree = "<group>";
 		};
+		62524F2E2C118FED00AAAB9B /* CarCommunication */ = {
+			isa = PBXGroup;
+			children = (
+				62994D772C0F5C1A008D8F78 /* FakeCarCommunication.swift */,
+			);
+			path = CarCommunication;
+			sourceTree = "<group>";
+		};
 		62656F072BF94C9B009EB228 /* Logger */ = {
 			isa = PBXGroup;
 			children = (
@@ -281,7 +289,6 @@
 				62994D682C0F4EE7008D8F78 /* CarConnectionService.swift */,
 				62994D6F2C0F590F008D8F78 /* CarDoorActionService.swift */,
 				62524F282C107B0600AAAB9B /* CarSoftwareUpdateService.swift */,
-				62994D772C0F5C1A008D8F78 /* CarFakeCommunicationService.swift */,
 				62524F2A2C108E5700AAAB9B /* CarConnectionTracer.swift */,
 			);
 			path = Services;
@@ -335,6 +342,7 @@
 		62BCDD7C2C0F284000DC5715 /* CarConnectionAction */ = {
 			isa = PBXGroup;
 			children = (
+				62524F2E2C118FED00AAAB9B /* CarCommunication */,
 				62994D6A2C0F51A9008D8F78 /* Models */,
 				62994D672C0F4EC7008D8F78 /* Services */,
 				62FDE7392C0F3CDB00DCB86E /* Views */,
@@ -556,7 +564,7 @@
 			files = (
 				62994D7A2C0F5CFD008D8F78 /* CarCommunicationError.swift in Sources */,
 				62994D742C0F598B008D8F78 /* CarColor.swift in Sources */,
-				62994D782C0F5C1A008D8F78 /* CarFakeCommunicationService.swift in Sources */,
+				62994D782C0F5C1A008D8F78 /* FakeCarCommunication.swift in Sources */,
 				62FDE7422C0F44D700DCB86E /* PhoneToCarLockUnlockActionView.swift in Sources */,
 				6219E3552BF5F0F700B7001A /* ContentView.swift in Sources */,
 				6219E39D2BF5F41B00B7001A /* OTelConfig.swift in Sources */,
