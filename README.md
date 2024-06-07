@@ -1,9 +1,10 @@
 # Mobile O11y Demo
 
-Welcome to the Mobile O11y Demo repository! This project demonstrates how to integrate OpenTelemetry into your mobile applications and visualize the telemetry data using Grafana Cloud.
+Welcome to the Mobile O11y Demo repository!  
+This project demonstrates how you can monitor your mobile apps by integrating OpenTelemetry and visualizing the telemetry data using Grafana.
 
 This is still a work in progress. This is the first very early version.
-Currently only iOS is supported. Soon Flutter will come.
+Currently only iOS is supported. Soon more mobile platforms will come.
 
 ## Overview
 
@@ -66,10 +67,7 @@ This project was built and tested using Xcode 15.3
 
 #### Backend
 
-To run the backends locally on your machine you will need:
-
-- node & npm
-- docker
+To run the backends locally on your machine you will need node & npm
 
 ### 1. Create a .env file
 
