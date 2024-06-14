@@ -19,11 +19,13 @@ struct CarSoftwareVersion: CustomStringConvertible {
 
 class CarSoftwareVersionFactory {
     func getRandomVersion() -> CarSoftwareVersion {
-        return CarSoftwareVersion(
-            major: Int.random(in: 1...5),
-            minor: Int.random(in: 0...20),
-            patch: Int.random(in: 0...4)
-        )
+        let initalVersions = [
+            CarSoftwareVersion(major: 1, minor: 0, patch: 0),
+            CarSoftwareVersion(major: 1, minor: 2, patch: 0),
+            CarSoftwareVersion(major: 2, minor: 0, patch: 1),
+            CarSoftwareVersion(major: 2, minor: 1, patch: 2),
+        ]
+        return initalVersions.randomElement()!
     }
     
     func getRandomNextVersion(currentVersion: CarSoftwareVersion) -> CarSoftwareVersion {

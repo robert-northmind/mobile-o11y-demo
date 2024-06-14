@@ -10,21 +10,24 @@ import Combine
 import OpenTelemetryApi
 
 protocol RemoteActionServiceProtocol {
-    func lockDoors() async
-    func unlockDoors() async
+    func lockDoors() async throws
+    func unlockDoors() async throws
     func getDoorStatus() async -> CarDoorStatus?
 }
 
 class RemoteActionService: RemoteActionServiceProtocol {
     private let tracer: Tracer
     private let apiClient: RemoteActionApiClientProtocol
+    private let selectedCarService: SelectedCarServiceProtocol
     
     init(
         apiClient: RemoteActionApiClientProtocol = InjectedValues[\.remoteActionApiClient],
-        tracer: Tracer = OTelTraces.instance.getTracer()
+        tracer: Tracer = OTelTraces.instance.getTracer(),
+        selectedCarService: SelectedCarServiceProtocol = InjectedValues[\.selectedCarService]
     ) {
         self.apiClient = apiClient
         self.tracer = tracer
+        self.selectedCarService = selectedCarService
     }
     
     func getDoorStatus() async -> CarDoorStatus? {
@@ -32,6 +35,7 @@ class RemoteActionService: RemoteActionServiceProtocol {
             .setSpanKind(spanKind: .server)
             .setActive(true)
             .startSpan()
+        applySpanAttributes(span: getStatusSpan)
         defer {
             getStatusSpan.end()
         }
@@ -39,54 +43,67 @@ class RemoteActionService: RemoteActionServiceProtocol {
         do {
             let doorStatus = try await apiClient.getDoorStatus()
             getStatusSpan.setAttribute(key: "CurrentDoorStatus", value: doorStatus.status.safeTracingName)
+            getStatusSpan.addEvent(name: "Successfully got status: \(doorStatus.status)")
             getStatusSpan.status = .ok
             return doorStatus
         } catch {
-            getStatusSpan.status = .error(description: error.localizedDescription)
+            getStatusSpan.addEvent(name: "Failed to get status. Error: \(error)")
+            getStatusSpan.status = .error(description: "\(error)")
             return nil
         }
     }
     
-    func lockDoors() async {
-        await changeDoorStatus(action: LockDoorStatusRemoteAction())
+    func lockDoors() async throws {
+        try await changeDoorStatus(action: LockDoorStatusRemoteAction())
     }
     
-    func unlockDoors() async {
-        await changeDoorStatus(action: UnlockDoorStatusRemoteAction())
+    func unlockDoors() async throws {
+        try await changeDoorStatus(action: UnlockDoorStatusRemoteAction())
     }
     
-    private func changeDoorStatus(action: ChangeDoorStatusRemoteAction) async {
+    private func changeDoorStatus(action: ChangeDoorStatusRemoteAction) async throws {
         logger.log("Sending request to OMC (observable-motor-command) to set door status to: \(action.status)", severity: .debug)
         
         let setStatusSpan = tracer.spanBuilder(spanName: "Remote-SetDoorStatus")
             .setSpanKind(spanKind: .server)
             .setActive(true)
             .startSpan()
+        applySpanAttributes(span: setStatusSpan)
         setStatusSpan.setAttribute(key: "ExpectedStatus", value: action.status.safeTracingName)
         
         do {
             try await apiClient.setDoorStatus(action: action)
+            setStatusSpan.addEvent(name: "Successfully did send set-request. Now polling..")
         } catch {
-            logger.log("DoorStatus failed to update with error: \(error)", severity: .error)
+            let message = "DoorStatus failed to update with error: \(error)"
+            logger.log(message, severity: .error)
+            setStatusSpan.addEvent(name: message)
             setStatusSpan.status = .error(description: error.localizedDescription)
             setStatusSpan.end()
-            return
+            throw error
         }
 
         logger.log("Start to poll for status changes", severity: .info)
         let didUpdateStatus = await pollForDoorStatus(toBe: action.status, parentSpan: setStatusSpan)
         if didUpdateStatus {
-            logger.log("DoorStatus did update! It is now: \(action.status)", severity: .debug)
+            let message = "DoorStatus did update! It is now: \(action.status)"
+            logger.log(message, severity: .debug)
+            setStatusSpan.addEvent(name: message)
             setStatusSpan.status = .ok
+            setStatusSpan.end()
+            return
         } else {
-            logger.log("DoorStatus did not update!", severity: .error)
-            setStatusSpan.status = .error(description: "Status did not update")
+            let message = "DoorStatus did not update!"
+            logger.log(message, severity: .error)
+            setStatusSpan.addEvent(name: message)
+            setStatusSpan.status = .error(description: message)
+            setStatusSpan.end()
+            throw ApiError.statusDidNotUpdate
         }
-        setStatusSpan.end()
     }
     
     private func pollForDoorStatus(toBe status: String, parentSpan: Span, startTime: Date = Date()) async -> Bool {
-        guard !startTime.isOlderThan(seconds: 30) else {
+        guard !startTime.isOlderThan(seconds: 20) else {
             logger.log("Door status polling timed out. Status never changed to \(status)", severity: .error)
             return false
         }
@@ -95,6 +112,7 @@ class RemoteActionService: RemoteActionServiceProtocol {
             .setParent(parentSpan)
             .setSpanKind(spanKind: .server)
             .startSpan()
+        applySpanAttributes(span: checkStatusSpan)
         
         do {
             let latestDoorStatus = try await apiClient.getDoorStatus()
@@ -106,15 +124,47 @@ class RemoteActionService: RemoteActionServiceProtocol {
                 return true
             }
         } catch {
-            logger.log("Get door status failed with error: \(error)", severity: .error)
+            let message = "Get door status failed with error: \(error)"
+            logger.log(message, severity: .error)
+            checkStatusSpan.addEvent(name: message)
+            checkStatusSpan.status = .error(description: message)
         }
         checkStatusSpan.end()
         
-        // Wait for 2 seconds
-        try? await Task.sleep(nanoseconds: 2 * 1_000_000_000)
+        // Wait for 5 seconds
+        try? await Task.sleep(nanoseconds: 5 * 1_000_000_000)
 
         logger.log("Starting new poll", severity: .info)
         return await pollForDoorStatus(toBe: status, parentSpan: parentSpan, startTime: startTime)
+    }
+    
+    private func applySpanAttributes(span: Span) {
+        let car = selectedCarService.selectedCar
+
+        span.setAttribute(
+            key: "CarVin",
+            value: car.info.vin.safeTracingName
+        )
+        span.setAttribute(
+            key: "CarModel",
+            value: car.info.model.rawValue.safeTracingName
+        )
+        span.setAttribute(
+            key: "CarColor",
+            value: car.info.color.rawValue.safeTracingName
+        )
+        span.setAttribute(
+            key: "CarProductonDate",
+            value: car.info.productionDate.description.safeTracingName
+        )
+        span.setAttribute(
+            key: "CarSoftwareVersion",
+            value: car.info.softwareVersion.description.safeTracingName
+        )
+        span.setAttribute(
+            key: "ActionType",
+            value: "Remote"
+        )
     }
 }
 

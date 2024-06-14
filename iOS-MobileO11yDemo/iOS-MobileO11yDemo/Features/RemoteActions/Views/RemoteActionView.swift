@@ -10,7 +10,10 @@ import SwiftUI
 struct RemoteActionView: View {
     @State var doorStatus: CarDoorStatus?
     @State var isLoading = false
+    
+    @State private var alertMessage = ""
     @State private var showAlert = false
+    
     
     private let remoteActionService = InjectedValues[\.remoteActionService]
     
@@ -27,12 +30,14 @@ struct RemoteActionView: View {
                 isLocked: doorStatus?.isLocked,
                 unlockAction: {
                     performRemoteAction {
-                        await remoteActionService.unlockDoors()
+                        try await remoteActionService.unlockDoors()
+                        return CarDoorStatus(status: "unlocked")
                     }
                 },
                 lockAction: {
                     performRemoteAction {
-                        await remoteActionService.lockDoors()
+                        try await remoteActionService.lockDoors()
+                        return CarDoorStatus(status: "locked")
                     }
                 }
             ).padding()
@@ -49,27 +54,37 @@ struct RemoteActionView: View {
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Something went wrong"),
-                message: Text("Could not fetch door status"),
+                message: Text(alertMessage),
                 dismissButton: .default(Text("OK"))
             )
         }
     }
     
-    private func performRemoteAction(action: @escaping () async -> Void) {
+    private func performRemoteAction(action: @escaping () async throws -> CarDoorStatus) {
         isLoading = true
         Task {
-            await action()
-            await updateDoorStatus()
+            do {
+                let updatedDoorStatus = try await action()
+                DispatchQueue.main.async {
+                    doorStatus = updatedDoorStatus
+                }
+            } catch {
+                alertMessage = "Could not change door status. Error: \(error)"
+                showAlert = true
+            }
+            isLoading = false
         }
     }
     
     private func updateDoorStatus() async {
+        isLoading = true
         let updatedDoorStatus = await remoteActionService.getDoorStatus()
         
         DispatchQueue.main.async {
             if let updatedDoorStatus = updatedDoorStatus {
                 doorStatus = updatedDoorStatus
             } else {
+                alertMessage = "Could not fetch door status"
                 showAlert = true
             }
             isLoading = false

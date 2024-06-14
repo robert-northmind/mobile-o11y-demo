@@ -27,9 +27,17 @@ class FakeCarCommunication: CarCommunicationProtocol {
     @Published var updateProgress: Double = 0
     var updateProgressPublisher: Published<Double>.Publisher { $updateProgress }
     
+    private let selectedCarService: SelectedCarServiceProtocol
+    
+    init(
+        selectedCarService: SelectedCarServiceProtocol = InjectedValues[\.selectedCarService]
+    ) {
+        self.selectedCarService = selectedCarService
+    }
+    
     func connectToCar() async {
         await makeFakeConnectionDelay(scale: .longSeconds)
-        connectedCar = CarFactory().getRandomCar()
+        connectedCar = selectedCarService.selectedCar
     }
     
     func disconnectFromCar() async {
@@ -43,10 +51,13 @@ class FakeCarCommunication: CarCommunicationProtocol {
         try throwFakeError(probabilityInPercent: 10)
 
         if let connectedCar = connectedCar {
-            self.connectedCar = Car(
-                info: connectedCar.info,
-                carDoorStatus: CarDoorStatus(status: "locked")
+            selectedCarService.updateSelectedCar(
+                Car(
+                    info: connectedCar.info,
+                    carDoorStatus: CarDoorStatus(status: "locked")
+                )
             )
+            self.connectedCar = selectedCarService.selectedCar
         }
     }
     
@@ -56,10 +67,13 @@ class FakeCarCommunication: CarCommunicationProtocol {
         try throwFakeError(probabilityInPercent: 10)
 
         if let connectedCar = connectedCar {
-            self.connectedCar = Car(
-                info: connectedCar.info,
-                carDoorStatus: CarDoorStatus(status: "unlocked")
+            selectedCarService.updateSelectedCar(
+                Car(
+                    info: connectedCar.info,
+                    carDoorStatus: CarDoorStatus(status: "unlocked")
+                )
             )
+            self.connectedCar = selectedCarService.selectedCar
         }
     }
     
@@ -81,10 +95,14 @@ class FakeCarCommunication: CarCommunicationProtocol {
                 productionDate: connectedCar.info.productionDate,
                 softwareVersion: nextVersion
             )
-            self.connectedCar = Car(
-                info: updateCarInfo,
-                carDoorStatus: connectedCar.carDoorStatus
+            
+            selectedCarService.updateSelectedCar(
+                Car(
+                    info: updateCarInfo,
+                    carDoorStatus: connectedCar.carDoorStatus
+                )
             )
+            self.connectedCar = selectedCarService.selectedCar
         }
     }
 

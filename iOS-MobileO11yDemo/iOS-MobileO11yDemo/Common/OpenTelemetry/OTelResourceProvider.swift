@@ -10,6 +10,8 @@ import OpenTelemetrySdk
 import ResourceExtension
 
 struct OTelResourceProvider {
+    static let serviceVersion: String = getRandomServiceVersion()
+    
     func getResource() -> Resource {
         let otelConfig = OTelConfig()
         let defaultResources = DefaultResources().get()
@@ -17,10 +19,19 @@ struct OTelResourceProvider {
             attributes: [
                 "service.name": AttributeValue.string(otelConfig.serviceName),
                 "deployment.environment": AttributeValue.string(otelConfig.deploymentEnvironment),
-                "service.version": AttributeValue.string("1.0.0"),
+                "service.version": AttributeValue.string(Self.serviceVersion),
             ]
         )
         return defaultResources.merging(other: customResource)
+    }
+    
+    static private func getRandomServiceVersion() -> String {
+        let versions = [
+            "1.0.0",
+            "1.0.6",
+            "2.3.6"
+        ]
+        return versions.randomElement()!
     }
 }
 

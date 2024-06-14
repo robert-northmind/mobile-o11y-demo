@@ -8,6 +8,6 @@
 import Foundation
 
 enum ApiError: Error {
-    case invalidUrl, requestError, decodingError, statusNotOk
+    case invalidUrl, requestError, decodingError, statusNotOk, statusDidNotUpdate
 }
 

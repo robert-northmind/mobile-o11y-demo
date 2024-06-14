@@ -31,6 +31,7 @@ class CarConnectionTracer: CarConnectionTracerProtocol {
     private var updateSoftwareSpan: Span?
     
     private var lastActiveCar: Car?
+    private var lastFailedStatus: Status?
     
     init(
         tracer: Tracer = OTelTraces.instance.getTracer()
@@ -39,6 +40,7 @@ class CarConnectionTracer: CarConnectionTracerProtocol {
     }
     
     func connectedToCar() {
+        lastFailedStatus = nil
         connectedSpan = tracer.spanBuilder(spanName: "Phone2Car-ConnectedToCar")
             .setSpanKind(spanKind: .server)
             .startSpan()
@@ -46,7 +48,11 @@ class CarConnectionTracer: CarConnectionTracerProtocol {
     }
 
     func disconnectedFromCar() {
-        connectedSpan?.status = .ok
+        if let lastFailedStatus = lastFailedStatus {
+            connectedSpan?.status = lastFailedStatus
+        } else {
+            connectedSpan?.status = .ok
+        }
         connectedSpan?.end()
         connectedSpan = nil
         lastActiveCar = nil
@@ -70,6 +76,10 @@ class CarConnectionTracer: CarConnectionTracerProtocol {
     }
     
     func endLockDoorSpan(status: Status) {
+        if case .error(_) = status {
+            lastFailedStatus = status
+        }
+
         lockDoorsSpan?.status = status
         lockDoorsSpan?.end()
         lockDoorsSpan = nil
@@ -88,6 +98,10 @@ class CarConnectionTracer: CarConnectionTracerProtocol {
     }
     
     func endUnlockDoorSpan(status: Status) {
+        if case .error(_) = status {
+            lastFailedStatus = status
+        }
+        
         unlockDoorsSpan?.status = status
         unlockDoorsSpan?.end()
         unlockDoorsSpan = nil
@@ -106,6 +120,10 @@ class CarConnectionTracer: CarConnectionTracerProtocol {
     }
     
     func endUpdateSoftwareSpan(status: Status) {
+        if case .error(_) = status {
+            lastFailedStatus = status
+        }
+        
         updateSoftwareSpan?.status = status
         updateSoftwareSpan?.end()
         updateSoftwareSpan = nil
@@ -142,6 +160,10 @@ class CarConnectionTracer: CarConnectionTracerProtocol {
             span.setAttribute(
                 key: "CarSoftwareVersion",
                 value: car.info.softwareVersion.description.safeTracingName
+            )
+            span.setAttribute(
+                key: "ActionType",
+                value: "Phone2Car"
             )
         }
     }

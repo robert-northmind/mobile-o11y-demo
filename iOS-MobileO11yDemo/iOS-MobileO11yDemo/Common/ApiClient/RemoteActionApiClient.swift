@@ -26,12 +26,13 @@ class RemoteActionApiClient: RemoteActionApiClientProtocol {
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
             let dataStr = String(data: data, encoding: .utf8)
-            logger.log("Successfully set new door status: \(String(describing: dataStr))", severity: .debug)
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                logger.log("Failed to get door status: \(String(describing: dataStr))", severity: .error)
                 throw ApiError.statusNotOk
             }
             guard let result = try? JSONDecoder().decode(CarDoorStatus.self, from: data) else {
+                logger.log("Failed to parse door status: \(String(describing: dataStr))", severity: .error)
                 throw ApiError.decodingError
             }
             logger.log("Got door status: \(result)", severity: .debug)
@@ -54,11 +55,18 @@ class RemoteActionApiClient: RemoteActionApiClientProtocol {
         do {
             let jsonData = try JSONEncoder().encode(action)
             request.httpBody = jsonData
-            let (data, _) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await URLSession.shared.data(for: request)
             let dataStr = String(data: data, encoding: .utf8)
+
+            if let response = response as? HTTPURLResponse, response.statusCode != 200 {
+                logger.log("Failed to set door status: \(String(describing: dataStr))", severity: .error)
+                throw ApiError.statusNotOk
+            }
+
             logger.log("Successfully set new door status: \(String(describing: dataStr))", severity: .debug)
         } catch {
             logger.log("Failed to set door status with error: \(error)", severity: .error)
+            throw error
         }
     }
 }
