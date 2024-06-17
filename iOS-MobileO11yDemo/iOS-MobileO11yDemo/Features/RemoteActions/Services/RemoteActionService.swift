@@ -131,8 +131,8 @@ class RemoteActionService: RemoteActionServiceProtocol {
         }
         checkStatusSpan.end()
         
-        // Wait for 5 seconds
-        try? await Task.sleep(nanoseconds: 5 * 1_000_000_000)
+        // Wait for 3 seconds
+        try? await Task.sleep(nanoseconds: 3 * 1_000_000_000)
 
         logger.log("Starting new poll", severity: .info)
         return await pollForDoorStatus(toBe: status, parentSpan: parentSpan, startTime: startTime)

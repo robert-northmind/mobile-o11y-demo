@@ -44,7 +44,7 @@ app.post("/set-door-status", async (req, res) => {
   }
 
   // Add one more delay before actually updating the status of the car
-  delay(1000, 6000).then(() => {
+  delay(1000, 30000).then(() => {
     log(
       "Updating car door status after random delay",
       logsAPI.SeverityNumber.INFO,
