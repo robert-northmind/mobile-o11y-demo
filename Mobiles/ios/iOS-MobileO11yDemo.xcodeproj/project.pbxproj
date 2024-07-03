@@ -572,7 +572,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"${SRCROOT}/..\"\nmake update-otel-config\n";
+			shellScript = "cd \"${SRCROOT}/../..\"\nmake update-otel-config\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
