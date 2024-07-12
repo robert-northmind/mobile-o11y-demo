@@ -1,5 +1,6 @@
 import 'package:flutter_mobile_o11y_demo/core/car/application_layer/car_communication/providers.dart';
 import 'package:flutter_mobile_o11y_demo/core/car/application_layer/selected_car/providers.dart';
+import 'package:flutter_mobile_o11y_demo/core/presentation/dialogs/providers.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/car_connection_service.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/car_door_action_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,12 +19,13 @@ CarConnectionService carConnectionService(
   return service;
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 CarDoorActionService carDoorActionService(
   CarDoorActionServiceRef ref,
 ) {
   return CarDoorActionService(
     carCommunication: ref.watch(carCommunicationProvider),
     selectedCarService: ref.watch(selectedCarServiceProvider),
+    errorPresenter: ref.watch(errorPresenterProvider),
   );
 }

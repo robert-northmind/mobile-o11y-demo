@@ -4,17 +4,21 @@ import 'package:flutter_mobile_o11y_demo/core/car/application_layer/car_communic
 import 'package:flutter_mobile_o11y_demo/core/car/application_layer/selected_car/selected_car_service.dart';
 import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car.dart';
 import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_door_status.dart';
+import 'package:flutter_mobile_o11y_demo/core/presentation/dialogs/error_presenter.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CarDoorActionService {
   CarDoorActionService({
     required SelectedCarService selectedCarService,
     required CarCommunication carCommunication,
+    required ErrorPresenter errorPresenter,
   })  : _selectedCarService = selectedCarService,
-        _carCommunication = carCommunication;
+        _carCommunication = carCommunication,
+        _errorPresenter = errorPresenter;
 
   final SelectedCarService _selectedCarService;
   final CarCommunication _carCommunication;
+  final ErrorPresenter _errorPresenter;
 
   final _isLoadingSubject = BehaviorSubject<bool>.seeded(false);
   Stream<bool> get isLoadingStream => _isLoadingSubject.stream;
@@ -50,6 +54,7 @@ class CarDoorActionService {
       _updateCar(car: car, shouldLock: shouldLock);
     } catch (error) {
       print('### CarDoorActionService, LockUnlock error: $error');
+      _errorPresenter.presentError(error);
     }
     _isLoadingSubject.value = false;
   }

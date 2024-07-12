@@ -23,11 +23,12 @@ final carConnectionServiceProvider = Provider<CarConnectionService>.internal(
 
 typedef CarConnectionServiceRef = ProviderRef<CarConnectionService>;
 String _$carDoorActionServiceHash() =>
-    r'ae82d49d71b76d671d710a640412c52353084082';
+    r'629d2e1d87fe56bc073e4637cb31ed846e1f1403';
 
 /// See also [carDoorActionService].
 @ProviderFor(carDoorActionService)
-final carDoorActionServiceProvider = Provider<CarDoorActionService>.internal(
+final carDoorActionServiceProvider =
+    AutoDisposeProvider<CarDoorActionService>.internal(
   carDoorActionService,
   name: r'carDoorActionServiceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -37,6 +38,6 @@ final carDoorActionServiceProvider = Provider<CarDoorActionService>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef CarDoorActionServiceRef = ProviderRef<CarDoorActionService>;
+typedef CarDoorActionServiceRef = AutoDisposeProviderRef<CarDoorActionService>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
