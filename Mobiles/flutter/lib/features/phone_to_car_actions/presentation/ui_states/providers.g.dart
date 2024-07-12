@@ -61,7 +61,7 @@ final notConnectedToCarUiStateProvider =
 typedef NotConnectedToCarUiStateRef
     = AutoDisposeProviderRef<NotConnectedToCarUiState>;
 String _$phoneToCarConnectionInfoUiStateHash() =>
-    r'7324a3fc83d31f38a2a269fca4c267e22a1d23d6';
+    r'94c1957f5056721412919a4dc06102191270ebb3';
 
 /// See also [phoneToCarConnectionInfoUiState].
 @ProviderFor(phoneToCarConnectionInfoUiState)
@@ -78,6 +78,24 @@ final phoneToCarConnectionInfoUiStateProvider =
 
 typedef PhoneToCarConnectionInfoUiStateRef
     = AutoDisposeProviderRef<PhoneToCarConnectionInfoUiState>;
+String _$phoneToCarLockUnlockActionUiStateHash() =>
+    r'000f1f9dd8aa426e66ce551c5c0549f6583b2b3f';
+
+/// See also [phoneToCarLockUnlockActionUiState].
+@ProviderFor(phoneToCarLockUnlockActionUiState)
+final phoneToCarLockUnlockActionUiStateProvider =
+    AutoDisposeProvider<PhoneToCarLockUnlockActionUiState>.internal(
+  phoneToCarLockUnlockActionUiState,
+  name: r'phoneToCarLockUnlockActionUiStateProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$phoneToCarLockUnlockActionUiStateHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef PhoneToCarLockUnlockActionUiStateRef
+    = AutoDisposeProviderRef<PhoneToCarLockUnlockActionUiState>;
 String _$isLoadingCarConnectionStateHash() =>
     r'e3d0f58b6cdc8a1ef0c7c4e0449e5ccf1b8b3e0d';
 
@@ -94,5 +112,36 @@ final _isLoadingCarConnectionStateProvider = AutoDisposeProvider<bool>.internal(
 );
 
 typedef _IsLoadingCarConnectionStateRef = AutoDisposeProviderRef<bool>;
+String _$getConnectedCarHash() => r'6477b0649f5a284491d44acaaae3a6bedc2b56b5';
+
+/// See also [_getConnectedCar].
+@ProviderFor(_getConnectedCar)
+final _getConnectedCarProvider = AutoDisposeProvider<Car?>.internal(
+  _getConnectedCar,
+  name: r'_getConnectedCarProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getConnectedCarHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _GetConnectedCarRef = AutoDisposeProviderRef<Car?>;
+String _$isLoadingDoorActionHash() =>
+    r'e7a2155cfa07d1a0469a75c598b79dbf86692145';
+
+/// See also [_isLoadingDoorAction].
+@ProviderFor(_isLoadingDoorAction)
+final _isLoadingDoorActionProvider = AutoDisposeProvider<bool>.internal(
+  _isLoadingDoorAction,
+  name: r'_isLoadingDoorActionProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$isLoadingDoorActionHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _IsLoadingDoorActionRef = AutoDisposeProviderRef<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

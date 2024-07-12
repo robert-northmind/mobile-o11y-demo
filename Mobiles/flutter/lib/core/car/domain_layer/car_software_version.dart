@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_mobile_o11y_demo/core/utils/random_element.dart';
 
-class CarSoftwareVersion {
+class CarSoftwareVersion extends Equatable {
   const CarSoftwareVersion({
     required this.major,
     required this.minor,
@@ -15,6 +16,9 @@ class CarSoftwareVersion {
   String toString() {
     return '(v$major.$minor.$patch)';
   }
+
+  @override
+  List<Object?> get props => [major, minor, patch];
 }
 
 class CarSoftwareVersionFactory {

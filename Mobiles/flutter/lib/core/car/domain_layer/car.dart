@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_door_status.dart';
 import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_info.dart';
 
-class Car {
+class Car extends Equatable {
   const Car({
     required this.info,
     required this.doorStatus,
@@ -9,6 +10,9 @@ class Car {
 
   final CarInfo info;
   final CarDoorStatus doorStatus;
+
+  @override
+  List<Object?> get props => [info, doorStatus];
 }
 
 class CarFactory {

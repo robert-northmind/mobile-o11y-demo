@@ -20,7 +20,7 @@ final carFactoryProvider = AutoDisposeProvider<CarFactory>.internal(
 );
 
 typedef CarFactoryRef = AutoDisposeProviderRef<CarFactory>;
-String _$carInfoFactoryHash() => r'0597b328e5b329481a93a3930362db3755d23e4e';
+String _$carInfoFactoryHash() => r'48aa3be04fd0d7062bc5943c7b805ad1dede47b8';
 
 /// See also [carInfoFactory].
 @ProviderFor(carInfoFactory)

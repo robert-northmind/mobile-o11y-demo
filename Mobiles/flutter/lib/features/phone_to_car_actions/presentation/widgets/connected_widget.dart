@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation/widgets/button_with_loading.dart';
-import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/ui_actions/providers.dart';
+import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/providers.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/ui_states/providers.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/widgets/phone_to_car_connection_info_widget.dart';
+import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/widgets/phone_to_car_lock_unlock_action_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ConnectedWidget extends ConsumerWidget {
@@ -17,7 +18,7 @@ class ConnectedWidget extends ConsumerWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            PhoneToCarConnectionInfoWidget(),
+            const PhoneToCarConnectionInfoWidget(),
             const Divider(),
             const Icon(
               Icons.directions_car,
@@ -27,29 +28,16 @@ class ConnectedWidget extends ConsumerWidget {
               title: 'Disconnect',
               isLoading: uiState.isLoading,
               onPressed: () {
-                ref.read(connectedToCarUiActionProvider).disconnectFromCar();
+                ref.read(carConnectionServiceProvider).disconnectFromCar();
               },
             ),
             const Divider(),
-            PhoneToCarLockUnlockActionWidget(),
+            const PhoneToCarLockUnlockActionWidget(),
             const Divider(),
             PhoneToCarUpdateSoftwareActionWidget(),
           ],
         ),
       ),
-    );
-  }
-}
-
-class PhoneToCarLockUnlockActionWidget extends StatelessWidget {
-  const PhoneToCarLockUnlockActionWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Lock / Unlock'),
-      ],
     );
   }
 }

@@ -19,7 +19,7 @@ class ButtonWithLoading extends StatelessWidget {
     return SizedBox(
       width: width,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isLoading ? null : onPressed,
         child: isLoading
             ? const SizedBox(
                 width: 24,
