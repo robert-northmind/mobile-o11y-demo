@@ -25,22 +25,14 @@ class CarDoorActionService {
   }
 
   Future<void> lockCar() async {
-    final car = _selectedCarService.car;
-    if (car == null) {
-      // No car. Cannot do anything.
-      return;
-    }
-
-    _isLoadingSubject.value = true;
-    await _carCommunication.lockDoors();
-    _updateCar(
-      car: car,
-      shouldLock: true,
-    );
-    _isLoadingSubject.value = false;
+    await _setDoorLockState(shouldLock: true);
   }
 
   Future<void> unlockCar() async {
+    await _setDoorLockState(shouldLock: false);
+  }
+
+  Future<void> _setDoorLockState({required bool shouldLock}) async {
     final car = _selectedCarService.car;
     if (car == null) {
       // No car. Cannot do anything.
@@ -48,18 +40,21 @@ class CarDoorActionService {
     }
 
     _isLoadingSubject.value = true;
-    await _carCommunication.unlockDoors();
-    _updateCar(
-      car: car,
-      shouldLock: false,
-    );
+
+    try {
+      if (shouldLock) {
+        await _carCommunication.lockDoors();
+      } else {
+        await _carCommunication.unlockDoors();
+      }
+      _updateCar(car: car, shouldLock: shouldLock);
+    } catch (error) {
+      print('### CarDoorActionService, LockUnlock error: $error');
+    }
     _isLoadingSubject.value = false;
   }
 
-  Future<void> _updateCar({
-    required Car car,
-    required bool shouldLock,
-  }) async {
+  Future<void> _updateCar({required Car car, required bool shouldLock}) async {
     final updatedCar = Car(
       info: car.info,
       doorStatus: CarDoorStatus(isLocked: shouldLock ? true : false),
