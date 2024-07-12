@@ -1,27 +1,17 @@
-import 'dart:async';
-
 import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CarConnectionService {
   CarConnectionService({
     required CarFactory carFactory,
-  }) : _carFactory = carFactory {
-    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
-      if (_carSubject.value == null) {
-        final car = _carFactory.getRandomCar();
-        _carSubject.add(car);
-      } else {
-        _carSubject.add(null);
-      }
-    });
-  }
+  }) : _carFactory = carFactory;
 
-  late final Timer? _timer;
   final CarFactory _carFactory;
   final _carSubject = BehaviorSubject<Car?>.seeded(null);
+  final _isLoadingSubject = BehaviorSubject<bool>.seeded(false);
 
-  Stream<bool> get isLoading => const Stream.empty();
+  Stream<bool> get isLoadingStream => _isLoadingSubject.stream;
+  bool get isLoading => _isLoadingSubject.value;
 
   Stream<void> get isConnectedChanged =>
       _carSubject.stream.map((car) => car != null);
@@ -30,11 +20,24 @@ class CarConnectionService {
   Stream<Car?> get carStream => _carSubject.stream;
 
   void dispose() {
-    _timer?.cancel();
+    _isLoadingSubject.close();
     _carSubject.close();
   }
 
-  Future<void> connectToCar() async {}
+  Future<void> connectToCar() async {
+    _isLoadingSubject.add(true);
+    await Future.delayed(const Duration(seconds: 1));
 
-  Future<void> disconnectFromCar() async {}
+    final car = _carFactory.getRandomCar();
+    _carSubject.add(car);
+    _isLoadingSubject.add(false);
+  }
+
+  Future<void> disconnectFromCar() async {
+    _isLoadingSubject.add(true);
+    await Future.delayed(const Duration(seconds: 1));
+
+    _carSubject.add(null);
+    _isLoadingSubject.add(false);
+  }
 }

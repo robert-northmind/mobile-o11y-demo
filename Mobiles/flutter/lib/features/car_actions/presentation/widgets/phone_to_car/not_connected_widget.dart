@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_o11y_demo/core/presentation/widgets/button_with_loading.dart';
+import 'package:flutter_mobile_o11y_demo/features/car_actions/presentation/ui_actions/providers.dart';
+import 'package:flutter_mobile_o11y_demo/features/car_actions/presentation/ui_states/providers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NotConnectedWidget extends StatelessWidget {
+class NotConnectedWidget extends ConsumerWidget {
   const NotConnectedWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final uiState = ref.watch(notConnectedToCarUiStateProvider);
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -20,11 +26,12 @@ class NotConnectedWidget extends StatelessWidget {
               Icons.directions_car,
               size: 70,
             ),
-            ElevatedButton(
+            ButtonWithLoading(
+              title: 'Connect phone directly to car',
+              isLoading: uiState.isLoading,
               onPressed: () {
-                // Add your onPressed code here!
+                ref.read(notConnectedToCarUiActionProvider).connectToCar();
               },
-              child: const Text('Connect phone directly to car'),
             ),
           ],
         ),
