@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobile_o11y_demo/features/car_actions/presentation/widgets/phone_to_car/phone_to_car_actions_widget.dart';
-import 'package:flutter_mobile_o11y_demo/features/car_actions/presentation/widgets/remote_actions_widget.dart';
+import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/pages/phone_to_car_actions_page.dart';
+import 'package:flutter_mobile_o11y_demo/features/remote_actions/presentation/pages/remote_actions_page.dart';
 
-class CarActionsPage extends StatefulWidget {
-  const CarActionsPage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<CarActionsPage> createState() => _CarActionsPageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _CarActionsPageState extends State<CarActionsPage> {
+class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    PhoneToCarActionsWidget(),
-    RemoteActionsWidget(),
+    PhoneToCarActionsPage(),
+    RemoteActionsPage(),
   ];
 
   void _onItemTapped(int index) {

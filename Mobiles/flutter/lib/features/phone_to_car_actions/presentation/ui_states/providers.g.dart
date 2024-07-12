@@ -7,7 +7,7 @@ part of 'providers.dart';
 // **************************************************************************
 
 String _$phoneToCarActionsUiStateHash() =>
-    r'9c2ec2dc1e7a87951fb346c6b1a4cbeb325c1a9c';
+    r'229c320086cad610e5a5ce2e6c0f4243c5342005';
 
 /// See also [phoneToCarActionsUiState].
 @ProviderFor(phoneToCarActionsUiState)
@@ -60,8 +60,26 @@ final notConnectedToCarUiStateProvider =
 
 typedef NotConnectedToCarUiStateRef
     = AutoDisposeProviderRef<NotConnectedToCarUiState>;
+String _$phoneToCarConnectionInfoUiStateHash() =>
+    r'7324a3fc83d31f38a2a269fca4c267e22a1d23d6';
+
+/// See also [phoneToCarConnectionInfoUiState].
+@ProviderFor(phoneToCarConnectionInfoUiState)
+final phoneToCarConnectionInfoUiStateProvider =
+    AutoDisposeProvider<PhoneToCarConnectionInfoUiState>.internal(
+  phoneToCarConnectionInfoUiState,
+  name: r'phoneToCarConnectionInfoUiStateProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$phoneToCarConnectionInfoUiStateHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef PhoneToCarConnectionInfoUiStateRef
+    = AutoDisposeProviderRef<PhoneToCarConnectionInfoUiState>;
 String _$isLoadingCarConnectionStateHash() =>
-    r'4f9ad773b47a06201116072c661d4b148c67a492';
+    r'e3d0f58b6cdc8a1ef0c7c4e0449e5ccf1b8b3e0d';
 
 /// See also [_isLoadingCarConnectionState].
 @ProviderFor(_isLoadingCarConnectionState)

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class RemoteActionsWidget extends StatelessWidget {
-  const RemoteActionsWidget({super.key});
+class RemoteActionsPage extends StatelessWidget {
+  const RemoteActionsPage({super.key});
 
   @override
   Widget build(BuildContext context) {

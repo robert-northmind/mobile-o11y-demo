@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation/widgets/button_with_loading.dart';
-import 'package:flutter_mobile_o11y_demo/features/car_actions/presentation/ui_actions/providers.dart';
-import 'package:flutter_mobile_o11y_demo/features/car_actions/presentation/ui_states/providers.dart';
+import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/ui_actions/providers.dart';
+import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/ui_states/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ConnectedWidget extends ConsumerWidget {
-  const ConnectedWidget({super.key});
+class NotConnectedWidget extends ConsumerWidget {
+  const NotConnectedWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final uiState = ref.watch(connectedToCarUiStateProvider);
+    final uiState = ref.watch(notConnectedToCarUiStateProvider);
 
     return Center(
       child: Padding(
@@ -17,7 +17,8 @@ class ConnectedWidget extends ConsumerWidget {
         child: Column(
           children: [
             const Text(
-              'You are connected to your car.',
+              // ignore: lines_longer_than_80_chars
+              'You are not yet connected to your car. If you are next to your car you can connect your phone to it and control it directly from your phone.',
               textAlign: TextAlign.center,
             ),
             const Divider(),
@@ -26,10 +27,10 @@ class ConnectedWidget extends ConsumerWidget {
               size: 70,
             ),
             ButtonWithLoading(
-              title: 'Disconnect',
+              title: 'Connect phone directly to car',
               isLoading: uiState.isLoading,
               onPressed: () {
-                ref.read(connectedToCarUiActionProvider).disconnectFromCar();
+                ref.read(notConnectedToCarUiActionProvider).connectToCar();
               },
             ),
           ],

@@ -18,6 +18,7 @@ class CarConnectionService {
   bool get isConnected => _carSubject.value != null;
 
   Stream<Car?> get carStream => _carSubject.stream;
+  Car? get car => _carSubject.value;
 
   void dispose() {
     _isLoadingSubject.close();

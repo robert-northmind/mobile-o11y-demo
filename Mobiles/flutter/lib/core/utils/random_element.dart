@@ -21,3 +21,15 @@ extension RandomElementDateTimeX on DateTime {
     return DateTime(randomYear, randomMonth, randomDay);
   }
 }
+
+class RandomVinFactory {
+  String getRandomVin() {
+    const vinChars = '0123456789ABCDEFGHJKLMNPRSTUVWXYZ';
+    const vinLength = 17;
+    final vin = List.generate(vinLength, (index) {
+      final randomIndex = Random().nextInt(vinChars.length);
+      return vinChars[randomIndex];
+    }).join();
+    return vin;
+  }
+}
