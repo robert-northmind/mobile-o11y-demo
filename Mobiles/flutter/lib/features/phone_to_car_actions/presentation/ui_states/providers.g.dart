@@ -61,7 +61,7 @@ final notConnectedToCarUiStateProvider =
 typedef NotConnectedToCarUiStateRef
     = AutoDisposeProviderRef<NotConnectedToCarUiState>;
 String _$phoneToCarConnectionInfoUiStateHash() =>
-    r'94c1957f5056721412919a4dc06102191270ebb3';
+    r'f7f5d095fc9e69e8f9629e9f96c5ed377517f302';
 
 /// See also [phoneToCarConnectionInfoUiState].
 @ProviderFor(phoneToCarConnectionInfoUiState)
@@ -79,7 +79,7 @@ final phoneToCarConnectionInfoUiStateProvider =
 typedef PhoneToCarConnectionInfoUiStateRef
     = AutoDisposeProviderRef<PhoneToCarConnectionInfoUiState>;
 String _$phoneToCarLockUnlockActionUiStateHash() =>
-    r'000f1f9dd8aa426e66ce551c5c0549f6583b2b3f';
+    r'b9045b9c7f58a495dc7349eed7c81142255dd27c';
 
 /// See also [phoneToCarLockUnlockActionUiState].
 @ProviderFor(phoneToCarLockUnlockActionUiState)
@@ -112,21 +112,6 @@ final _isLoadingCarConnectionStateProvider = AutoDisposeProvider<bool>.internal(
 );
 
 typedef _IsLoadingCarConnectionStateRef = AutoDisposeProviderRef<bool>;
-String _$getConnectedCarHash() => r'6477b0649f5a284491d44acaaae3a6bedc2b56b5';
-
-/// See also [_getConnectedCar].
-@ProviderFor(_getConnectedCar)
-final _getConnectedCarProvider = AutoDisposeProvider<Car?>.internal(
-  _getConnectedCar,
-  name: r'_getConnectedCarProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$getConnectedCarHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _GetConnectedCarRef = AutoDisposeProviderRef<Car?>;
 String _$isLoadingDoorActionHash() =>
     r'e7a2155cfa07d1a0469a75c598b79dbf86692145';
 

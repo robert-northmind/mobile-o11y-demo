@@ -23,7 +23,7 @@ final carConnectionServiceProvider = Provider<CarConnectionService>.internal(
 
 typedef CarConnectionServiceRef = ProviderRef<CarConnectionService>;
 String _$carDoorActionServiceHash() =>
-    r'629d2e1d87fe56bc073e4637cb31ed846e1f1403';
+    r'f0e8654bf3274f912a0a5cefa69901eed9ccb371';
 
 /// See also [carDoorActionService].
 @ProviderFor(carDoorActionService)
@@ -39,5 +39,37 @@ final carDoorActionServiceProvider =
 );
 
 typedef CarDoorActionServiceRef = AutoDisposeProviderRef<CarDoorActionService>;
+String _$carSoftwareUpdateServiceHash() =>
+    r'9007dfdec8d45b6e3803fc8167d20df94f7ace21';
+
+/// See also [carSoftwareUpdateService].
+@ProviderFor(carSoftwareUpdateService)
+final carSoftwareUpdateServiceProvider =
+    Provider<CarSoftwareUpdateService>.internal(
+  carSoftwareUpdateService,
+  name: r'carSoftwareUpdateServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$carSoftwareUpdateServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef CarSoftwareUpdateServiceRef = ProviderRef<CarSoftwareUpdateService>;
+String _$getConnectedCarHash() => r'92bd1202920a09712894755bd9d38c1caf1b72cf';
+
+/// See also [getConnectedCar].
+@ProviderFor(getConnectedCar)
+final getConnectedCarProvider = AutoDisposeProvider<Car?>.internal(
+  getConnectedCar,
+  name: r'getConnectedCarProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getConnectedCarHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef GetConnectedCarRef = AutoDisposeProviderRef<Car?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

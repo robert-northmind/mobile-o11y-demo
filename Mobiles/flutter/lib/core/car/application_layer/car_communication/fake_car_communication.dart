@@ -47,21 +47,28 @@ class FakeCarCommunication implements CarCommunication {
   Future<void> updateSoftware(CarSoftwareVersion nextVersion) async {
     _softwareUpdateProgressSubject.value = 0;
 
-    while (_softwareUpdateProgressSubject.value < 100) {
-      await _makeFakeConnectionDelay(minSec: 1, maxSec: 2.5);
+    while (_softwareUpdateProgressSubject.value < 1) {
+      _checkIfConnectedAndCanStillUpdate();
+      await _makeFakeConnectionDelay(minSec: 0.5, maxSec: 2.1);
       await _throwFakeError(probabilityInPercent: 6);
       _softwareUpdateProgressSubject.value = min(
-        _softwareUpdateProgressSubject.value + 10,
+        _softwareUpdateProgressSubject.value + 0.1,
         100,
       );
     }
-    await _makeFakeConnectionDelay(minSec: 1, maxSec: 2.5);
+    await _makeFakeConnectionDelay(minSec: 0.5, maxSec: 2.1);
   }
 
   @override
   void dispose() {
     _isConnectedSubject.close();
     _softwareUpdateProgressSubject.close();
+  }
+
+  void _checkIfConnectedAndCanStillUpdate() {
+    if (!isConnected) {
+      throw NotConnectedError();
+    }
   }
 
   Future<void> _throwFakeError({

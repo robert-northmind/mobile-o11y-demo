@@ -25,3 +25,8 @@ class MysticMagicError extends CarCommunicationError {
   @override
   String toString() => 'Mystic Magic Error';
 }
+
+class NotConnectedError extends CarCommunicationError {
+  @override
+  String toString() => 'Not Connected Error';
+}

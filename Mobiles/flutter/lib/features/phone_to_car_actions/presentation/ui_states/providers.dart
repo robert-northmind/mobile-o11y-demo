@@ -1,4 +1,3 @@
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car.dart';
 import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_model.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/providers.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/ui_states/connected_to_car_ui_state.dart';
@@ -49,7 +48,7 @@ NotConnectedToCarUiState notConnectedToCarUiState(
 PhoneToCarConnectionInfoUiState phoneToCarConnectionInfoUiState(
   PhoneToCarConnectionInfoUiStateRef ref,
 ) {
-  final car = ref.watch(_getConnectedCarProvider);
+  final car = ref.watch(getConnectedCarProvider);
   return PhoneToCarConnectionInfoUiState(
     connectedToName: car?.info.model.description ?? '',
     connectedToVin: car?.info.vin ?? '',
@@ -60,7 +59,7 @@ PhoneToCarConnectionInfoUiState phoneToCarConnectionInfoUiState(
 PhoneToCarLockUnlockActionUiState phoneToCarLockUnlockActionUiState(
   PhoneToCarLockUnlockActionUiStateRef ref,
 ) {
-  final car = ref.watch(_getConnectedCarProvider);
+  final car = ref.watch(getConnectedCarProvider);
   final isLoadingDoorAction = ref.watch(_isLoadingDoorActionProvider);
 
   final isLocked = car?.doorStatus.isLocked == true;
@@ -82,18 +81,6 @@ bool _isLoadingCarConnectionState(
   });
   ref.onDispose(subscription.cancel);
   return carConnectionService.isLoading;
-}
-
-@riverpod
-Car? _getConnectedCar(
-  _GetConnectedCarRef ref,
-) {
-  final carConnectionService = ref.watch(carConnectionServiceProvider);
-  final subscription = carConnectionService.carStream.skip(1).listen((_) {
-    ref.invalidateSelf();
-  });
-  ref.onDispose(subscription.cancel);
-  return carConnectionService.car;
 }
 
 @riverpod

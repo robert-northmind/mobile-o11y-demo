@@ -53,8 +53,9 @@ class CarDoorActionService {
       }
       _updateCar(car: car, shouldLock: shouldLock);
     } catch (error) {
-      print('### CarDoorActionService, LockUnlock error: $error');
-      _errorPresenter.presentError(error);
+      _errorPresenter.presentError(
+        'CarDoorActionService failed with error: $error',
+      );
     }
     _isLoadingSubject.value = false;
   }

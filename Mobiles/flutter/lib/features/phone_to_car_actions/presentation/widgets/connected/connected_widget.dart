@@ -5,6 +5,7 @@ import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentat
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/widgets/connected/connected_vehicle_icons_widget.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/widgets/connected/phone_to_car_connection_info_widget.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/widgets/connected/phone_to_car_lock_unlock_action_widget.dart';
+import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/widgets/connected/phone_to_car_update_software_action_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ConnectedWidget extends ConsumerWidget {
@@ -32,23 +33,10 @@ class ConnectedWidget extends ConsumerWidget {
             const Divider(),
             const PhoneToCarLockUnlockActionWidget(),
             const Divider(),
-            PhoneToCarUpdateSoftwareActionWidget(),
+            const PhoneToCarUpdateSoftwareActionWidget(),
           ],
         ),
       ),
-    );
-  }
-}
-
-class PhoneToCarUpdateSoftwareActionWidget extends StatelessWidget {
-  const PhoneToCarUpdateSoftwareActionWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Update software'),
-      ],
     );
   }
 }
