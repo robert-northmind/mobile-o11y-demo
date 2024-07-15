@@ -23,8 +23,8 @@ class NotConnectedWidget extends ConsumerWidget {
             ),
             const Divider(),
             const Icon(
-              Icons.directions_car,
-              size: 70,
+              Icons.sensors_off,
+              size: 50,
             ),
             ButtonWithLoading(
               title: 'Connect phone directly to car',

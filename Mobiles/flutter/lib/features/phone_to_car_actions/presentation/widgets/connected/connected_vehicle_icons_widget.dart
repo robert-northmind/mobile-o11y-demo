@@ -9,12 +9,8 @@ class ConnectedVehicleIconsWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(
-          Icons.wifi,
-          size: 40,
-        ),
-        Icon(
-          Icons.directions_car,
-          size: 70,
+          Icons.sensors,
+          size: 50,
         ),
       ],
     );
