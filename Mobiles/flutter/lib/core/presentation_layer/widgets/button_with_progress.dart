@@ -7,7 +7,7 @@ class ButtonWithProgress extends StatelessWidget {
     required this.isInProgress,
     required this.currentProgress,
     required this.onPressed,
-    this.width = 240,
+    this.width = 270,
   });
 
   final String title;
@@ -32,7 +32,6 @@ class ButtonWithProgress extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: LinearProgressIndicator(
               value: currentProgress,
-              semanticsLabel: 'Linear progress indicator',
             ),
           ),
       ],

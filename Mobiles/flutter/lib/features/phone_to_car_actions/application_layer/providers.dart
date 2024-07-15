@@ -1,8 +1,8 @@
-import 'package:flutter_mobile_o11y_demo/core/car/application_layer/car_communication/providers.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/application_layer/selected_car/providers.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/providers.dart';
-import 'package:flutter_mobile_o11y_demo/core/presentation/dialogs/providers.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/car_communication/providers.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/providers.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/providers.dart';
+import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/providers.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/car_connection_service.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/car_door_action_service.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/car_software_update_service.dart';

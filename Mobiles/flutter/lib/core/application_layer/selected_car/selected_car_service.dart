@@ -1,6 +1,6 @@
 // ignore_for_file: use_setters_to_change_properties
 
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SelectedCarService {

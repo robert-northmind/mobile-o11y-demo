@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:flutter_mobile_o11y_demo/core/car/application_layer/car_communication/car_communication.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_communication_error.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_software_version.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/car_communication/car_communication.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_communication_error.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_software_version.dart';
 import 'package:rxdart/rxdart.dart';
 
 class FakeCarCommunication implements CarCommunication {

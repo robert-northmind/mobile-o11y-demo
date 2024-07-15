@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_color.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_model.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_software_version.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_color.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_model.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_software_version.dart';
 import 'package:flutter_mobile_o11y_demo/core/utils/random_element.dart';
 
 class CarInfo extends Equatable {

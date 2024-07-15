@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_door_status.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_info.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_door_status.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_info.dart';
 
 class Car extends Equatable {
   const Car({

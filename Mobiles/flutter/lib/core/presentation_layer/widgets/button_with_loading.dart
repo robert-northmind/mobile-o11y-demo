@@ -6,7 +6,7 @@ class ButtonWithLoading extends StatelessWidget {
     required this.title,
     required this.isLoading,
     required this.onPressed,
-    this.width = 240,
+    this.width = 270,
   });
 
   final String title;

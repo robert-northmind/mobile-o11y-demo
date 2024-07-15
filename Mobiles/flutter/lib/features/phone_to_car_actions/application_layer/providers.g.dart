@@ -40,7 +40,7 @@ final carDoorActionServiceProvider =
 
 typedef CarDoorActionServiceRef = AutoDisposeProviderRef<CarDoorActionService>;
 String _$carSoftwareUpdateServiceHash() =>
-    r'9007dfdec8d45b6e3803fc8167d20df94f7ace21';
+    r'39e15e74a8b4d60368b244d7bbd39e037fb4619d';
 
 /// See also [carSoftwareUpdateService].
 @ProviderFor(carSoftwareUpdateService)

@@ -1,4 +1,4 @@
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_model.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_model.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/providers.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/ui_states/connected_to_car_ui_state.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/presentation/ui_states/not_connected_to_car_ui_state.dart';

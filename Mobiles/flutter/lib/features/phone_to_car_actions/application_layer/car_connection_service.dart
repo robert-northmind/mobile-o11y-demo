@@ -1,6 +1,6 @@
-import 'package:flutter_mobile_o11y_demo/core/car/application_layer/car_communication/car_communication.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/application_layer/selected_car/selected_car_service.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/car_communication/car_communication.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/selected_car_service.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CarConnectionService {

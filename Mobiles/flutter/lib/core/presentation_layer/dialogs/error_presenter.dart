@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobile_o11y_demo/core/presentation/dialogs/dialog_presenter.dart';
+import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/dialog_presenter.dart';
 
 class ErrorPresenter {
   ErrorPresenter({

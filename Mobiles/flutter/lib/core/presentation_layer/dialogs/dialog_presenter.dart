@@ -14,7 +14,6 @@ class DialogPresenter {
   ) {
     final navigatorKey = _navigatorKey;
     if (navigatorKey == null) {
-      print('## Now nav key. Do nothing');
       return;
     }
 

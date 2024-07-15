@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.5.1
+  http: ^1.2.1
   riverpod_annotation: ^2.3.5
   rxdart: ^0.27.7
 

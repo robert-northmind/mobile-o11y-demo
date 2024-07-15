@@ -1,10 +1,8 @@
-// ignore_for_file: avoid_bool_literals_in_conditional_expressions
-
-import 'package:flutter_mobile_o11y_demo/core/car/application_layer/car_communication/car_communication.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/application_layer/selected_car/selected_car_service.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car.dart';
-import 'package:flutter_mobile_o11y_demo/core/car/domain_layer/car_door_status.dart';
-import 'package:flutter_mobile_o11y_demo/core/presentation/dialogs/error_presenter.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/car_communication/car_communication.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/selected_car_service.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car.dart';
+import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_door_status.dart';
+import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/error_presenter.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CarDoorActionService {
@@ -51,7 +49,7 @@ class CarDoorActionService {
       } else {
         await _carCommunication.unlockDoors();
       }
-      _updateCar(car: car, shouldLock: shouldLock);
+      _updateCar(car: car, isLocked: shouldLock);
     } catch (error) {
       _errorPresenter.presentError(
         'CarDoorActionService failed with error: $error',
@@ -60,10 +58,10 @@ class CarDoorActionService {
     _isLoadingSubject.value = false;
   }
 
-  Future<void> _updateCar({required Car car, required bool shouldLock}) async {
+  Future<void> _updateCar({required Car car, required bool isLocked}) async {
     final updatedCar = Car(
       info: car.info,
-      doorStatus: CarDoorStatus(isLocked: shouldLock ? true : false),
+      doorStatus: CarDoorStatus(isLocked: isLocked),
     );
     _selectedCarService.updateSelectedCar(updatedCar);
   }
