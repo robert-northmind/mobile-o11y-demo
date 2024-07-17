@@ -35,29 +35,16 @@ class RemoteCarActionService {
   Stream<bool> get isLoadingStream => _isLoadingSubject.stream;
   bool get isLoading => _isLoadingSubject.value;
 
+  void dispose() {
+    _isLoadingSubject.close();
+  }
+
   Future<void> lockDoors() async {
-    _setDoorLockState(shouldLock: true);
+    await _setDoorLockState(shouldLock: true);
   }
 
   Future<void> unlockDoors() async {
-    _setDoorLockState(shouldLock: false);
-  }
-
-  Future<CarDoorStatus?> getDoorStatus() async {
-    _isLoadingSubject.add(true);
-    try {
-      await _remoteDataSource.getDoorStatus();
-    } catch (error) {
-      _errorPresenter.presentError(
-        'RemoteCarActionService getDoorStatus failed with error: $error',
-      );
-    }
-    _isLoadingSubject.add(false);
-    return null;
-  }
-
-  void dispose() {
-    _isLoadingSubject.close();
+    await _setDoorLockState(shouldLock: false);
   }
 
   Future<void> _setDoorLockState({required bool shouldLock}) async {
@@ -68,20 +55,50 @@ class RemoteCarActionService {
     }
 
     _isLoadingSubject.value = true;
-
     try {
-      if (shouldLock) {
-        await _remoteDataSource.lockDoors();
-      } else {
-        await _remoteDataSource.unlockDoors();
-      }
-      _updateCar(car: car, isLocked: shouldLock);
+      await _setDoorLockStateInternal(shouldLock: shouldLock, car: car);
     } catch (error) {
       _errorPresenter.presentError(
         'RemoteCarActionService failed with error: $error',
       );
     }
     _isLoadingSubject.value = false;
+  }
+
+  Future<void> _setDoorLockStateInternal({
+    required Car car,
+    required bool shouldLock,
+  }) async {
+    if (shouldLock) {
+      await _remoteDataSource.lockDoors();
+    } else {
+      await _remoteDataSource.unlockDoors();
+    }
+
+    await _pollForDoorStatusChange(expectedLockState: shouldLock);
+
+    _updateCar(car: car, isLocked: shouldLock);
+  }
+
+  Future<void> _pollForDoorStatusChange({
+    required bool expectedLockState,
+  }) async {
+    const maxAttempts = 6;
+    const pollInterval = Duration(seconds: 3);
+
+    for (var i = 0; i < maxAttempts; i++) {
+      try {
+        final doorStatus = await _remoteDataSource.getDoorStatus();
+        if (doorStatus.isLocked == expectedLockState) {
+          return;
+        }
+      } catch (error) {
+        print('_pollForDoorStatusChange failed with error: $error');
+      }
+      await Future.delayed(pollInterval);
+    }
+
+    throw Exception('Door status did not change as expected');
   }
 
   Future<void> _updateCar({
