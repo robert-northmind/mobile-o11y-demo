@@ -16,15 +16,12 @@ fi
 # Remove the prefix "Authorization=" from OTEL_EXPORTER_OTLP_HEADERS
 FIXED_OTEL_EXPORTER_OTLP_HEADERS="${OTEL_EXPORTER_OTLP_HEADERS#Authorization=}"
 
-# File to be updated
-FILE="$SCRIPT_DIR/../Mobiles/ios/iOS-MobileO11yDemo/Common/OpenTelemetry/OTelConfig.swift"
+# File to be created
+FILE="$SCRIPT_DIR/../Mobiles/flutter/.env"
 
-# New content
-NEW_OTEL_HEADERS="    let otelHeaders = \"$FIXED_OTEL_EXPORTER_OTLP_HEADERS\""
-NEW_ENDPOINT="    let endpointUrl = \"$OTEL_EXPORTER_OTLP_ENDPOINT\""
+# Write environment variables to the file
+echo "FARO_API_KEY=$FARO_API_KEY" > $FILE
+echo "FARO_COLLECTOR_URL=$FARO_COLLECTOR_URL" >> $FILE
 
-# Use sed to find and replace the line containing the prev string
-sed -i '' "s|    let otelHeaders = \".*\"|$NEW_OTEL_HEADERS|" "$FILE"
-sed -i '' "s|    let endpointUrl = \".*\"|$NEW_ENDPOINT|" "$FILE"
-
-echo "✅ Finished updating the iOS OpenTelemetry configuration."
+# Print a message indicating success
+echo "✅ Finished updating the Flutter Faro configuration."

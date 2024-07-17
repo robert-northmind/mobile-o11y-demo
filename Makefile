@@ -15,6 +15,7 @@ stop-backends:
 	@echo "Stopping both backends..."
 	Scripts/stop-node-servers.sh
 
-update-otel-config:
+update-otel-faro-config:
 	@echo "Updating iOS OpenTelemetry configuration..."
 	Scripts/update-ios-otel-config.sh
+	Scripts/update-flutter-faro-config.sh
