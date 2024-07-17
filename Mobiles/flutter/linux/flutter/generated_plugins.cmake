@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  rum_sdk
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

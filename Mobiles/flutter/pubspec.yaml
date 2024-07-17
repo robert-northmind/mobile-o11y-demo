@@ -12,20 +12,34 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.1.0
   flutter_riverpod: ^2.5.1
   http: ^1.2.1
   json_annotation: ^4.9.0
   json_serializable: ^6.8.0
+  offline_transport:
+    git:
+      url: git@github.com:robert-northmind/flutter-rum-sdk.git
+      path: packages/offline_transport
+      ref: main
   riverpod_annotation: ^2.3.5
+  rum_sdk:
+    git:
+      url: git@github.com:robert-northmind/flutter-rum-sdk.git
+      path: packages/rum_sdk
+      ref: main
   rxdart: ^0.27.7
 
 dev_dependencies:
   build_runner: ^2.4.11
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
   riverpod_generator: ^2.4.0
   riverpod_lint: ^2.1.1
 
 flutter:
+  assets:
+    - .env
+
   uses-material-design: true
