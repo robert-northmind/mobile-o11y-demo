@@ -1,8 +1,10 @@
 import 'package:flutter_mobile_o11y_demo/core/application_layer/car_communication/car_communication.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/traces/o11y_span.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/selected_car_service.dart';
 import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car.dart';
 import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_door_status.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/error_presenter.dart';
+import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/car_connection_tracer.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CarDoorActionService {
@@ -10,13 +12,16 @@ class CarDoorActionService {
     required SelectedCarService selectedCarService,
     required CarCommunication carCommunication,
     required ErrorPresenter errorPresenter,
+    required CarConnectionTracer tracer,
   })  : _selectedCarService = selectedCarService,
         _carCommunication = carCommunication,
-        _errorPresenter = errorPresenter;
+        _errorPresenter = errorPresenter,
+        _tracer = tracer;
 
   final SelectedCarService _selectedCarService;
   final CarCommunication _carCommunication;
   final ErrorPresenter _errorPresenter;
+  final CarConnectionTracer _tracer;
 
   final _isLoadingSubject = BehaviorSubject<bool>.seeded(false);
   Stream<bool> get isLoadingStream => _isLoadingSubject.stream;
@@ -44,15 +49,26 @@ class CarDoorActionService {
     _isLoadingSubject.value = true;
 
     try {
+      _tracer.startLockUnlockDoorsSpan(shouldLock: shouldLock);
       if (shouldLock) {
         await _carCommunication.lockDoors();
       } else {
         await _carCommunication.unlockDoors();
       }
+      _tracer.endLockUnlockDoorSpan(
+        shouldLock: shouldLock,
+        status: StatusCode.ok,
+      );
+
       _updateCar(car: car, isLocked: shouldLock);
     } catch (error) {
       _errorPresenter.presentError(
         'CarDoorActionService failed with error: $error',
+      );
+      _tracer.endLockUnlockDoorSpan(
+        shouldLock: shouldLock,
+        status: StatusCode.error,
+        message: error.toString(),
       );
     }
     _isLoadingSubject.value = false;

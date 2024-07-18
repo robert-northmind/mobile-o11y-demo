@@ -4,6 +4,7 @@ import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car.dart';
 import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/providers.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/providers.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/car_connection_service.dart';
+import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/car_connection_tracer.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/car_door_action_service.dart';
 import 'package:flutter_mobile_o11y_demo/features/phone_to_car_actions/application_layer/car_software_update_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,6 +18,7 @@ CarConnectionService carConnectionService(
   final service = CarConnectionService(
     carCommunication: ref.watch(carCommunicationProvider),
     selectedCarService: ref.watch(selectedCarServiceProvider),
+    tracer: ref.watch(carConnectionTracerProvider),
   );
   ref.onDispose(service.dispose);
   return service;
@@ -30,6 +32,7 @@ CarDoorActionService carDoorActionService(
     carCommunication: ref.watch(carCommunicationProvider),
     selectedCarService: ref.watch(selectedCarServiceProvider),
     errorPresenter: ref.watch(errorPresenterProvider),
+    tracer: ref.watch(carConnectionTracerProvider),
   );
   ref.onDispose(service.dispose);
   return service;
@@ -44,6 +47,7 @@ CarSoftwareUpdateService carSoftwareUpdateService(
     selectedCarService: ref.watch(selectedCarServiceProvider),
     carSoftwareVersionFactory: ref.read(carSoftwareVersionFactoryProvider),
     errorPresenter: ref.read(errorPresenterProvider),
+    tracer: ref.watch(carConnectionTracerProvider),
   );
   ref.onDispose(service.dispose);
   return service;
