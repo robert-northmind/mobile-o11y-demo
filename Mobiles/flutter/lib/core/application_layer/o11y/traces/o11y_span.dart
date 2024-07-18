@@ -31,8 +31,29 @@ class O11ySpan {
     otelSpan.addEvent(message, attributes: listAttributes);
   }
 
+  void setAttributes(Map<String, String> attributes) {
+    final listAttributes = attributes.entries.map((entry) {
+      return api.Attribute.fromString(entry.key, entry.value);
+    }).toList();
+    otelSpan.setAttributes(listAttributes);
+  }
+
   void end() {
     otelSpan.end();
+  }
+
+  String toHttpTraceparent() {
+    // W3CTraceContextPropagator stuff.
+    // Copied from the OtelSift implementation
+    // https://github.com/open-telemetry/opentelemetry-swift/blob/7bad8ae7f230e7a1b9ec697f36dcae91a8debff9/Sources/OpenTelemetryApi/Trace/Propagation/W3CTraceContextPropagator.swift
+    const version = '00';
+    const delimiter = '-';
+    final traceId = otelSpan.spanContext.traceId.toString();
+    final spanId = otelSpan.spanContext.spanId.toString();
+    const endString = '01';
+    final traceparent =
+        '$version$delimiter$traceId$delimiter$spanId$delimiter$endString';
+    return traceparent;
   }
 }
 

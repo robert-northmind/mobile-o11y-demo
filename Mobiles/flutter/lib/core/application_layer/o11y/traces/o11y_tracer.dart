@@ -42,18 +42,18 @@ class O11yTracer {
     return ollySpan;
   }
 
-  Future<void> executeWithParentSpan({
+  Future<T> executeWithParentSpan<T>({
     O11ySpan? parentSpan,
-    required FutureOr<void> Function() work,
+    required FutureOr<T> Function() work,
   }) async {
-    final completer = Completer();
+    final completer = Completer<T>();
     final parentO11ySpan = parentSpan ?? activeSpan;
     final parent = parentO11ySpan?.otelSpan ?? Context.current.span;
     Context.current.withSpan(parent).execute(() async {
-      await work();
-      completer.complete();
+      final result = await work();
+      completer.complete(result);
     });
-    await completer.future;
+    return completer.future;
   }
 
   void setup() {
