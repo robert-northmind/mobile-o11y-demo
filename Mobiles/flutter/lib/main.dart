@@ -21,7 +21,7 @@ void main() async {
 
   rumFlutter.runApp(
     optionsConfiguration: RumConfig(
-      appName: 'mobile-O11y-flutter-demo-app',
+      appName: 'mobile-o11y-flutter-demo-app',
       appVersion: '1.0.0',
       appEnv: 'production',
       apiKey: dotenv.env['FARO_API_KEY'] ?? '',

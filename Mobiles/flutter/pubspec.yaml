@@ -22,6 +22,7 @@ dependencies:
       url: git@github.com:robert-northmind/flutter-rum-sdk.git
       path: packages/offline_transport
       ref: main
+  opentelemetry: ^0.18.3
   riverpod_annotation: ^2.3.5
   rum_sdk:
     git:
