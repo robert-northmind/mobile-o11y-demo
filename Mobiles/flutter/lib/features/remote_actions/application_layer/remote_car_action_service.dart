@@ -1,5 +1,6 @@
 // ignore_for_file: cascade_invocations, lines_longer_than_80_chars
 
+import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/loggers/o11y_logger.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/traces/o11y_span.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/traces/o11y_tracer.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/providers.dart';
@@ -18,6 +19,7 @@ final remoteCarActionServiceProvider = Provider.autoDispose((ref) {
     errorPresenter: ref.watch(errorPresenterProvider),
     selectedCarService: ref.watch(selectedCarServiceProvider),
     tracer: ref.watch(o11yTracerProvider),
+    logger: ref.watch(o11yLoggerProvider),
   );
   ref.onDispose(service.dispose);
   return service;
@@ -29,15 +31,18 @@ class RemoteCarActionService {
     required ErrorPresenter errorPresenter,
     required SelectedCarService selectedCarService,
     required O11yTracer tracer,
+    required O11yLogger logger,
   })  : _remoteDataSource = remoteDataSource,
         _errorPresenter = errorPresenter,
         _selectedCarService = selectedCarService,
-        _tracer = tracer;
+        _tracer = tracer,
+        _logger = logger;
 
   final RemoteCarActionRemoteDataSource _remoteDataSource;
   final ErrorPresenter _errorPresenter;
   final SelectedCarService _selectedCarService;
   final O11yTracer _tracer;
+  final O11yLogger _logger;
 
   final _isLoadingSubject = BehaviorSubject<bool>.seeded(false);
   Stream<bool> get isLoadingStream => _isLoadingSubject.stream;
@@ -48,11 +53,23 @@ class RemoteCarActionService {
   }
 
   Future<void> lockDoors() async {
+    _logger.debug('Starting Locking doors', context: {
+      'service': 'RemoteCarActionService',
+    });
     await _setDoorLockState(shouldLock: true);
+    _logger.debug('Completed Locking doors', context: {
+      'service': 'RemoteCarActionService',
+    });
   }
 
   Future<void> unlockDoors() async {
+    _logger.debug('Starting Unlocking doors', context: {
+      'service': 'RemoteCarActionService',
+    });
     await _setDoorLockState(shouldLock: false);
+    _logger.debug('Completed Unlocking doors', context: {
+      'service': 'RemoteCarActionService',
+    });
   }
 
   Future<void> _setDoorLockState({required bool shouldLock}) async {

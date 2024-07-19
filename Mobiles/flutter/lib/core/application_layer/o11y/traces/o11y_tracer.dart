@@ -65,7 +65,7 @@ class O11yTracer {
       processors: [
         // otel_sdk.SimpleSpanProcessor(exporter),
         otel_sdk.BatchSpanProcessor(exporter),
-        otel_sdk.SimpleSpanProcessor(otel_sdk.ConsoleExporter())
+        // otel_sdk.SimpleSpanProcessor(otel_sdk.ConsoleExporter())
       ],
     );
 
