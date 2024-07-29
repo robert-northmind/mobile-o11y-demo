@@ -66,7 +66,7 @@ class FakeCarCommunication implements CarCommunication {
     while (_softwareUpdateProgressSubject.value < 1) {
       _checkIfConnectedAndCanStillUpdate();
       await _makeFakeConnectionDelay(minSec: 0.5, maxSec: 2.1);
-      await _throwFakeError(probabilityInPercent: 6);
+      await _throwFakeError(probabilityInPercent: 4);
       _softwareUpdateProgressSubject.value = min(
         _softwareUpdateProgressSubject.value + 0.1,
         100,
