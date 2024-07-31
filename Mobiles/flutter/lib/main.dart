@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/providers.dart';
-import 'package:flutter_mobile_o11y_demo/features/home/presentation/pages/home_page.dart';
+import 'package:flutter_mobile_o11y_demo/core/presentation_layer/router/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:offline_transport/offline_transport.dart';
 import 'package:rum_sdk/rum_sdk.dart';
@@ -46,8 +46,6 @@ void main() async {
   );
 }
 
-final navigatorKey = GlobalKey<NavigatorState>();
-
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
@@ -55,15 +53,27 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(dialogPresenterProvider).setNavigatorKey(navigatorKey);
 
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'MobileO11y Demo',
-      navigatorObservers: [RumNavigationObserver()],
-      navigatorKey: navigatorKey,
+      routerConfig: router,
+
+      // routerDelegate: RumRouterDelegate(navigatorKey: navigatorKey),
+      // routeInformationParser: RumRouteInformationParser(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
     );
+
+    // return MaterialApp(
+    //   title: 'MobileO11y Demo',
+    //   navigatorObservers: [RumNavigationObserver()],
+    //   navigatorKey: navigatorKey,
+    //   theme: ThemeData(
+    //     colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    //     useMaterial3: true,
+    //   ),
+    //   home: const HomePage(),
+    // );
   }
 }
