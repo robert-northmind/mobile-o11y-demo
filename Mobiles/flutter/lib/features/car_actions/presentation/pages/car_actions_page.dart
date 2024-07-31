@@ -27,7 +27,7 @@ class _CarActionsPageState extends State<CarActionsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MobileO11y Demo'),
+        title: const Text('Car Actions'),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

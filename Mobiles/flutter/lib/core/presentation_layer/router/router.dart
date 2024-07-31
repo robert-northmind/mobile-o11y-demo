@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/pages/bottom_navigation_bar_scaffold.dart';
 import 'package:flutter_mobile_o11y_demo/features/car_actions/presentation/pages/car_actions_page.dart';
+import 'package:flutter_mobile_o11y_demo/features/home/presentation_layer/pages/home_page.dart';
+import 'package:flutter_mobile_o11y_demo/features/settings/presentation_layer/pages/settings_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rum_sdk/rum_sdk.dart';
 
@@ -19,53 +21,23 @@ final router = GoRouter(
       routes: [
         GoRoute(
           path: '/home',
-          builder: (context, state) => const HomePage2(),
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: HomePage());
+          },
         ),
         GoRoute(
           path: '/car-actions',
-          builder: (context, state) => const CarActionsPage(),
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: CarActionsPage());
+          },
         ),
         GoRoute(
           path: '/settings',
-          builder: (context, state) => const SettingsPage(),
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: SettingsPage());
+          },
         ),
       ],
     )
   ],
 );
-
-class HomePage2 extends StatelessWidget {
-  const HomePage2({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('MobileO11y Demo'),
-      ),
-      body: const Center(
-        child: Center(
-          child: Text('Hi'),
-        ),
-      ),
-    );
-  }
-}
-
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('MobileO11y Demo'),
-      ),
-      body: const Center(
-        child: Center(
-          child: Text('Settings'),
-        ),
-      ),
-    );
-  }
-}

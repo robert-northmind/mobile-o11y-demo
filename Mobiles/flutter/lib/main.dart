@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -56,24 +58,10 @@ class MyApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'MobileO11y Demo',
       routerConfig: router,
-
-      // routerDelegate: RumRouterDelegate(navigatorKey: navigatorKey),
-      // routeInformationParser: RumRouteInformationParser(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
     );
-
-    // return MaterialApp(
-    //   title: 'MobileO11y Demo',
-    //   navigatorObservers: [RumNavigationObserver()],
-    //   navigatorKey: navigatorKey,
-    //   theme: ThemeData(
-    //     colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-    //     useMaterial3: true,
-    //   ),
-    //   home: const HomePage(),
-    // );
   }
 }

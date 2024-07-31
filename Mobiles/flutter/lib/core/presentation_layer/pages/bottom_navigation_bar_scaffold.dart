@@ -21,7 +21,8 @@ class _BottomNavigationBarScaffoldState
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         onTap: changeTab,
-        backgroundColor: const Color(0xffe0b9f6),
+        backgroundColor: Colors.teal[100],
+        selectedItemColor: Colors.black,
         currentIndex: currentIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
