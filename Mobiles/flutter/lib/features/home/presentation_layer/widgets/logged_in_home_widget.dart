@@ -30,6 +30,11 @@ class LoggedInHomeWidget extends StatelessWidget {
               homeUiState.carInfo,
               textAlign: TextAlign.center,
             ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Image.asset(homeUiState.carImagePath, fit: BoxFit.contain),
+            ),
           ],
         ),
       ),

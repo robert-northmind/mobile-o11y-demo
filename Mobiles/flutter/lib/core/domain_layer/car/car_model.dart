@@ -24,4 +24,21 @@ extension CarModelX on CarModel {
         return 'Rocket Raccoon';
     }
   }
+
+  String get imageAssetPath {
+    switch (this) {
+      case CarModel.turboWombat:
+        return 'assets/images/turboWombat.webp';
+      case CarModel.vortexVelociraptor:
+        return 'assets/images/vortexVelociraptor.webp';
+      case CarModel.giggleMobile:
+        return 'assets/images/giggleMobile.webp';
+      case CarModel.pandaProwler:
+        return 'assets/images/pandaProwler.webp';
+      case CarModel.blizzardBison:
+        return 'assets/images/blizzardBison.webp';
+      case CarModel.rocketRaccoon:
+        return 'assets/images/rocketRaccoon.webp';
+    }
+  }
 }
