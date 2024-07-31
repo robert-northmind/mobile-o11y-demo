@@ -16,8 +16,23 @@ class O11yEvents {
 
   final RumFlutter _rumFlutter;
 
-  void trackEvent(String name, {Map<String, String> attributes = const {}}) {
-    _rumFlutter.pushEvent(name, attributes: attributes);
+  Future<void> trackEvent(
+    String name, {
+    Map<String, String> attributes = const {},
+  }) async {
+    await _rumFlutter.pushEvent(name, attributes: attributes);
+  }
+
+  void trackStartEvent(String key, String name) {
+    _rumFlutter.markEventStart(key, name);
+  }
+
+  Future<void> trackEndEvent(
+    String key,
+    String name, {
+    Map<String, String> attributes = const {},
+  }) async {
+    await _rumFlutter.markEventEnd(key, name, attributes: attributes);
   }
 
   void setUser({

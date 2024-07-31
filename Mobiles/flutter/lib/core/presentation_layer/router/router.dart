@@ -15,26 +15,42 @@ final router = GoRouter(
   observers: [RumNavigationObserver()],
   routes: [
     ShellRoute(
+      observers: [RumNavigationObserver()],
       navigatorKey: _shellNavigatorKey,
       builder: (context, state, child) =>
           BottomNavigationBarScaffold(child: child),
       routes: [
         GoRoute(
+          name: 'home',
           path: '/home',
           pageBuilder: (context, state) {
-            return const NoTransitionPage(child: HomePage());
+            return NoTransitionPage(
+              key: state.pageKey,
+              name: state.name,
+              child: const HomePage(),
+            );
           },
         ),
         GoRoute(
+          name: 'car-actions',
           path: '/car-actions',
           pageBuilder: (context, state) {
-            return const NoTransitionPage(child: CarActionsPage());
+            return NoTransitionPage(
+              key: state.pageKey,
+              name: state.name,
+              child: const CarActionsPage(),
+            );
           },
         ),
         GoRoute(
+          name: 'settings',
           path: '/settings',
           pageBuilder: (context, state) {
-            return const NoTransitionPage(child: SettingsPage());
+            return NoTransitionPage(
+              key: state.pageKey,
+              name: state.name,
+              child: const SettingsPage(),
+            );
           },
         ),
       ],

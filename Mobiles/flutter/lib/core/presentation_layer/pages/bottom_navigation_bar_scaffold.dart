@@ -21,13 +21,15 @@ class _BottomNavigationBarScaffoldState
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         onTap: changeTab,
-        backgroundColor: Colors.teal[100],
+        backgroundColor: Colors.deepPurple[100],
         selectedItemColor: Colors.black,
         currentIndex: currentIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'CarAction'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Settings'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.directions_car), label: 'Car Actions'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
     );

@@ -1,40 +1,66 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/current_user/current_user_service.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/providers.dart';
+import 'package:flutter_mobile_o11y_demo/features/home/presentation_layer/widgets/logged_in_home_widget.dart';
+import 'package:flutter_mobile_o11y_demo/features/home/presentation_layer/widgets/not_logged_in_home_widget.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('MobileO11y Demo'),
-      ),
-      body: const Padding(
-        padding: EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          // mainAxisSize: MainAxisSize.max,
-          children: [
-            Text(
-              'Hi and welcome back',
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              'Some Random name',
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20),
-            Text(
-              'This is your car',
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              'Some car info',
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final homeUiState = ref.watch(homeUiStateProvider);
+
+    if (homeUiState is LoggedInHomeUiState) {
+      return LoggedInHomeWidget(homeUiState: homeUiState);
+    }
+    return const NotLoggedInHomeWidget();
   }
 }
+
+abstract class HomeUiState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
+
+class NotLoggedInHomeUiState extends HomeUiState {}
+
+class LoggedInHomeUiState extends HomeUiState {
+  LoggedInHomeUiState({
+    required this.username,
+    required this.carInfo,
+  });
+
+  final String username;
+  final String carInfo;
+
+  @override
+  List<Object?> get props => [username, carInfo];
+}
+
+final homeUiStateProvider = Provider.autoDispose<HomeUiState>((ref) {
+  final userService = ref.watch(currentUserServiceProvider);
+
+  final currentUser = userService.user;
+  if (currentUser == null) {
+    return NotLoggedInHomeUiState();
+  }
+
+  final car = ref.watch(selectedCarProvider);
+  var carInfo = '';
+  if (car != null) {
+    carInfo = '''
+This is your car:
+vin: ${car.info.vin}
+model: ${car.info.model}
+color: ${car.info.color}
+''';
+  }
+
+  return LoggedInHomeUiState(
+    username: currentUser.username,
+    carInfo: carInfo,
+  );
+});

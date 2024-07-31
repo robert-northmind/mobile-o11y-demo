@@ -21,20 +21,24 @@ void main() async {
     OfflineTransport(maxCacheDuration: const Duration(days: 3)),
   );
 
+  final otelEndpoint = dotenv.env['OTEL_EXPORTER_OTLP_ENDPOINT'] ?? '';
+  final escapedOtelEndpoint = RegExp.escape(otelEndpoint);
+  final regExIgnorePatternOtel = '($escapedOtelEndpoint)';
+
   rumFlutter.runApp(
     optionsConfiguration: RumConfig(
-      appName: 'mobile-o11y-flutter-demo-app',
-      appVersion: '1.0.0',
-      appEnv: 'production',
-      apiKey: dotenv.env['FARO_API_KEY'] ?? '',
-      anrTracking: true,
-      cpuUsageVitals: true,
-      collectorUrl: dotenv.env['FARO_COLLECTOR_URL'] ?? '',
-      enableCrashReporting: true,
-      memoryUsageVitals: true,
-      refreshRateVitals: true,
-      fetchVitalsInterval: const Duration(seconds: 30),
-    ),
+        appName: 'mobile-o11y-flutter-demo-app',
+        appVersion: '1.0.0',
+        appEnv: 'production',
+        apiKey: dotenv.env['FARO_API_KEY'] ?? '',
+        anrTracking: true,
+        cpuUsageVitals: true,
+        collectorUrl: dotenv.env['FARO_COLLECTOR_URL'] ?? '',
+        enableCrashReporting: true,
+        memoryUsageVitals: true,
+        refreshRateVitals: true,
+        fetchVitalsInterval: const Duration(seconds: 30),
+        ignoreUrls: [RegExp(regExIgnorePatternOtel)]),
     appRunner: () {
       runApp(
         DefaultAssetBundle(

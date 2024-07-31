@@ -10,42 +10,32 @@ class CarActionsPage extends StatefulWidget {
 }
 
 class _CarActionsPageState extends State<CarActionsPage> {
-  int _selectedIndex = 0;
-
-  static const List<Widget> _widgetOptions = <Widget>[
-    PhoneToCarActionsPage(),
-    RemoteActionsPage(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Car Actions'),
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.phone_android),
-            label: 'Phone To Car Actions',
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                text: 'Phone To Car Actions',
+                icon: Icon(Icons.phone_android),
+              ),
+              Tab(
+                text: 'Remote Actions',
+                icon: Icon(Icons.language),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.language),
-            label: 'Remote Actions',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
+          title: const Text('Car Actions'),
+        ),
+        body: const TabBarView(
+          children: [
+            PhoneToCarActionsPage(),
+            RemoteActionsPage(),
+          ],
+        ),
       ),
     );
   }

@@ -71,6 +71,30 @@ app.get("/door-status", async (req, res) => {
   }
 });
 
+app.post("/failpost", async (req, res) => {
+  const message = `Sending back 400 error for POST. Got body: ${req.body}`;
+  log(message, logsAPI.SeverityNumber.ERROR);
+  return res.status(400).json({ error: message });
+});
+
+app.post("/successpost", async (req, res) => {
+  const message = `Sending back 200 success for POST. Got body: ${req.body}`;
+  log(message, logsAPI.SeverityNumber.DEBUG);
+  res.status(200).json({ message: message });
+});
+
+app.get("/failget", async (req, res) => {
+  const message = `Sending back 400 error for GET.`;
+  log(message, logsAPI.SeverityNumber.ERROR);
+  return res.status(400).json({ error: message });
+});
+
+app.get("/successget", async (req, res) => {
+  const message = `Sending back 200 success for GET.`;
+  log(message, logsAPI.SeverityNumber.DEBUG);
+  res.status(200).json({ message: message });
+});
+
 // Start the server
 app.listen(port, () => {
   log(
