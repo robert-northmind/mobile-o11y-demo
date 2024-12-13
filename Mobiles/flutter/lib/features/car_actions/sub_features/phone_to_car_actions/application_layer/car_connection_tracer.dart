@@ -1,33 +1,30 @@
-import 'dart:async';
-
-import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/traces/o11y_span.dart';
-import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/traces/o11y_tracer.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/faro/faro.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rum_sdk/rum_sdk.dart';
 
 final carConnectionTracerProvider = Provider((ref) {
   return CarConnectionTracer(
-    tracer: ref.watch(o11yTracerProvider),
+    tracer: ref.watch(tracerProvider),
   );
 });
 
 class CarConnectionTracer {
   CarConnectionTracer({
-    required O11yTracer tracer,
+    required Tracer tracer,
   }) : _tracer = tracer;
 
-  final O11yTracer _tracer;
+  final Tracer _tracer;
 
-  O11ySpan? _connectedSpan;
-  O11ySpan? _lockUnlockDoorsSpan;
-  Completer? _lockUnlockDoorsCompleter;
-  O11ySpan? _updateSoftwareSpan;
-  Completer? _updateSoftwareSpanCompleter;
+  Span? _connectedSpan;
+  Span? _lockUnlockDoorsSpan;
+  Span? _updateSoftwareSpan;
 
-  StatusCode? _lastFailedStatus;
+  SpanStatusCode? _lastFailedStatus;
 
   void connectedToCar() {
     _lastFailedStatus = null;
-    _connectedSpan = _tracer.startSpan('Phone2Car-ConnectedToCar');
+    _connectedSpan =
+        _tracer.startSpan('Phone2Car-ConnectedToCar', isActive: true);
 
     // TODO: Add this!
     // applySpanAttributes()
@@ -37,7 +34,7 @@ class CarConnectionTracer {
     if (_lastFailedStatus != null) {
       _connectedSpan?.setStatus(_lastFailedStatus!);
     } else {
-      _connectedSpan?.setStatus(StatusCode.ok);
+      _connectedSpan?.setStatus(SpanStatusCode.ok);
     }
     _connectedSpan?.end();
     _connectedSpan = null;
@@ -45,58 +42,37 @@ class CarConnectionTracer {
   }
 
   void startLockUnlockDoorsSpan({required bool shouldLock}) {
-    final lockUnlockDoorsCompleter = Completer();
-    _lockUnlockDoorsCompleter?.complete();
-    _lockUnlockDoorsCompleter = lockUnlockDoorsCompleter;
-
-    _tracer.executeWithParentSpan(
-      parentSpan: _connectedSpan,
-      work: () async {
-        if (shouldLock) {
-          _lockUnlockDoorsSpan = _tracer.startSpan('Phone2Car-LockDoors');
-        } else {
-          _lockUnlockDoorsSpan = _tracer.startSpan('Phone2Car-UnlockDoors');
-        }
-
-        // TODO: Add this!
-        // applySpanAttributes()
-
-        await lockUnlockDoorsCompleter.future;
-      },
-    );
+    if (shouldLock) {
+      _lockUnlockDoorsSpan = _tracer.startSpan(
+        'Phone2Car-LockDoors',
+        parentSpan: _connectedSpan,
+      );
+    } else {
+      _lockUnlockDoorsSpan = _tracer.startSpan(
+        'Phone2Car-UnlockDoors',
+        parentSpan: _connectedSpan,
+      );
+    }
   }
 
   void endLockUnlockDoorSpan({
     required bool shouldLock,
-    required StatusCode status,
+    required SpanStatusCode status,
     String? message,
   }) {
-    if (status == StatusCode.error) {
+    if (status == SpanStatusCode.error) {
       _lastFailedStatus = status;
     }
 
     _lockUnlockDoorsSpan?.setStatus(status, message: message);
     _lockUnlockDoorsSpan?.end();
     _lockUnlockDoorsSpan = null;
-    _lockUnlockDoorsCompleter?.complete();
-    _lockUnlockDoorsCompleter = null;
   }
 
   void startUpdateSoftwareSpan() {
-    final updateSoftwareSpanCompleter = Completer();
-    _updateSoftwareSpanCompleter?.complete();
-    _updateSoftwareSpanCompleter = updateSoftwareSpanCompleter;
-
-    _tracer.executeWithParentSpan(
+    _updateSoftwareSpan = _tracer.startSpan(
+      'Phone2Car-UpdateSoftware',
       parentSpan: _connectedSpan,
-      work: () async {
-        _updateSoftwareSpan = _tracer.startSpan('Phone2Car-UpdateSoftware');
-
-        // TODO: Add this!
-        // applySpanAttributes()
-
-        await updateSoftwareSpanCompleter.future;
-      },
     );
   }
 
@@ -105,17 +81,15 @@ class CarConnectionTracer {
   }
 
   void endUpdateSoftwareSpan({
-    required StatusCode status,
+    required SpanStatusCode status,
     String? message,
   }) {
-    if (status == StatusCode.error) {
+    if (status == SpanStatusCode.error) {
       _lastFailedStatus = status;
     }
 
     _updateSoftwareSpan?.setStatus(status, message: message);
     _updateSoftwareSpan?.end();
     _updateSoftwareSpan = null;
-    _updateSoftwareSpanCompleter?.complete();
-    _updateSoftwareSpanCompleter = null;
   }
 }

@@ -20,16 +20,15 @@ dependencies:
   json_serializable: ^6.8.0
   offline_transport:
     git:
-      url: git@github.com:robert-northmind/flutter-rum-sdk.git
+      url: https://github.com/grafana/faro-flutter-sdk.git
       path: packages/offline_transport
-      ref: develop
-  opentelemetry: ^0.18.3
+      ref: v0.0.2
   riverpod_annotation: ^2.3.5
   rum_sdk:
     git:
-      url: git@github.com:robert-northmind/flutter-rum-sdk.git
+      url: https://github.com/grafana/faro-flutter-sdk.git
       path: packages/rum_sdk
-      ref: develop
+      ref: v0.0.2
   rxdart: ^0.27.7
 
 dev_dependencies:

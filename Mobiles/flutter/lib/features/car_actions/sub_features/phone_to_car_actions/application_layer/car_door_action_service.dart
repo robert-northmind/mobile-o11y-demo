@@ -1,10 +1,10 @@
 import 'package:flutter_mobile_o11y_demo/core/application_layer/car_communication/car_communication.dart';
-import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/traces/o11y_span.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/selected_car_service.dart';
 import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car.dart';
 import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_door_status.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/error_presenter.dart';
 import 'package:flutter_mobile_o11y_demo/features/car_actions/sub_features/phone_to_car_actions/application_layer/car_connection_tracer.dart';
+import 'package:rum_sdk/rum_sdk.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CarDoorActionService {
@@ -57,7 +57,7 @@ class CarDoorActionService {
       }
       _tracer.endLockUnlockDoorSpan(
         shouldLock: shouldLock,
-        status: StatusCode.ok,
+        status: SpanStatusCode.ok,
       );
 
       _updateCar(car: car, isLocked: shouldLock);
@@ -67,7 +67,7 @@ class CarDoorActionService {
       );
       _tracer.endLockUnlockDoorSpan(
         shouldLock: shouldLock,
-        status: StatusCode.error,
+        status: SpanStatusCode.error,
         message: error.toString(),
       );
     }

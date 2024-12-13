@@ -4,13 +4,13 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter_mobile_o11y_demo/core/application_layer/car_communication/car_communication.dart';
-import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/traces/o11y_span.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/selected_car_service.dart';
 import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car.dart';
 import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_info.dart';
 import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_software_version.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/error_presenter.dart';
 import 'package:flutter_mobile_o11y_demo/features/car_actions/sub_features/phone_to_car_actions/application_layer/car_connection_tracer.dart';
+import 'package:rum_sdk/rum_sdk.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CarSoftwareUpdateService {
@@ -74,13 +74,13 @@ class CarSoftwareUpdateService {
       _tracer.addEventToSoftwareUpdateSpan(
         'Updated! New version is: $nextVersion',
       );
-      _tracer.endUpdateSoftwareSpan(status: StatusCode.ok);
+      _tracer.endUpdateSoftwareSpan(status: SpanStatusCode.ok);
     } catch (error) {
       _errorPresenter.presentError(
         'CarSoftwareUpdateService failed with error: $error',
       );
       _tracer.endUpdateSoftwareSpan(
-        status: StatusCode.error,
+        status: SpanStatusCode.error,
         message: error.toString(),
       );
     }

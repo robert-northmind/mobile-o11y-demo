@@ -18,12 +18,17 @@ void main() async {
 
   final rumFlutter = RumFlutter();
   rumFlutter.transports.add(
-    OfflineTransport(maxCacheDuration: const Duration(days: 3)),
+    OfflineTransport(
+      maxCacheDuration: const Duration(days: 3),
+      collectorUrl: 'example.com',
+    ),
   );
 
   final otelEndpoint = dotenv.env['OTEL_EXPORTER_OTLP_ENDPOINT'] ?? '';
   final escapedOtelEndpoint = RegExp.escape(otelEndpoint);
   final regExIgnorePatternOtel = '($escapedOtelEndpoint)';
+
+  RumFlutter().enableDataCollection = true;
 
   rumFlutter.runApp(
     optionsConfiguration: RumConfig(

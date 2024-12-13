@@ -1,75 +1,50 @@
 // ignore_for_file: cascade_invocations
 
-import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/traces/o11y_span.dart';
-import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/traces/o11y_tracer.dart';
+import 'dart:io';
+
 import 'package:flutter_mobile_o11y_demo/core/data_layer/models/http_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
 final httpClientProvider = Provider((ref) {
-  return HttpClient(
-    baseUrl: 'localhost:3000',
-    tracer: ref.watch(o11yTracerProvider),
-  );
+  if (Platform.isAndroid) {
+    // When running an Android emulator, localhost or 127.0.0.1
+    // within the emulator refers to the emulator’s own loopback address,
+    // not your machine’s localhost. The Android emulator provides a special IP
+    // address that redirects to your local machine’s localhost.
+    // That is this '10.0.2.2'
+    return HttpClient(baseUrl: '10.0.2.2:3000');
+  } else {
+    return HttpClient(baseUrl: 'localhost:3000');
+  }
 });
 
 class HttpClient {
-  HttpClient({
-    required String baseUrl,
-    required O11yTracer tracer,
-  })  : _baseUrl = baseUrl,
-        _tracer = tracer {
+  HttpClient({required String baseUrl}) : _baseUrl = baseUrl {
     _client = http.Client();
   }
 
   final String _baseUrl;
   late final http.Client _client;
-  final O11yTracer _tracer;
 
   Future<HttpResponse> get(String endpoint) async {
-    return _tracer.executeWithParentSpan(work: () async {
-      final span = _tracer.startSpan('HTTP GET');
-      final uri = Uri.http(_baseUrl, endpoint);
-
-      try {
-        final response = await _client.get(uri);
-        span.setStatus(StatusCode.ok);
-        return HttpResponse(
-          statusCode: response.statusCode,
-          body: response.body,
-        );
-      } catch (error) {
-        span.setStatus(StatusCode.error, message: error.toString());
-        rethrow;
-      } finally {
-        span.end();
-      }
-    });
+    final uri = Uri.http(_baseUrl, endpoint);
+    final response = await _client.get(uri);
+    return HttpResponse(
+      statusCode: response.statusCode,
+      body: response.body,
+    );
   }
 
   Future<HttpResponse> post(String endpoint, dynamic body) async {
-    return _tracer.executeWithParentSpan(work: () async {
-      final span = _tracer.startSpan('HTTP POST');
-
-      final uri = Uri.http(_baseUrl, endpoint);
-      final headers = <String, String>{
-        'Content-Type': 'application/json',
-        'traceparent': span.toHttpTraceparent(),
-      };
-
-      try {
-        final response = await _client.post(uri, body: body, headers: headers);
-        span.setStatus(StatusCode.ok);
-        return HttpResponse(
-          statusCode: response.statusCode,
-          body: response.body,
-        );
-      } catch (error) {
-        span.setStatus(StatusCode.error, message: error.toString());
-        rethrow;
-      } finally {
-        span.end();
-      }
-    });
+    final uri = Uri.http(_baseUrl, endpoint);
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+    };
+    final response = await _client.post(uri, body: body, headers: headers);
+    return HttpResponse(
+      statusCode: response.statusCode,
+      body: response.body,
+    );
   }
 }
