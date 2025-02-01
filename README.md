@@ -88,12 +88,28 @@ From there you need to copy the configuration and past it into the `.env` file.
 
 If you don't have a token yet, then you first need to tap the `Generate now` button in the token section.
 
-### 3. Start the fake backends
+### 3. Configure Faro
+In order to send the data collected to the Grafana stack you previously configured, you need to setup the **FARO** env variables `FARO_API_KEY` and `FARO_COLLECTOR_URL`. 
+
+1. Go to the Grafana path `/a/grafana-mobileo11y-app` and create a new app configuration with name **mobile-o11y-flutter-demo-app**.
+2. Then, from the step `Initialize RUM` copy the properties **apiKey** and **collectorUrl** from the **RumConfig** snippet and replace the environment variables `FARO_API_KEY` and `FARO_COLLECTOR_URL` with those values respectively.
+
+<div align="center">
+  <img src="https://github.com/robert-northmind/mobile-o11y-demo/blob/main/Docs/Resources/connect-mobile-ppp.png?raw=true" width="500">
+</div>
+
+### 4. Start the fake backends
 
 You can run them locally. Start them by running this command from the project root:
 
 ```sh
 make start-backends
+```
+
+or use Docker to start them through the command:
+
+```sh
+docker-compose up --build
 ```
 
 By default they will run at `http://localhost:3000` and `http://localhost:3001`.  
@@ -105,7 +121,13 @@ Note: To stop the backends later you can run:
 make stop-backends
 ```
 
-### 4. Start up the iOS app
+or use the Docker command:
+
+```sh
+docker compose down
+```
+
+### 5. Start up the iOS app
 
 Now you can build and run the iOS app. It is probably easiest to run it on the iOS Simulator (if you want to run it on a real device, then you will need to set up provisioning and signing. This is outside the scope of this example). And you will need to make sure that the device has access to your localhost.
 
@@ -113,13 +135,13 @@ Now you can build and run the iOS app. It is probably easiest to run it on the i
     <img src="Docs/Resources/ios-app-demo.gif" alt="App Demo GIF">
 </div>
 
-### 5. Collect some data
+### 6. Collect some data
 
 Click around a bit. The app has 2 tabs, one for direct interaction from phone to car (this is all faked. Since there is no real car to interact with), and one tab for controlling the car via the local backends.
 
 Now it is time to click a bit. Do some locking/unlocking and update the software of your car.
 
-### 6. Check out your data in Grafana Cloud
+### 7. Check out your data in Grafana Cloud
 
 After some time, you should be able to see your data in App O11y in Grafana Cloud.
 

@@ -24,7 +24,7 @@ app.post("/set-door-status", async (req, res) => {
       "requesting /set-door-status from car-imitator",
       logsAPI.SeverityNumber.INFO
     );
-    const response = await fetch("http://localhost:3001/set-door-status", {
+    const response = await fetch("http://host.docker.internal:3001/set-door-status", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
@@ -53,7 +53,7 @@ app.get("/door-status", async (req, res) => {
     logsAPI.SeverityNumber.INFO
   );
   try {
-    const response = await fetch("http://localhost:3001/door-status");
+    const response = await fetch("http://host.docker.internal:3001/door-status");
 
     // Check if the response status indicates an error
     if (!response.ok) {
