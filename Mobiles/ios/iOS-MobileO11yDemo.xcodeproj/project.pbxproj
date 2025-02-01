@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		6219E3532BF5F0F700B7001A /* iOS_MobileO11yDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3522BF5F0F700B7001A /* iOS_MobileO11yDemoApp.swift */; };
 		6219E3552BF5F0F700B7001A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3542BF5F0F700B7001A /* ContentView.swift */; };
-		6219E3572BF5F0F800B7001A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6219E3562BF5F0F800B7001A /* Assets.xcassets */; };
-		6219E35A2BF5F0F800B7001A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6219E3592BF5F0F800B7001A /* Preview Assets.xcassets */; };
 		6219E3642BF5F0F800B7001A /* iOS_MobileO11yDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3632BF5F0F800B7001A /* iOS_MobileO11yDemoTests.swift */; };
 		6219E36E2BF5F0F900B7001A /* iOS_MobileO11yDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E36D2BF5F0F900B7001A /* iOS_MobileO11yDemoUITests.swift */; };
 		6219E3702BF5F0F900B7001A /* iOS_MobileO11yDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E36F2BF5F0F900B7001A /* iOS_MobileO11yDemoUITestsLaunchTests.swift */; };
@@ -80,8 +78,6 @@
 		6219E34F2BF5F0F700B7001A /* iOS-MobileO11yDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-MobileO11yDemo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6219E3522BF5F0F700B7001A /* iOS_MobileO11yDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_MobileO11yDemoApp.swift; sourceTree = "<group>"; };
 		6219E3542BF5F0F700B7001A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		6219E3562BF5F0F800B7001A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6219E3592BF5F0F800B7001A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6219E35F2BF5F0F800B7001A /* iOS-MobileO11yDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-MobileO11yDemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6219E3632BF5F0F800B7001A /* iOS_MobileO11yDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_MobileO11yDemoTests.swift; sourceTree = "<group>"; };
 		6219E3692BF5F0F900B7001A /* iOS-MobileO11yDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-MobileO11yDemoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,18 +180,8 @@
 				62BCDD7A2C0F281B00DC5715 /* Features */,
 				6219E3522BF5F0F700B7001A /* iOS_MobileO11yDemoApp.swift */,
 				6219E3542BF5F0F700B7001A /* ContentView.swift */,
-				6219E3562BF5F0F800B7001A /* Assets.xcassets */,
-				6219E3582BF5F0F800B7001A /* Preview Content */,
 			);
 			path = "iOS-MobileO11yDemo";
-			sourceTree = "<group>";
-		};
-		6219E3582BF5F0F800B7001A /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				6219E3592BF5F0F800B7001A /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		6219E3622BF5F0F800B7001A /* iOS-MobileO11yDemoTests */ = {
@@ -534,8 +520,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6219E35A2BF5F0F800B7001A /* Preview Assets.xcassets in Resources */,
-				6219E3572BF5F0F800B7001A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,7 +765,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"iOS-MobileO11yDemo/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = CF67NZZ27B;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -811,7 +795,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"iOS-MobileO11yDemo/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = CF67NZZ27B;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
