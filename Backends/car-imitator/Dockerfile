@@ -1,5 +1,6 @@
 FROM node:alpine
 
+ENV HOSTNAME="host.docker.internal"
 COPY package.json package-lock.json* ./
 RUN npm install && npm cache clean --force
 COPY logger.js ./logger.js
