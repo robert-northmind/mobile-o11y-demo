@@ -88,11 +88,18 @@ From there you need to copy the configuration and past it into the `.env` file.
 
 If you don't have a token yet, then you first need to tap the `Generate now` button in the token section.
 
+Note: If the `OTEL_EXPORTER_OTLP_ENDPOINT` env variable ends with `/otlp/otlp` just remove the last `/otlp` from the configuration. The result should be something like: 
+
+```
+OTEL_EXPORTER_OTLP_ENDPOINT=https://[otlp-host]/otlp
+```
+
 ### 3. Configure Faro
 In order to send the data collected to the Grafana stack you previously configured, you need to setup the **FARO** env variables `FARO_API_KEY` and `FARO_COLLECTOR_URL`. 
 
 1. Go to the Grafana path `/a/grafana-mobileo11y-app` and create a new app configuration with name **mobile-o11y-flutter-demo-app**.
 2. Then, from the step `Initialize RUM` copy the properties **apiKey** and **collectorUrl** from the **RumConfig** snippet and replace the environment variables `FARO_API_KEY` and `FARO_COLLECTOR_URL` with those values respectively.
+3. Make sure the `FARO_COLLECTOR_URL` is configured with the **apiKey** at the end of the URL.
 
 <div align="center">
   <img src="https://github.com/robert-northmind/mobile-o11y-demo/blob/main/Docs/Resources/connect-mobile-ppp.png?raw=true" width="500">

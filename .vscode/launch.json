@@ -1,0 +1,64 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "dart",
+        "request": "launch",
+        "name": "Flutter",
+        "program": "Mobiles/flutter/lib/main.dart",
+        "flutterMode": "debug"
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch OMC",
+        "program": "${workspaceFolder}/backend/observable-motor-command/server.js",
+        "outFiles": [
+          "${workspaceFolder}/backend/observable-motor-command/**/*.js"
+        ],
+        "env": {
+          "NODE_ENV": "development"
+        }
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch car-imitator",
+        "program": "${workspaceFolder}/backend/car-imitator/server.js",
+        "outFiles": ["${workspaceFolder}/backend/car-imitator/**/*.js"],
+        "env": {
+          "NODE_ENV": "development"
+        }
+      },
+      {
+        "name": "Launch OMC from script",
+        "type": "node",
+        "request": "launch",
+        "runtimeExecutable": "npm",
+        "runtimeArgs": ["run", "start"],
+        "cwd": "${workspaceFolder}/backend/observable-motor-command",
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen"
+      },
+      {
+        "name": "Launch car-imitator from script",
+        "type": "node",
+        "request": "launch",
+        "runtimeExecutable": "npm",
+        "runtimeArgs": ["run", "start"],
+        "cwd": "${workspaceFolder}/backend/car-imitator",
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen"
+      }
+    ]
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

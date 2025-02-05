@@ -18,17 +18,12 @@ dependencies:
   http: ^1.2.1
   json_annotation: ^4.9.0
   json_serializable: ^6.8.0
-  offline_transport:
-    git:
-      url: https://github.com/grafana/faro-flutter-sdk.git
-      path: packages/offline_transport
-      ref: v0.0.2
   riverpod_annotation: ^2.3.5
   rum_sdk:
     git:
       url: https://github.com/grafana/faro-flutter-sdk.git
       path: packages/rum_sdk
-      ref: v0.0.2
+      ref: v0.1.1
   rxdart: ^0.27.7
 
 dev_dependencies:
