@@ -188,6 +188,7 @@ playground.xcworkspace
 
 # Generated plist files
 *.plist
+!Mobiles/flutter/ios/Runner/Info.plist
 
 # Archives
 *.xcarchive
