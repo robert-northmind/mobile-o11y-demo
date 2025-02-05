@@ -1,0 +1,22 @@
+services:
+  observable-motor-command:
+    container_name: 'observable-motor-command'
+    build:
+      args:
+        - NODE_ENV=development
+      context: ./Backends/observable-motor-command
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+
+  car-imitator:
+    container_name: 'car-imitator'
+    build:
+      args:
+        - NODE_ENV=development
+      context: ./Backends/car-imitator
+    ports:
+      - 3001:3001
+    env_file:
+      - .env

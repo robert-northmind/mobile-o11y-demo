@@ -98,7 +98,7 @@ dist
 .temp/
 
 # VS Code settings
-.vscode/
+!.vscode/launch.json
 
 # Xcode
 DerivedData/

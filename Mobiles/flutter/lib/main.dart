@@ -7,7 +7,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/providers.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/router/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:offline_transport/offline_transport.dart';
 import 'package:rum_sdk/rum_sdk.dart';
 
 void main() async {
@@ -20,7 +19,6 @@ void main() async {
   rumFlutter.transports.add(
     OfflineTransport(
       maxCacheDuration: const Duration(days: 3),
-      collectorUrl: 'example.com',
     ),
   );
 

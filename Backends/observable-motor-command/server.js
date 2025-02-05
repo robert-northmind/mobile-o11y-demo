@@ -1,5 +1,8 @@
 import { log, logsAPI } from "./logger.js";
 import express from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const port = 3000;
@@ -11,6 +14,7 @@ app.use(express.json());
 app.post("/set-door-status", async (req, res) => {
   const { status } = req.body;
   log("requesting /set-door-status", logsAPI.SeverityNumber.INFO);
+  const hostname = process.env.HOSTNAME;
 
   if (status !== "locked" && status !== "unlocked") {
     const message =
@@ -24,7 +28,7 @@ app.post("/set-door-status", async (req, res) => {
       "requesting /set-door-status from car-imitator",
       logsAPI.SeverityNumber.INFO
     );
-    const response = await fetch("http://localhost:3001/set-door-status", {
+    const response = await fetch(`http://${hostname}:3001/set-door-status`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
@@ -48,12 +52,14 @@ app.post("/set-door-status", async (req, res) => {
 
 // Endpoint to check the current door status
 app.get("/door-status", async (req, res) => {
+  const hostname = process.env.HOSTNAME;
+
   log(
     "requesting /door-status  from car-imitator",
     logsAPI.SeverityNumber.INFO
   );
   try {
-    const response = await fetch("http://localhost:3001/door-status");
+    const response = await fetch(`http://${hostname}:3001/door-status`);
 
     // Check if the response status indicates an error
     if (!response.ok) {
