@@ -197,6 +197,7 @@ playground.xcworkspace
 
 # Resource folders
 *.xcassets
+!Mobiles/flutter/ios/Runner/Assets.xcassets/
 
 # General
 .DS_Store
