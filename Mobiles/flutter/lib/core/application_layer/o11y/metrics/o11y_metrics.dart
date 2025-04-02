@@ -1,7 +1,6 @@
+import 'package:faro/faro.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/faro/faro.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rum_sdk/rum_flutter.dart';
-import 'package:rum_sdk/rum_sdk.dart';
 
 final o11yMetricsProvider = Provider((ref) {
   return O11yMetrics(
@@ -11,10 +10,10 @@ final o11yMetricsProvider = Provider((ref) {
 
 class O11yMetrics {
   O11yMetrics({
-    required RumFlutter rumFlutter,
+    required Faro rumFlutter,
   }) : _rumFlutter = rumFlutter;
 
-  final RumFlutter _rumFlutter;
+  final Faro _rumFlutter;
 
   Future<void> addMeasurement(
     String name,

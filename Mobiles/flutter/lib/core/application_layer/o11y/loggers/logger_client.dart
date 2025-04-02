@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_print
 
+import 'package:faro/faro.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/faro/faro.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rum_sdk/rum_flutter.dart';
 
 final consoleLoggerClientProvider = Provider((ref) {
   return ConsoleLoggerClient();
@@ -53,10 +53,10 @@ class ConsoleLoggerClient implements LoggerClient {
 
 class FaroLoggerClient implements LoggerClient {
   FaroLoggerClient({
-    required RumFlutter rumFlutter,
+    required Faro rumFlutter,
   }) : _rumFlutter = rumFlutter;
 
-  final RumFlutter _rumFlutter;
+  final Faro _rumFlutter;
 
   @override
   void debug(String message, {required Map<String, String> context}) {

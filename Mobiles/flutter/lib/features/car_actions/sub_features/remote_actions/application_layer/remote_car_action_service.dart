@@ -1,5 +1,6 @@
 // ignore_for_file: cascade_invocations, lines_longer_than_80_chars
 
+import 'package:faro/faro_sdk.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/faro/faro.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/loggers/o11y_logger.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/providers.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/error_p
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/providers.dart';
 import 'package:flutter_mobile_o11y_demo/features/car_actions/sub_features/remote_actions/data_layer/remote_car_action_remote_data_source.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rum_sdk/rum_sdk.dart';
 import 'package:rxdart/rxdart.dart';
 
 final remoteCarActionServiceProvider = Provider.autoDispose((ref) {

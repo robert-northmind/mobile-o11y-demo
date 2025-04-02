@@ -2,20 +2,20 @@
 
 import 'dart:io';
 
+import 'package:faro/faro_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/providers.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/router/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rum_sdk/rum_sdk.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  HttpOverrides.global = RumHttpOverrides(HttpOverrides.current);
+  HttpOverrides.global = FaroHttpOverrides(HttpOverrides.current);
   await dotenv.load();
 
-  final rumFlutter = RumFlutter();
+  final rumFlutter = Faro();
   rumFlutter.transports.add(
     OfflineTransport(
       maxCacheDuration: const Duration(days: 3),
@@ -26,10 +26,10 @@ void main() async {
   final escapedOtelEndpoint = RegExp.escape(otelEndpoint);
   final regExIgnorePatternOtel = '($escapedOtelEndpoint)';
 
-  RumFlutter().enableDataCollection = true;
+  Faro().enableDataCollection = true;
 
   rumFlutter.runApp(
-    optionsConfiguration: RumConfig(
+    optionsConfiguration: FaroConfig(
         appName: 'mobile-o11y-flutter-demo-app',
         appVersion: '1.0.0',
         appEnv: 'production',
@@ -45,8 +45,8 @@ void main() async {
     appRunner: () {
       runApp(
         DefaultAssetBundle(
-          bundle: RumAssetBundle(),
-          child: const RumUserInteractionWidget(
+          bundle: FaroAssetBundle(),
+          child: const FaroUserInteractionWidget(
             child: ProviderScope(child: MyApp()),
           ),
         ),

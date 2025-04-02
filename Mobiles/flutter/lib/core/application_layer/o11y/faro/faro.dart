@@ -1,7 +1,7 @@
+import 'package:faro/faro.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rum_sdk/rum_flutter.dart';
 
-final rumProvider = Provider((ref) => RumFlutter());
+final rumProvider = Provider((ref) => Faro());
 
 final tracerProvider = Provider((ref) {
   final faro = ref.watch(rumProvider);

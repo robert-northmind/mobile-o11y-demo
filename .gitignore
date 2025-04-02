@@ -208,3 +208,5 @@ playground.xcworkspace
 *.log
 *.xcconfig
 *.xcworkspace
+
+**/.cxx/
