@@ -8,9 +8,10 @@
 import OpenTelemetryApi
 import OpenTelemetrySdk
 import ResourceExtension
+import Foundation
 
 struct OTelResourceProvider {
-    static let serviceVersion: String = getRandomServiceVersion()
+    static private let serviceVersion: String = getRandomServiceVersion()
     
     func getResource() -> Resource {
         let otelConfig = OTelConfig()

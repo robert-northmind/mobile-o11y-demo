@@ -13,13 +13,6 @@
 		6219E36E2BF5F0F900B7001A /* iOS_MobileO11yDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E36D2BF5F0F900B7001A /* iOS_MobileO11yDemoUITests.swift */; };
 		6219E3702BF5F0F900B7001A /* iOS_MobileO11yDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E36F2BF5F0F900B7001A /* iOS_MobileO11yDemoUITestsLaunchTests.swift */; };
 		6219E37E2BF5F27E00B7001A /* OTelTraces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E37D2BF5F27E00B7001A /* OTelTraces.swift */; };
-		6219E3832BF5F3D100B7001A /* OpenTelemetryApi in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E3822BF5F3D100B7001A /* OpenTelemetryApi */; };
-		6219E3872BF5F3D100B7001A /* OpenTelemetryProtocolExporterHTTP in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E3862BF5F3D100B7001A /* OpenTelemetryProtocolExporterHTTP */; };
-		6219E3892BF5F3D100B7001A /* OpenTelemetrySdk in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E3882BF5F3D100B7001A /* OpenTelemetrySdk */; };
-		6219E38B2BF5F3D100B7001A /* ResourceExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E38A2BF5F3D100B7001A /* ResourceExtension */; };
-		6219E38D2BF5F3D100B7001A /* SignPostIntegration in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E38C2BF5F3D100B7001A /* SignPostIntegration */; };
-		6219E38F2BF5F3D100B7001A /* StdoutExporter in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E38E2BF5F3D100B7001A /* StdoutExporter */; };
-		6219E3932BF5F3D100B7001A /* URLSessionInstrumentation in Frameworks */ = {isa = PBXBuildFile; productRef = 6219E3922BF5F3D100B7001A /* URLSessionInstrumentation */; };
 		6219E39D2BF5F41B00B7001A /* OTelConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E39C2BF5F41B00B7001A /* OTelConfig.swift */; };
 		6219E39F2BF5F53F00B7001A /* OTelResourceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E39E2BF5F53F00B7001A /* OTelResourceProvider.swift */; };
 		6219E3A12BF5F5FC00B7001A /* OTelAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3A02BF5F5FC00B7001A /* OTelAuthProvider.swift */; };
@@ -30,6 +23,13 @@
 		6219E3AE2BF5FD1700B7001A /* InjectedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3AD2BF5FD1700B7001A /* InjectedValues.swift */; };
 		6219E3B12BF5FD7700B7001A /* RemoteActionApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3B02BF5FD7700B7001A /* RemoteActionApiClient.swift */; };
 		6219E3B32BF6002500B7001A /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6219E3B22BF6002500B7001A /* ApiError.swift */; };
+		624FFC892DC01E3900D8A8C6 /* OpenTelemetryApi in Frameworks */ = {isa = PBXBuildFile; productRef = 624FFC882DC01E3900D8A8C6 /* OpenTelemetryApi */; };
+		624FFC8B2DC01E3900D8A8C6 /* OpenTelemetryProtocolExporterHTTP in Frameworks */ = {isa = PBXBuildFile; productRef = 624FFC8A2DC01E3900D8A8C6 /* OpenTelemetryProtocolExporterHTTP */; };
+		624FFC8D2DC01E3900D8A8C6 /* OpenTelemetrySdk in Frameworks */ = {isa = PBXBuildFile; productRef = 624FFC8C2DC01E3900D8A8C6 /* OpenTelemetrySdk */; };
+		624FFC8F2DC01E3900D8A8C6 /* StdoutExporter in Frameworks */ = {isa = PBXBuildFile; productRef = 624FFC8E2DC01E3900D8A8C6 /* StdoutExporter */; };
+		624FFC912DC01E3900D8A8C6 /* URLSessionInstrumentation in Frameworks */ = {isa = PBXBuildFile; productRef = 624FFC902DC01E3900D8A8C6 /* URLSessionInstrumentation */; };
+		624FFC942DC01E7700D8A8C6 /* FaroOtelExporter in Frameworks */ = {isa = PBXBuildFile; productRef = 624FFC932DC01E7700D8A8C6 /* FaroOtelExporter */; };
+		624FFC962DC01ED300D8A8C6 /* ResourceExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 624FFC952DC01ED300D8A8C6 /* ResourceExtension */; };
 		62524F272C1078C800AAAB9B /* PhoneToCarUpdateSoftwareActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62524F262C1078C800AAAB9B /* PhoneToCarUpdateSoftwareActionViewModel.swift */; };
 		62524F292C107B0600AAAB9B /* CarSoftwareUpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62524F282C107B0600AAAB9B /* CarSoftwareUpdateService.swift */; };
 		62524F2B2C108E5700AAAB9B /* CarConnectionTracer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62524F2A2C108E5700AAAB9B /* CarConnectionTracer.swift */; };
@@ -51,6 +51,7 @@
 		62994D822C0FAA89008D8F78 /* PhoneToCarLockUnlockActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62994D812C0FAA89008D8F78 /* PhoneToCarLockUnlockActionViewModel.swift */; };
 		62BCDD7E2C0F28AB00DC5715 /* RemoteActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BCDD7D2C0F28AB00DC5715 /* RemoteActionView.swift */; };
 		62BCDD802C0F2E8C00DC5715 /* PhoneToCarActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */; };
+		62F755D62DCDFCE700E7F9BC /* FaroConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F755D52DCDFCE700E7F9BC /* FaroConfig.swift */; };
 		62FDE73B2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDE73A2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift */; };
 		62FDE73D2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDE73C2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift */; };
 		62FDE7402C0F410200DCB86E /* DoorLockStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDE73F2C0F410200DCB86E /* DoorLockStateView.swift */; };
@@ -115,6 +116,7 @@
 		62994D812C0FAA89008D8F78 /* PhoneToCarLockUnlockActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarLockUnlockActionViewModel.swift; sourceTree = "<group>"; };
 		62BCDD7D2C0F28AB00DC5715 /* RemoteActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteActionView.swift; sourceTree = "<group>"; };
 		62BCDD7F2C0F2E8C00DC5715 /* PhoneToCarActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarActionView.swift; sourceTree = "<group>"; };
+		62F755D52DCDFCE700E7F9BC /* FaroConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaroConfig.swift; sourceTree = "<group>"; };
 		62FDE73A2C0F3DCD00DCB86E /* PhoneToCarConnectedActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarConnectedActionView.swift; sourceTree = "<group>"; };
 		62FDE73C2C0F3DE100DCB86E /* PhoneToCarNotConnectedActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToCarNotConnectedActionView.swift; sourceTree = "<group>"; };
 		62FDE73F2C0F410200DCB86E /* DoorLockStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorLockStateView.swift; sourceTree = "<group>"; };
@@ -126,13 +128,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6219E3892BF5F3D100B7001A /* OpenTelemetrySdk in Frameworks */,
-				6219E38F2BF5F3D100B7001A /* StdoutExporter in Frameworks */,
-				6219E38B2BF5F3D100B7001A /* ResourceExtension in Frameworks */,
-				6219E38D2BF5F3D100B7001A /* SignPostIntegration in Frameworks */,
-				6219E3832BF5F3D100B7001A /* OpenTelemetryApi in Frameworks */,
-				6219E3932BF5F3D100B7001A /* URLSessionInstrumentation in Frameworks */,
-				6219E3872BF5F3D100B7001A /* OpenTelemetryProtocolExporterHTTP in Frameworks */,
+				624FFC8D2DC01E3900D8A8C6 /* OpenTelemetrySdk in Frameworks */,
+				624FFC942DC01E7700D8A8C6 /* FaroOtelExporter in Frameworks */,
+				624FFC962DC01ED300D8A8C6 /* ResourceExtension in Frameworks */,
+				624FFC892DC01E3900D8A8C6 /* OpenTelemetryApi in Frameworks */,
+				624FFC8F2DC01E3900D8A8C6 /* StdoutExporter in Frameworks */,
+				624FFC912DC01E3900D8A8C6 /* URLSessionInstrumentation in Frameworks */,
+				624FFC8B2DC01E3900D8A8C6 /* OpenTelemetryProtocolExporterHTTP in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +161,7 @@
 				6219E3512BF5F0F700B7001A /* iOS-MobileO11yDemo */,
 				6219E3622BF5F0F800B7001A /* iOS-MobileO11yDemoTests */,
 				6219E36C2BF5F0F900B7001A /* iOS-MobileO11yDemoUITests */,
+				627942C62DAF92E6001E0A2C /* Frameworks */,
 				6219E3502BF5F0F700B7001A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 		6219E37C2BF5F22D00B7001A /* OpenTelemetry */ = {
 			isa = PBXGroup;
 			children = (
+				62F755D52DCDFCE700E7F9BC /* FaroConfig.swift */,
 				6219E37D2BF5F27E00B7001A /* OTelTraces.swift */,
 				6219E39C2BF5F41B00B7001A /* OTelConfig.swift */,
 				6219E39E2BF5F53F00B7001A /* OTelResourceProvider.swift */,
@@ -285,6 +289,13 @@
 				626ED2AA2C1C659E00055EBC /* SelectedCarService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		627942C62DAF92E6001E0A2C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		62994D672C0F4EC7008D8F78 /* Services */ = {
@@ -421,13 +432,13 @@
 			);
 			name = "iOS-MobileO11yDemo";
 			packageProductDependencies = (
-				6219E3822BF5F3D100B7001A /* OpenTelemetryApi */,
-				6219E3862BF5F3D100B7001A /* OpenTelemetryProtocolExporterHTTP */,
-				6219E3882BF5F3D100B7001A /* OpenTelemetrySdk */,
-				6219E38A2BF5F3D100B7001A /* ResourceExtension */,
-				6219E38C2BF5F3D100B7001A /* SignPostIntegration */,
-				6219E38E2BF5F3D100B7001A /* StdoutExporter */,
-				6219E3922BF5F3D100B7001A /* URLSessionInstrumentation */,
+				624FFC882DC01E3900D8A8C6 /* OpenTelemetryApi */,
+				624FFC8A2DC01E3900D8A8C6 /* OpenTelemetryProtocolExporterHTTP */,
+				624FFC8C2DC01E3900D8A8C6 /* OpenTelemetrySdk */,
+				624FFC8E2DC01E3900D8A8C6 /* StdoutExporter */,
+				624FFC902DC01E3900D8A8C6 /* URLSessionInstrumentation */,
+				624FFC932DC01E7700D8A8C6 /* FaroOtelExporter */,
+				624FFC952DC01ED300D8A8C6 /* ResourceExtension */,
 			);
 			productName = "iOS-MobileO11yDemo";
 			productReference = 6219E34F2BF5F0F700B7001A /* iOS-MobileO11yDemo.app */;
@@ -502,7 +513,8 @@
 			);
 			mainGroup = 6219E3462BF5F0F700B7001A;
 			packageReferences = (
-				6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */,
+				624FFC872DC01E3900D8A8C6 /* XCRemoteSwiftPackageReference "opentelemetry-swift" */,
+				624FFC922DC01E7700D8A8C6 /* XCRemoteSwiftPackageReference "faro-otel-swift-exporter" */,
 			);
 			productRefGroup = 6219E3502BF5F0F700B7001A /* Products */;
 			projectDirPath = "";
@@ -602,6 +614,7 @@
 				62994D662C0F488B008D8F78 /* PhoneToCarUpdateSoftwareActionView.swift in Sources */,
 				6219E3A62BF5F9A600B7001A /* RemoteActionService.swift in Sources */,
 				62524F292C107B0600AAAB9B /* CarSoftwareUpdateService.swift in Sources */,
+				62F755D62DCDFCE700E7F9BC /* FaroConfig.swift in Sources */,
 				62994D702C0F590F008D8F78 /* CarDoorActionService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -766,7 +779,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = CF67NZZ27B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -796,7 +809,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = CF67NZZ27B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -825,7 +838,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CF67NZZ27B;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MARKETING_VERSION = 1.0;
@@ -845,7 +858,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CF67NZZ27B;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MARKETING_VERSION = 1.0;
@@ -864,7 +877,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CF67NZZ27B;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.grafana.appo11y.demo.iOS-MobileO11yDemoUITests";
@@ -882,7 +895,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CF67NZZ27B;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.grafana.appo11y.demo.iOS-MobileO11yDemoUITests";
@@ -936,51 +949,59 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */ = {
+		624FFC872DC01E3900D8A8C6 /* XCRemoteSwiftPackageReference "opentelemetry-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/open-telemetry/opentelemetry-swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.9.2;
+				minimumVersion = 1.15.0;
+			};
+		};
+		624FFC922DC01E7700D8A8C6 /* XCRemoteSwiftPackageReference "faro-otel-swift-exporter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/grafana/faro-otel-swift-exporter";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6219E3822BF5F3D100B7001A /* OpenTelemetryApi */ = {
+		624FFC882DC01E3900D8A8C6 /* OpenTelemetryApi */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			package = 624FFC872DC01E3900D8A8C6 /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
 			productName = OpenTelemetryApi;
 		};
-		6219E3862BF5F3D100B7001A /* OpenTelemetryProtocolExporterHTTP */ = {
+		624FFC8A2DC01E3900D8A8C6 /* OpenTelemetryProtocolExporterHTTP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			package = 624FFC872DC01E3900D8A8C6 /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
 			productName = OpenTelemetryProtocolExporterHTTP;
 		};
-		6219E3882BF5F3D100B7001A /* OpenTelemetrySdk */ = {
+		624FFC8C2DC01E3900D8A8C6 /* OpenTelemetrySdk */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			package = 624FFC872DC01E3900D8A8C6 /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
 			productName = OpenTelemetrySdk;
 		};
-		6219E38A2BF5F3D100B7001A /* ResourceExtension */ = {
+		624FFC8E2DC01E3900D8A8C6 /* StdoutExporter */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
-			productName = ResourceExtension;
-		};
-		6219E38C2BF5F3D100B7001A /* SignPostIntegration */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
-			productName = SignPostIntegration;
-		};
-		6219E38E2BF5F3D100B7001A /* StdoutExporter */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			package = 624FFC872DC01E3900D8A8C6 /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
 			productName = StdoutExporter;
 		};
-		6219E3922BF5F3D100B7001A /* URLSessionInstrumentation */ = {
+		624FFC902DC01E3900D8A8C6 /* URLSessionInstrumentation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6219E37F2BF5F3D100B7001A /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			package = 624FFC872DC01E3900D8A8C6 /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
 			productName = URLSessionInstrumentation;
+		};
+		624FFC932DC01E7700D8A8C6 /* FaroOtelExporter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 624FFC922DC01E7700D8A8C6 /* XCRemoteSwiftPackageReference "faro-otel-swift-exporter" */;
+			productName = FaroOtelExporter;
+		};
+		624FFC952DC01ED300D8A8C6 /* ResourceExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 624FFC872DC01E3900D8A8C6 /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = ResourceExtension;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

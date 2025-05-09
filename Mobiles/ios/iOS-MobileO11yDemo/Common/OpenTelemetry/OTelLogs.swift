@@ -9,6 +9,7 @@ import Foundation
 import OpenTelemetryApi
 import OpenTelemetrySdk
 import OpenTelemetryProtocolExporterHttp
+import FaroOtelExporter
 
 class OTelLogs {
     static let instance = OTelLogs()
@@ -21,22 +22,28 @@ class OTelLogs {
         guard isInitialized == false else { return }
         isInitialized = true
 
+        // -- Pure Otel exporter --
         let urlConfig = URLSessionConfiguration.default
         urlConfig.httpAdditionalHeaders = OTelAuthProvider().getAuthHeader()
-        
         let otlpHttpLogExporter = OtlpHttpLogExporter(
             endpoint: URL(string: "\(OTelConfig().endpointUrl)/v1/logs")!,
             useSession: URLSession(configuration: urlConfig)
         )
-        
         // Use `SimpleLogRecordProcessor` during development.
-//        let logProcessor = SimpleLogRecordProcessor(logRecordExporter:otlpHttpLogExporter)
+        let otelLogProcessor = SimpleLogRecordProcessor(logRecordExporter:otlpHttpLogExporter)
         
-        // Use `BatchSpanProcessor` for production.
-        let logProcessor = BatchLogRecordProcessor(logRecordExporter:otlpHttpLogExporter)
-        
+        // -- Faro exporter --
+        let faroOptions = FaroExporterOptions(
+            collectorUrl: FaroConfig().collectorUrl,
+            appName: "mobile-o11y-flutter-demo-app",
+            appVersion: "1.0.0",
+            appEnvironment: "production",
+        )
+        let faroLogExporter = try! FaroExporter(options: faroOptions)
+        let faroLogProcessor = BatchLogRecordProcessor(logRecordExporter:faroLogExporter)
+
         let loggerProvider = LoggerProviderBuilder()
-                    .with(processors: [logProcessor])
+                    .with(processors: [faroLogProcessor])
                     .with(resource: OTelResourceProvider().getResource())
                     .build()
         OpenTelemetry.registerLoggerProvider(loggerProvider: loggerProvider)
@@ -57,12 +64,12 @@ extension OpenTelemetryApi.Logger {
         timestamp: Date = Date(),
         attributes: [String: String] = [:]
     ) {
-        let otelAttributes = attributes.reduce(into: [String: AttributeValue]()) {
-            $0[$1.key] = AttributeValue.string($1.value)
+        var otelAttributes = attributes.reduce(into: [String: OpenTelemetryApi.AttributeValue]()) {
+            $0[$1.key] = OpenTelemetryApi.AttributeValue.string($1.value)
         }
         self
             .logRecordBuilder()
-            .setBody(AttributeValue.string(message))
+            .setBody(OpenTelemetryApi.AttributeValue.string(message))
             .setTimestamp(timestamp)
             .setAttributes(otelAttributes)
             .setSeverity(severity)

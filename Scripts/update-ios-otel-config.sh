@@ -16,15 +16,22 @@ fi
 # Remove the prefix "Authorization=" from OTEL_EXPORTER_OTLP_HEADERS
 FIXED_OTEL_EXPORTER_OTLP_HEADERS="${OTEL_EXPORTER_OTLP_HEADERS#Authorization=}"
 
-# File to be updated
-FILE="$SCRIPT_DIR/../Mobiles/ios/iOS-MobileO11yDemo/Common/OpenTelemetry/OTelConfig.swift"
+# Files to be updated
+OTEL_FILE="$SCRIPT_DIR/../Mobiles/ios/iOS-MobileO11yDemo/Common/OpenTelemetry/OTelConfig.swift"
+FARO_FILE="$SCRIPT_DIR/../Mobiles/ios/iOS-MobileO11yDemo/Common/OpenTelemetry/FaroConfig.swift"
 
-# New content
+# New content for OTelConfig
 NEW_OTEL_HEADERS="    let otelHeaders = \"$FIXED_OTEL_EXPORTER_OTLP_HEADERS\""
 NEW_ENDPOINT="    let endpointUrl = \"$OTEL_EXPORTER_OTLP_ENDPOINT\""
 
-# Use sed to find and replace the line containing the prev string
-sed -i '' "s|    let otelHeaders = \".*\"|$NEW_OTEL_HEADERS|" "$FILE"
-sed -i '' "s|    let endpointUrl = \".*\"|$NEW_ENDPOINT|" "$FILE"
+# New content for FaroConfig
+NEW_FARO_COLLECTOR_URL="    let collectorUrl = \"$FARO_COLLECTOR_URL\""
 
-echo "✅ Finished updating the iOS OpenTelemetry configuration."
+# Use sed to find and replace the line containing the prev string in OTelConfig
+sed -i '' "s|    let otelHeaders = \".*\"|$NEW_OTEL_HEADERS|" "$OTEL_FILE"
+sed -i '' "s|    let endpointUrl = \".*\"|$NEW_ENDPOINT|" "$OTEL_FILE"
+
+# Use sed to find and replace the line containing collectorUrl in FaroConfig
+sed -i '' "s|    let collectorUrl = \".*\"|$NEW_FARO_COLLECTOR_URL|" "$FARO_FILE"
+
+echo "✅ Finished updating the iOS OpenTelemetry and Faro configurations."
