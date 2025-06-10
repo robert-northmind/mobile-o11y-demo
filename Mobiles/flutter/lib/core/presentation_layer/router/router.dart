@@ -12,10 +12,10 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: navigatorKey,
   initialLocation: '/home',
-  observers: [FaroNavigationObserver()],
+  // observers: [FaroNavigationObserver()],
   routes: [
     ShellRoute(
-      observers: [FaroNavigationObserver()],
+      // observers: [FaroNavigationObserver()],
       navigatorKey: _shellNavigatorKey,
       builder: (context, state, child) =>
           BottomNavigationBarScaffold(child: child),

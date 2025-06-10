@@ -1,29 +1,32 @@
 import 'package:faro/faro.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/faro/faro.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/local_o11y/local_events.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final o11yEventsProvider = Provider((ref) {
-  return O11yEvents(
-    rumFlutter: ref.watch(rumProvider),
-  );
+  return LocalO11yEvents();
+
+  // return O11yEvents(
+  //   faro: ref.watch(faroProvider),
+  // );
 });
 
 class O11yEvents {
   O11yEvents({
-    required Faro rumFlutter,
-  }) : _rumFlutter = rumFlutter;
+    required Faro faro,
+  }) : _faro = faro;
 
-  final Faro _rumFlutter;
+  final Faro _faro;
 
   Future<void> trackEvent(
     String name, {
     Map<String, String> attributes = const {},
   }) async {
-    await _rumFlutter.pushEvent(name, attributes: attributes);
+    await _faro.pushEvent(name, attributes: attributes);
   }
 
   void trackStartEvent(String key, String name) {
-    _rumFlutter.markEventStart(key, name);
+    _faro.markEventStart(key, name);
   }
 
   Future<void> trackEndEvent(
@@ -31,7 +34,7 @@ class O11yEvents {
     String name, {
     Map<String, String> attributes = const {},
   }) async {
-    await _rumFlutter.markEventEnd(key, name, attributes: attributes);
+    await _faro.markEventEnd(key, name, attributes: attributes);
   }
 
   void setUser({
@@ -39,7 +42,7 @@ class O11yEvents {
     required String name,
     required String email,
   }) {
-    _rumFlutter.setUserMeta(
+    _faro.setUserMeta(
       userId: id,
       userName: name,
       userEmail: email,
