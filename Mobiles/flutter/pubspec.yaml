@@ -10,10 +10,7 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.6
   equatable: ^2.0.5
-  faro:
-    git:
-      url: https://github.com/grafana/faro-flutter-sdk.git
-      ref: v0.3.0
+  faro: ^0.3.7
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.1.0
