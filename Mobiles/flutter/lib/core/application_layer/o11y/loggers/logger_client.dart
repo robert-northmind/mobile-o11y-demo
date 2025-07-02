@@ -10,11 +10,11 @@ final consoleLoggerClientProvider = Provider((ref) {
 });
 
 final faroLoggerClientProvider = Provider((ref) {
-  return LocalLoggerClient();
+  // return LocalLoggerClient();
 
-  // return FaroLoggerClient(
-  //   faro: ref.watch(faroProvider),
-  // );
+  return FaroLoggerClient(
+    faro: ref.watch(faroProvider),
+  );
 });
 
 abstract class LoggerClient {
@@ -63,12 +63,12 @@ class FaroLoggerClient implements LoggerClient {
 
   @override
   void debug(String message, {required Map<String, String> context}) {
-    _faro.pushLog(message, level: 'DEBUG', context: context);
+    _faro.pushLog(message, level: LogLevel.debug, context: context);
   }
 
   @override
   void warning(String message, {required Map<String, String> context}) {
-    _faro.pushLog(message, level: 'WARNING', context: context);
+    _faro.pushLog(message, level: LogLevel.warn, context: context);
   }
 
   @override
@@ -91,6 +91,6 @@ class FaroLoggerClient implements LoggerClient {
         'stackTrace': stackTrace.toString(),
       };
     }
-    _faro.pushLog(message, level: 'ERROR', context: allContext);
+    _faro.pushLog(message, level: LogLevel.error, context: allContext);
   }
 }

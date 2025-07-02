@@ -84,6 +84,16 @@ class SettingsPage extends ConsumerWidget {
               ),
               ElevatedButton(
                 onPressed: () {
+                  o11yLogger.error(
+                    'Custom Error Log triggered from button',
+                    context: {'custom_key': 'custom_value'},
+                    error: CustomError('Custom Error'),
+                  );
+                },
+                child: const Text('Custom Error Log'),
+              ),
+              ElevatedButton(
+                onPressed: () {
                   o11yMetrics.addMeasurement(
                     'custom_measurement',
                     {'custom_value': 1},

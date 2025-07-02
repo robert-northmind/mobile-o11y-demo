@@ -45,7 +45,7 @@ class FakeCarCommunication implements CarCommunication {
   Future<void> lockDoors() async {
     _logger.debug('Locking to car', context: _loggerContext);
     await _makeFakeConnectionDelay(minSec: 0.5, maxSec: 1.5);
-    await _throwFakeError(probabilityInPercent: 10);
+    await _throwFakeError(probabilityInPercent: 9);
   }
 
   @override
@@ -66,7 +66,7 @@ class FakeCarCommunication implements CarCommunication {
     while (_softwareUpdateProgressSubject.value < 1) {
       _checkIfConnectedAndCanStillUpdate();
       await _makeFakeConnectionDelay(minSec: 0.5, maxSec: 2.1);
-      await _throwFakeError(probabilityInPercent: 4);
+      await _throwFakeError(probabilityInPercent: 10);
       _softwareUpdateProgressSubject.value = min(
         _softwareUpdateProgressSubject.value + 0.1,
         100,

@@ -3,8 +3,7 @@ import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/events/o11y
 
 class LocalO11yEvents implements O11yEvents {
   @override
-  Future<void> trackEvent(String name,
-      {Map<String, String> attributes = const {}}) async {
+  void trackEvent(String name, {Map<String, String> attributes = const {}}) {
     print('LocalO11yEvents: trackEvent: $name, $attributes');
   }
 
@@ -18,8 +17,8 @@ class LocalO11yEvents implements O11yEvents {
   }
 
   @override
-  Future<void> trackEndEvent(String key, String name,
-      {Map<String, String> attributes = const {}}) async {
+  void trackEndEvent(String key, String name,
+      {Map<String, String> attributes = const {}}) {
     print('LocalO11yEvents: trackEndEvent: $key, $name, $attributes');
   }
 

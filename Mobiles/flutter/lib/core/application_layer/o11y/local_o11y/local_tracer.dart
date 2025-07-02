@@ -1,13 +1,24 @@
-import 'package:faro/faro_sdk.dart';
+import 'dart:async';
 
-class LocalTracer implements Tracer {
+import 'package:faro/faro.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/traces/o11y_traces.dart';
+
+class LocalO11yTraces implements O11yTraces {
   @override
-  Span startSpan(String name,
-      {bool isActive = false,
-      Span? parentSpan,
-      Map<String, dynamic> attributes = const {}}) {
-    print('LocalTracer: startSpan: $name, $attributes');
+  Span? getActiveSpan() {
+    return null;
+  }
+
+  @override
+  Span startSpanManual(String name,
+      {Map<String, String> attributes = const {}, Span? parentSpan}) {
     return LocalSpan();
+  }
+
+  @override
+  FutureOr<T> startSpan<T>(String name, FutureOr<T> Function(Span span) body,
+      {Map<String, String> attributes = const {}, Span? parentSpan}) {
+    return body(LocalSpan());
   }
 }
 
@@ -28,8 +39,18 @@ class LocalSpan implements Span {
   }
 
   @override
+  void setAttribute(String key, String value) {
+    print('LocalSpan: setAttribute: $key, $value');
+  }
+
+  @override
   void setStatus(SpanStatusCode statusCode, {String? message}) {
     print('LocalSpan: setStatus: $statusCode, $message');
+  }
+
+  @override
+  void recordException(exception, {StackTrace? stackTrace}) {
+    print('LocalSpan: recordException: $exception, $stackTrace');
   }
 
   @override
@@ -40,4 +61,7 @@ class LocalSpan implements Span {
 
   @override
   bool get wasEnded => false;
+
+  @override
+  SpanStatusCode get status => SpanStatusCode.unset;
 }

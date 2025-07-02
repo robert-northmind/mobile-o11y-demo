@@ -4,11 +4,11 @@ import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/local_o11y/
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final o11yEventsProvider = Provider((ref) {
-  return LocalO11yEvents();
+  // return LocalO11yEvents();
 
-  // return O11yEvents(
-  //   faro: ref.watch(faroProvider),
-  // );
+  return O11yEvents(
+    faro: ref.watch(faroProvider),
+  );
 });
 
 class O11yEvents {
@@ -18,23 +18,20 @@ class O11yEvents {
 
   final Faro _faro;
 
-  Future<void> trackEvent(
-    String name, {
-    Map<String, String> attributes = const {},
-  }) async {
-    await _faro.pushEvent(name, attributes: attributes);
+  void trackEvent(String name, {Map<String, String> attributes = const {}}) {
+    _faro.pushEvent(name, attributes: attributes);
   }
 
   void trackStartEvent(String key, String name) {
     _faro.markEventStart(key, name);
   }
 
-  Future<void> trackEndEvent(
+  void trackEndEvent(
     String key,
     String name, {
     Map<String, String> attributes = const {},
-  }) async {
-    await _faro.markEventEnd(key, name, attributes: attributes);
+  }) {
+    _faro.markEventEnd(key, name, attributes: attributes);
   }
 
   void setUser({
