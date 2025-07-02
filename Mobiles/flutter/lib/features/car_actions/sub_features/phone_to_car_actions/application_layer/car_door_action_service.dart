@@ -1,4 +1,3 @@
-import 'package:faro/faro_sdk.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/car_communication/car_communication.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/selected_car_service.dart';
 import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car.dart';
@@ -47,30 +46,23 @@ class CarDoorActionService {
     }
 
     _isLoadingSubject.value = true;
-
     try {
-      _tracer.startLockUnlockDoorsSpan(shouldLock: shouldLock);
-      if (shouldLock) {
-        await _carCommunication.lockDoors();
-      } else {
-        await _carCommunication.unlockDoors();
-      }
-      _tracer.endLockUnlockDoorSpan(
+      await _tracer.startLockUnlockDoorsSpan(
         shouldLock: shouldLock,
-        status: SpanStatusCode.ok,
+        action: () async {
+          if (shouldLock) {
+            await _carCommunication.lockDoors();
+          } else {
+            await _carCommunication.unlockDoors();
+          }
+        },
       );
-
-      _updateCar(car: car, isLocked: shouldLock);
     } catch (error) {
       _errorPresenter.presentError(
         'CarDoorActionService failed with error: $error',
       );
-      _tracer.endLockUnlockDoorSpan(
-        shouldLock: shouldLock,
-        status: SpanStatusCode.error,
-        message: error.toString(),
-      );
     }
+    _updateCar(car: car, isLocked: shouldLock);
     _isLoadingSubject.value = false;
   }
 

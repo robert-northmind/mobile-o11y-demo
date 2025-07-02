@@ -2,6 +2,7 @@
 
 import 'package:faro/faro.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/faro/faro.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/local_o11y/local_logger.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final consoleLoggerClientProvider = Provider((ref) {
@@ -9,8 +10,10 @@ final consoleLoggerClientProvider = Provider((ref) {
 });
 
 final faroLoggerClientProvider = Provider((ref) {
+  // return LocalLoggerClient();
+
   return FaroLoggerClient(
-    rumFlutter: ref.watch(rumProvider),
+    faro: ref.watch(faroProvider),
   );
 });
 
@@ -53,19 +56,19 @@ class ConsoleLoggerClient implements LoggerClient {
 
 class FaroLoggerClient implements LoggerClient {
   FaroLoggerClient({
-    required Faro rumFlutter,
-  }) : _rumFlutter = rumFlutter;
+    required Faro faro,
+  }) : _faro = faro;
 
-  final Faro _rumFlutter;
+  final Faro _faro;
 
   @override
   void debug(String message, {required Map<String, String> context}) {
-    _rumFlutter.pushLog(message, level: 'DEBUG', context: context);
+    _faro.pushLog(message, level: LogLevel.debug, context: context);
   }
 
   @override
   void warning(String message, {required Map<String, String> context}) {
-    _rumFlutter.pushLog(message, level: 'WARNING', context: context);
+    _faro.pushLog(message, level: LogLevel.warn, context: context);
   }
 
   @override
@@ -88,6 +91,6 @@ class FaroLoggerClient implements LoggerClient {
         'stackTrace': stackTrace.toString(),
       };
     }
-    _rumFlutter.pushLog(message, level: 'ERROR', context: allContext);
+    _faro.pushLog(message, level: LogLevel.error, context: allContext);
   }
 }

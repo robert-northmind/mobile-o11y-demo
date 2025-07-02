@@ -1,8 +1,8 @@
 // ignore_for_file: cascade_invocations, lines_longer_than_80_chars
 
-import 'package:faro/faro_sdk.dart';
-import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/faro/faro.dart';
+import 'package:faro/faro.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/loggers/o11y_logger.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/traces/o11y_traces.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/providers.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/selected_car_service.dart';
 import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car.dart';
@@ -18,7 +18,7 @@ final remoteCarActionServiceProvider = Provider.autoDispose((ref) {
     remoteDataSource: ref.watch(remoteCarActionRemoteDataSourceProvider),
     errorPresenter: ref.watch(errorPresenterProvider),
     selectedCarService: ref.watch(selectedCarServiceProvider),
-    tracer: ref.watch(tracerProvider),
+    traces: ref.watch(o11yTracesProvider),
     logger: ref.watch(o11yLoggerProvider),
   );
   ref.onDispose(service.dispose);
@@ -30,18 +30,18 @@ class RemoteCarActionService {
     required RemoteCarActionRemoteDataSource remoteDataSource,
     required ErrorPresenter errorPresenter,
     required SelectedCarService selectedCarService,
-    required Tracer tracer,
+    required O11yTraces traces,
     required O11yLogger logger,
   })  : _remoteDataSource = remoteDataSource,
         _errorPresenter = errorPresenter,
         _selectedCarService = selectedCarService,
-        _tracer = tracer,
+        _traces = traces,
         _logger = logger;
 
   final RemoteCarActionRemoteDataSource _remoteDataSource;
   final ErrorPresenter _errorPresenter;
   final SelectedCarService _selectedCarService;
-  final Tracer _tracer;
+  final O11yTraces _traces;
   final O11yLogger _logger;
 
   final _isLoadingSubject = BehaviorSubject<bool>.seeded(false);
@@ -78,30 +78,32 @@ class RemoteCarActionService {
       // No car. Cannot do anything.
       return;
     }
-
-    final span = _tracer.startSpan('Remote-SetDoorStatus', isActive: true);
-    _isLoadingSubject.value = true;
-    try {
-      await _setDoorLockStateInternal(shouldLock: shouldLock, car: car);
-      span.addEvent('Successfully set door lock state', attributes: {
-        'shouldLock': shouldLock.toString(),
-      });
-      span.setStatus(SpanStatusCode.ok);
-    } catch (error) {
-      _errorPresenter.presentError(
-        'RemoteCarActionService failed with error: $error',
-      );
-      span.addEvent('Failed to set door lock state', attributes: {
-        'shouldLock': shouldLock.toString(),
-      });
-      span.setStatus(
-        SpanStatusCode.error,
-        message:
-            'Failed to set door lock state to ${shouldLock ? 'Locked' : 'Unlocked'}',
-      );
-    }
-    span.end();
-    _isLoadingSubject.value = false;
+    await _traces.startSpan(
+      'Remote-SetDoorStatus',
+      (span) async {
+        _isLoadingSubject.value = true;
+        try {
+          await _setDoorLockStateInternal(shouldLock: shouldLock, car: car);
+          span.addEvent('Successfully set door lock state', attributes: {
+            'shouldLock': shouldLock.toString(),
+          });
+          span.setStatus(SpanStatusCode.ok);
+        } catch (error) {
+          _errorPresenter.presentError(
+            'RemoteCarActionService failed with error: $error',
+          );
+          span.addEvent('Failed to set door lock state', attributes: {
+            'shouldLock': shouldLock.toString(),
+          });
+          span.setStatus(
+            SpanStatusCode.error,
+            message:
+                'Failed to set door lock state to ${shouldLock ? 'Locked' : 'Unlocked'}',
+          );
+        }
+        _isLoadingSubject.value = false;
+      },
+    );
   }
 
   Future<void> _setDoorLockStateInternal({
@@ -129,33 +131,32 @@ class RemoteCarActionService {
     var numberAttempts = 0;
 
     while (didComplete == false && numberAttempts < maxAttempts) {
-      final span = _tracer.startSpan('Remote-CheckDoorStatusPoller');
-
-      try {
-        final doorStatus = await _remoteDataSource.getDoorStatus();
-        if (doorStatus.isLocked == expectedLockState) {
-          span.setStatus(SpanStatusCode.ok,
-              message: 'Door status got updated!');
-          didComplete = true;
-        } else {
+      await _traces.startSpan('Remote-CheckDoorStatusPoller', (span) async {
+        try {
+          final doorStatus = await _remoteDataSource.getDoorStatus();
+          if (doorStatus.isLocked == expectedLockState) {
+            span.setStatus(SpanStatusCode.ok,
+                message: 'Door status got updated!');
+            didComplete = true;
+          } else {
+            span.setStatus(
+              SpanStatusCode.unset,
+              message: 'Door status did not update yet',
+            );
+          }
+        } catch (error) {
+          print('_pollForDoorStatusChange failed with error: $error');
           span.setStatus(
-            SpanStatusCode.unset,
-            message: 'Door status did not update yet',
+            SpanStatusCode.error,
+            message: 'Door status check failed with error: $error',
           );
         }
-      } catch (error) {
-        print('_pollForDoorStatusChange failed with error: $error');
-        span.setStatus(
-          SpanStatusCode.error,
-          message: 'Door status check failed with error: $error',
-        );
-      }
 
-      span.end();
-      numberAttempts += 1;
-      if (didComplete == false && numberAttempts < maxAttempts) {
-        await Future.delayed(pollInterval);
-      }
+        numberAttempts += 1;
+        if (didComplete == false && numberAttempts < maxAttempts) {
+          await Future.delayed(pollInterval);
+        }
+      });
     }
 
     if (didComplete == false) {

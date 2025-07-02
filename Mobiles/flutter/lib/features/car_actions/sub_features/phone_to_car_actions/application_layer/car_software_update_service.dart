@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:faro/faro_sdk.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/car_communication/car_communication.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/selected_car/selected_car_service.dart';
 import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car.dart';
@@ -26,7 +25,6 @@ class CarSoftwareUpdateService {
         _errorPresenter = errorPresenter,
         _tracer = tracer {
     _setupNextSoftwareVersionListener();
-    _setupUpdateProgressListener();
   }
 
   final CarCommunication _carCommunication;
@@ -35,7 +33,8 @@ class CarSoftwareUpdateService {
   final ErrorPresenter _errorPresenter;
   final CarConnectionTracer _tracer;
 
-  final List<StreamSubscription> _subscriptions = [];
+  StreamSubscription? _nextSoftwareVersionSubscription;
+  StreamSubscription? _updateProgressSubscription;
 
   final _newSoftwareVersionSubject =
       BehaviorSubject<CarSoftwareVersion?>.seeded(null);
@@ -62,26 +61,27 @@ class CarSoftwareUpdateService {
     }
 
     _inProgressSubject.add(true);
-    _tracer.startUpdateSoftwareSpan();
 
     try {
-      _tracer.addEventToSoftwareUpdateSpan(
-          'Starting update! Current version is: ${car.info.softwareVersion}, will update to: $nextVersion');
+      await _tracer.startUpdateSoftwareSpan(
+        action: (span) async {
+          span.addEvent(
+            'Starting update! Current version is: ${car.info.softwareVersion}, will update to: $nextVersion',
+          );
 
-      await _carCommunication.updateSoftware(nextVersion);
-      _updateCar(car: car, newSoftwareVersion: nextVersion);
+          _setupUpdateProgressListener();
 
-      _tracer.addEventToSoftwareUpdateSpan(
-        'Updated! New version is: $nextVersion',
+          await _carCommunication.updateSoftware(nextVersion);
+          _updateCar(car: car, newSoftwareVersion: nextVersion);
+
+          span.addEvent(
+            'Updated! New version is: $nextVersion',
+          );
+        },
       );
-      _tracer.endUpdateSoftwareSpan(status: SpanStatusCode.ok);
     } catch (error) {
       _errorPresenter.presentError(
         'CarSoftwareUpdateService failed with error: $error',
-      );
-      _tracer.endUpdateSoftwareSpan(
-        status: SpanStatusCode.error,
-        message: error.toString(),
       );
     }
 
@@ -92,13 +92,14 @@ class CarSoftwareUpdateService {
     _newSoftwareVersionSubject.close();
     _updateProgressSubject.close();
     _inProgressSubject.close();
-    for (final subscription in _subscriptions) {
-      subscription.cancel();
-    }
+    _nextSoftwareVersionSubscription?.cancel();
+    _updateProgressSubscription?.cancel();
   }
 
   void _setupNextSoftwareVersionListener() {
-    final subscription = _selectedCarService.carStream.listen((car) {
+    _nextSoftwareVersionSubscription?.cancel();
+    _nextSoftwareVersionSubscription =
+        _selectedCarService.carStream.listen((car) {
       if (car != null) {
         final currentVersion = car.info.softwareVersion;
         final nextVersion = _carSoftwareVersionFactory.getRandomNextVersion(
@@ -107,17 +108,22 @@ class CarSoftwareUpdateService {
         _newSoftwareVersionSubject.add(nextVersion);
       }
     });
-    _subscriptions.add(subscription);
   }
 
   void _setupUpdateProgressListener() {
-    final subscription =
+    _updateProgressSubscription?.cancel();
+    var isFirstProgress = true;
+    _updateProgressSubscription =
         _carCommunication.softwareUpdateProgressStream.listen((progress) {
+      if (isFirstProgress) {
+        isFirstProgress = false;
+        return;
+      }
+
       _updateProgressSubject.add(progress);
       final printableProgress = min(progress * 100, 100).toStringAsFixed(2);
       _tracer.addEventToSoftwareUpdateSpan('Progress: $printableProgress%');
     });
-    _subscriptions.add(subscription);
   }
 
   Future<void> _updateCar({

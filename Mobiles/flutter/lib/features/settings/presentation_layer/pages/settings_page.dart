@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/events/o11y_events.dart';
-import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/faro/faro.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/loggers/o11y_logger.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/metrics/o11y_metrics.dart';
 import 'package:flutter_mobile_o11y_demo/core/data_layer/http_client.dart';
@@ -17,7 +16,6 @@ class SettingsPage extends ConsumerWidget {
     final o11yLogger = ref.watch(o11yLoggerProvider);
     final httpClient = ref.watch(httpClientProvider);
     final o11yMetrics = ref.watch(o11yMetricsProvider);
-    final faro = ref.watch(rumProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -68,15 +66,6 @@ class SettingsPage extends ConsumerWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  faro.pushError(
-                    type: 'button_triggered_error',
-                    value: 'some_error',
-                  );
-                },
-                child: const Text('Push error'),
-              ),
-              ElevatedButton(
-                onPressed: () {
                   o11yLogger.debug(
                     'Custom debug Log triggered from button',
                     context: {'custom_key': 'custom_value'},
@@ -92,6 +81,16 @@ class SettingsPage extends ConsumerWidget {
                   );
                 },
                 child: const Text('Custom Warn Log'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  o11yLogger.error(
+                    'Custom Error Log triggered from button',
+                    context: {'custom_key': 'custom_value'},
+                    error: CustomError('Custom Error'),
+                  );
+                },
+                child: const Text('Custom Error Log'),
               ),
               ElevatedButton(
                 onPressed: () {
