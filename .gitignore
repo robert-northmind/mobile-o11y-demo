@@ -210,3 +210,7 @@ playground.xcworkspace
 *.xcworkspace
 
 **/.cxx/
+
+# Cursor IDE
+.cursorrules
+.cursor/
