@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/confetti/confetti_service.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/events/o11y_events.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/loggers/o11y_logger.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/metrics/o11y_metrics.dart';
 import 'package:flutter_mobile_o11y_demo/core/data_layer/http_client.dart';
+import 'package:flutter_mobile_o11y_demo/features/settings/presentation_layer/widgets/confetti_painter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SettingsPage extends ConsumerWidget {
@@ -16,6 +18,7 @@ class SettingsPage extends ConsumerWidget {
     final o11yLogger = ref.watch(o11yLoggerProvider);
     final httpClient = ref.watch(httpClientProvider);
     final o11yMetrics = ref.watch(o11yMetricsProvider);
+    final confettiService = ref.watch(confettiServiceProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -23,6 +26,8 @@ class SettingsPage extends ConsumerWidget {
       ),
       body: Center(
         child: SingleChildScrollView(
+          clipBehavior:
+              Clip.none, // Allow confetti to paint outside scroll bounds
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -140,6 +145,28 @@ class SettingsPage extends ConsumerWidget {
                   throw Exception('Throwing an exception from example button');
                 },
                 child: const Text('Throw Exception'),
+              ),
+              const SizedBox(height: 100),
+              // Confetti Button with localized Stack
+              Stack(
+                clipBehavior: Clip.none, // Allow confetti to overflow
+                alignment: Alignment.center,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      confettiService.explode('settings_page_confetti');
+                    },
+                    icon: const Icon(Icons.celebration),
+                    label: const Text('Confetti'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
+                    ),
+                  ),
+                  const ConfettiPainter(),
+                ],
               ),
               const SizedBox(height: 16),
             ],

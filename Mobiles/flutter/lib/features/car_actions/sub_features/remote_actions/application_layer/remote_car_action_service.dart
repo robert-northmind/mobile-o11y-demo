@@ -48,6 +48,13 @@ class RemoteCarActionService {
   Stream<bool> get isLoadingStream => _isLoadingSubject.stream;
   bool get isLoading => _isLoadingSubject.value;
 
+  // Add a helper method to safely set loading state
+  void _setLoading(bool value) {
+    if (!_isLoadingSubject.isClosed) {
+      _isLoadingSubject.value = value;
+    }
+  }
+
   void dispose() {
     _isLoadingSubject.close();
   }
@@ -81,7 +88,7 @@ class RemoteCarActionService {
     await _traces.startSpan(
       'Remote-SetDoorStatus',
       (span) async {
-        _isLoadingSubject.value = true;
+        _setLoading(true);
         try {
           await _setDoorLockStateInternal(shouldLock: shouldLock, car: car);
           span.addEvent('Successfully set door lock state', attributes: {
@@ -101,7 +108,7 @@ class RemoteCarActionService {
                 'Failed to set door lock state to ${shouldLock ? 'Locked' : 'Unlocked'}',
           );
         }
-        _isLoadingSubject.value = false;
+        _setLoading(false);
       },
     );
   }

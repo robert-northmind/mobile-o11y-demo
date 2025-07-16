@@ -64,4 +64,7 @@ class LocalSpan implements Span {
 
   @override
   SpanStatusCode get status => SpanStatusCode.unset;
+
+  @override
+  bool get statusHasBeenSet => false;
 }
