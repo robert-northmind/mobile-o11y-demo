@@ -1,6 +1,7 @@
 import 'package:faro/faro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/pages/bottom_navigation_bar_scaffold.dart';
+import 'package:flutter_mobile_o11y_demo/core/presentation_layer/router/local_navigation_observer.dart';
 import 'package:flutter_mobile_o11y_demo/features/car_actions/presentation/pages/car_actions_page.dart';
 import 'package:flutter_mobile_o11y_demo/features/home/presentation_layer/pages/home_page.dart';
 import 'package:flutter_mobile_o11y_demo/features/settings/presentation_layer/pages/settings_page.dart';
@@ -12,10 +13,16 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: navigatorKey,
   initialLocation: '/home',
-  observers: [FaroNavigationObserver()],
+  observers: [
+    FaroNavigationObserver(),
+    LocalNavigationObserver(),
+  ],
   routes: [
     ShellRoute(
-      observers: [FaroNavigationObserver()],
+      observers: [
+        FaroNavigationObserver(),
+        LocalNavigationObserver(),
+      ],
       navigatorKey: _shellNavigatorKey,
       builder: (context, state, child) =>
           BottomNavigationBarScaffold(child: child),
