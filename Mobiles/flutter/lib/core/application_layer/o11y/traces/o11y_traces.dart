@@ -6,7 +6,7 @@ import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/local_o11y/
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final o11yTracesProvider = Provider((ref) {
-  // return LocalO11yTraces();
+  return LocalO11yTraces();
 
   return O11yTraces(
     faro: ref.watch(faroProvider),

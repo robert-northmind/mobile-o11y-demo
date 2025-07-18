@@ -10,7 +10,7 @@ final consoleLoggerClientProvider = Provider((ref) {
 });
 
 final faroLoggerClientProvider = Provider((ref) {
-  // return LocalLoggerClient();
+  return LocalLoggerClient();
 
   return FaroLoggerClient(
     faro: ref.watch(faroProvider),

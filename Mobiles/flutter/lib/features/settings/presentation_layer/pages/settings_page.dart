@@ -1,7 +1,11 @@
+// ignore_for_file: unnecessary_lambdas
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/confetti/confetti_service.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/native_crash/bad_functioning_service.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/errors/o11y_errors.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/events/o11y_events.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/loggers/o11y_logger.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/metrics/o11y_metrics.dart';
@@ -18,7 +22,9 @@ class SettingsPage extends ConsumerWidget {
     final o11yLogger = ref.watch(o11yLoggerProvider);
     final httpClient = ref.watch(httpClientProvider);
     final o11yMetrics = ref.watch(o11yMetricsProvider);
+    final o11yErrors = ref.watch(o11yErrorsProvider);
     final confettiService = ref.watch(confettiServiceProvider);
+    final badFunctioningService = ref.watch(badFunctioningServiceProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -113,7 +119,7 @@ class SettingsPage extends ConsumerWidget {
                 child: const Text('Send Event'),
               ),
               ElevatedButton(
-                onPressed: () async {
+                onPressed: () {
                   o11yEvents.trackStartEvent(
                     'some_event_key',
                     'some_event_name',
@@ -122,7 +128,7 @@ class SettingsPage extends ConsumerWidget {
                 child: const Text('Mark Event Start'),
               ),
               ElevatedButton(
-                onPressed: () async {
+                onPressed: () {
                   o11yEvents.trackEndEvent(
                     'some_event_key',
                     'some_event_name',
@@ -135,16 +141,27 @@ class SettingsPage extends ConsumerWidget {
                 child: const Text('Mark Event End'),
               ),
               ElevatedButton(
-                onPressed: () async {
-                  throw CustomError('Throwing an error from example button');
+                onPressed: () {
+                  badFunctioningService.doSomethingWhichThrowsCustomError();
                 },
                 child: const Text('Throw Error'),
               ),
               ElevatedButton(
-                onPressed: () async {
-                  throw Exception('Throwing an exception from example button');
+                onPressed: () {
+                  badFunctioningService.doSomethingWhichThrowsException();
                 },
                 child: const Text('Throw Exception'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  o11yErrors.reportError(
+                    type: 'custom_error',
+                    error: 'Pushed a custom error from button',
+                    stacktrace: StackTrace.current,
+                    context: {'custom_key': 'custom_value'},
+                  );
+                },
+                child: const Text('Report custom error'),
               ),
               const SizedBox(height: 100),
               // Confetti Button with localized Stack
@@ -174,16 +191,5 @@ class SettingsPage extends ConsumerWidget {
         ),
       ),
     );
-  }
-}
-
-class CustomError extends Error {
-  CustomError(this.message);
-
-  final String message;
-
-  @override
-  String toString() {
-    return 'CustomError: $message';
   }
 }

@@ -22,6 +22,8 @@ final phoneToCarActionsUiStateProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef PhoneToCarActionsUiStateRef
     = AutoDisposeProviderRef<PhoneToCarActionsUiState>;
 String _$connectedToCarUiStateHash() =>
@@ -40,6 +42,8 @@ final connectedToCarUiStateProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef ConnectedToCarUiStateRef
     = AutoDisposeProviderRef<ConnectedToCarUiState>;
 String _$notConnectedToCarUiStateHash() =>
@@ -58,6 +62,8 @@ final notConnectedToCarUiStateProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef NotConnectedToCarUiStateRef
     = AutoDisposeProviderRef<NotConnectedToCarUiState>;
 String _$phoneToCarConnectionInfoUiStateHash() =>
@@ -76,6 +82,8 @@ final phoneToCarConnectionInfoUiStateProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef PhoneToCarConnectionInfoUiStateRef
     = AutoDisposeProviderRef<PhoneToCarConnectionInfoUiState>;
 String _$phoneToCarLockUnlockActionUiStateHash() =>
@@ -94,6 +102,8 @@ final phoneToCarLockUnlockActionUiStateProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef PhoneToCarLockUnlockActionUiStateRef
     = AutoDisposeProviderRef<PhoneToCarLockUnlockActionUiState>;
 String _$isLoadingCarConnectionStateHash() =>
@@ -111,6 +121,8 @@ final _isLoadingCarConnectionStateProvider = AutoDisposeProvider<bool>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _IsLoadingCarConnectionStateRef = AutoDisposeProviderRef<bool>;
 String _$isLoadingDoorActionHash() =>
     r'e7a2155cfa07d1a0469a75c598b79dbf86692145';
@@ -127,6 +139,8 @@ final _isLoadingDoorActionProvider = AutoDisposeProvider<bool>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _IsLoadingDoorActionRef = AutoDisposeProviderRef<bool>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

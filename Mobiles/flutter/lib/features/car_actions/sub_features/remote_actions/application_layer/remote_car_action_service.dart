@@ -13,7 +13,7 @@ import 'package:flutter_mobile_o11y_demo/features/car_actions/sub_features/remot
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 
-final remoteCarActionServiceProvider = Provider.autoDispose((ref) {
+final remoteCarActionServiceProvider = Provider((ref) {
   final service = RemoteCarActionService(
     remoteDataSource: ref.watch(remoteCarActionRemoteDataSourceProvider),
     errorPresenter: ref.watch(errorPresenterProvider),
@@ -151,8 +151,15 @@ class RemoteCarActionService {
               message: 'Door status did not update yet',
             );
           }
-        } catch (error) {
-          print('_pollForDoorStatusChange failed with error: $error');
+        } catch (error, stackTrace) {
+          _logger.error(
+            '_pollForDoorStatusChange failed',
+            context: {
+              'service': 'RemoteCarActionService',
+            },
+            error: error,
+            stackTrace: stackTrace,
+          );
           span.setStatus(
             SpanStatusCode.error,
             message: 'Door status check failed with error: $error',

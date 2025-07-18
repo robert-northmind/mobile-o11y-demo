@@ -21,6 +21,8 @@ final selectedCarServiceProvider = Provider<SelectedCarService>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef SelectedCarServiceRef = ProviderRef<SelectedCarService>;
 String _$selectedCarHash() => r'd151d9b4eb2675d94c0ff95ecc2f29c7ae2adb98';
 
@@ -35,6 +37,8 @@ final selectedCarProvider = AutoDisposeProvider<Car?>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef SelectedCarRef = AutoDisposeProviderRef<Car?>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
