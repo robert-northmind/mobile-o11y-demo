@@ -1,3 +1,4 @@
+import 'package:faro/faro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/pages/bottom_navigation_bar_scaffold.dart';
 import 'package:flutter_mobile_o11y_demo/features/car_actions/presentation/pages/car_actions_page.dart';
@@ -12,12 +13,12 @@ final router = GoRouter(
   navigatorKey: navigatorKey,
   initialLocation: '/home',
   observers: [
-    // FaroNavigationObserver(),
+    FaroNavigationObserver(),
   ],
   routes: [
     ShellRoute(
       observers: [
-        // FaroNavigationObserver(),
+        FaroNavigationObserver(),
       ],
       navigatorKey: _shellNavigatorKey,
       builder: (context, state, child) =>
