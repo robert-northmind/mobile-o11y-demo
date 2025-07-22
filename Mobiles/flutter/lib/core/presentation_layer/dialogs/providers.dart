@@ -11,7 +11,7 @@ DialogPresenter dialogPresenter(
   return DialogPresenter();
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 ErrorPresenter errorPresenter(
   ErrorPresenterRef ref,
 ) {

@@ -7,7 +7,7 @@ part of 'providers.dart';
 // **************************************************************************
 
 String _$carConnectionServiceHash() =>
-    r'0b91d4490173187be450e955fb7978baea95531e';
+    r'8cf645ef8977ae66aba453ad55de9c4e7e1f15c3';
 
 /// See also [carConnectionService].
 @ProviderFor(carConnectionService)
@@ -21,9 +21,11 @@ final carConnectionServiceProvider = Provider<CarConnectionService>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef CarConnectionServiceRef = ProviderRef<CarConnectionService>;
 String _$carDoorActionServiceHash() =>
-    r'f0e8654bf3274f912a0a5cefa69901eed9ccb371';
+    r'0f5d45fb55232e62558a4f90fe405d1759faa947';
 
 /// See also [carDoorActionService].
 @ProviderFor(carDoorActionService)
@@ -38,9 +40,11 @@ final carDoorActionServiceProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef CarDoorActionServiceRef = AutoDisposeProviderRef<CarDoorActionService>;
 String _$carSoftwareUpdateServiceHash() =>
-    r'39e15e74a8b4d60368b244d7bbd39e037fb4619d';
+    r'4b2c52186b841c9d4666e467cb37609056261fe1';
 
 /// See also [carSoftwareUpdateService].
 @ProviderFor(carSoftwareUpdateService)
@@ -55,6 +59,8 @@ final carSoftwareUpdateServiceProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef CarSoftwareUpdateServiceRef = ProviderRef<CarSoftwareUpdateService>;
 String _$getConnectedCarHash() => r'92bd1202920a09712894755bd9d38c1caf1b72cf';
 
@@ -70,6 +76,8 @@ final getConnectedCarProvider = AutoDisposeProvider<Car?>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef GetConnectedCarRef = AutoDisposeProviderRef<Car?>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

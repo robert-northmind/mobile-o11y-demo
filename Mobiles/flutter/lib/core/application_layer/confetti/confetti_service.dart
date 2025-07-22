@@ -1,12 +1,14 @@
 // ignore_for_file: cascade_invocations
 
 import 'package:confetti/confetti.dart';
+import 'package:flutter_mobile_o11y_demo/core/application_layer/native_crash/bad_functioning_service.dart';
 import 'package:flutter_mobile_o11y_demo/core/application_layer/o11y/loggers/o11y_logger.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final confettiServiceProvider = Provider.autoDispose<ConfettiService>((ref) {
   final service = ConfettiService(
     logger: ref.watch(o11yLoggerProvider),
+    badFunctioningService: ref.watch(badFunctioningServiceProvider),
   );
   ref.onDispose(service.dispose);
   return service;
@@ -15,10 +17,13 @@ final confettiServiceProvider = Provider.autoDispose<ConfettiService>((ref) {
 class ConfettiService {
   ConfettiService({
     required O11yLogger logger,
-  }) : _logger = logger;
+    required BadFunctioningService badFunctioningService,
+  })  : _logger = logger,
+        _badFunctioningService = badFunctioningService;
 
   final O11yLogger _logger;
   final Map<String, ConfettiController> _controllers = {};
+  final BadFunctioningService _badFunctioningService;
 
   /// Creates or gets an existing confetti controller for the given key
   ConfettiController getController(String key) {
@@ -33,6 +38,7 @@ class ConfettiService {
 
   /// Triggers confetti explosion for the given controller key
   void explode(String key) {
+    _badFunctioningService.doSomethingWhichThrowsSneakyError();
     final controller = getController(key);
     controller.play();
     _logger.debug('Confetti explosion triggered',

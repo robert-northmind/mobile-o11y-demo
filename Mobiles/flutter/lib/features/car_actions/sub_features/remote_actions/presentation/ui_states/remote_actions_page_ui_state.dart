@@ -20,7 +20,7 @@ class RemoteActionsPageUiState extends Equatable {
   List<Object?> get props => [isLoading, isLocked];
 }
 
-final remoteActionsPageUiStateProvider = Provider.autoDispose((ref) {
+final remoteActionsPageUiStateProvider = Provider((ref) {
   final selectedCarService = ref.watch(selectedCarServiceProvider);
   final remoteCarActionService = ref.watch(remoteCarActionServiceProvider);
 

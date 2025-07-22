@@ -20,12 +20,14 @@ final dialogPresenterProvider = AutoDisposeProvider<DialogPresenter>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef DialogPresenterRef = AutoDisposeProviderRef<DialogPresenter>;
-String _$errorPresenterHash() => r'11030e71fd96c8d99dc8fdea3be493739b7f1638';
+String _$errorPresenterHash() => r'4ce4f4140e6d193e4e61d3b4d02c62a4a889b700';
 
 /// See also [errorPresenter].
 @ProviderFor(errorPresenter)
-final errorPresenterProvider = AutoDisposeProvider<ErrorPresenter>.internal(
+final errorPresenterProvider = Provider<ErrorPresenter>.internal(
   errorPresenter,
   name: r'errorPresenterProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -35,6 +37,8 @@ final errorPresenterProvider = AutoDisposeProvider<ErrorPresenter>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef ErrorPresenterRef = AutoDisposeProviderRef<ErrorPresenter>;
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef ErrorPresenterRef = ProviderRef<ErrorPresenter>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
