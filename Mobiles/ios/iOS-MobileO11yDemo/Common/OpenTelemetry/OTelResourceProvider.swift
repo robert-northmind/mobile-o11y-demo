@@ -21,6 +21,8 @@ struct OTelResourceProvider {
                 "service.name": AttributeValue.string(otelConfig.serviceName),
                 "deployment.environment": AttributeValue.string(otelConfig.deploymentEnvironment),
                 "service.version": AttributeValue.string(Self.serviceVersion),
+                "telemetry.sdk.name": AttributeValue.string("opentelemetry-swift"),
+                "telemetry.sdk.version": AttributeValue.string("1.15.0"),
             ]
         )
         return defaultResources.merging(other: customResource)
