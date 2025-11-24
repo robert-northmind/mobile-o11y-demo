@@ -10,9 +10,9 @@ import Combine
 import OpenTelemetryApi
 
 protocol RemoteActionServiceProtocol {
-    func lockDoors() async throws
-    func unlockDoors() async throws
-    func getDoorStatus() async -> CarDoorStatus?
+    func lockDoors(errorType: ErrorSimulationType) async throws
+    func unlockDoors(errorType: ErrorSimulationType) async throws
+    func getDoorStatus(errorType: ErrorSimulationType) async -> CarDoorStatus?
 }
 
 class RemoteActionService: RemoteActionServiceProtocol {
@@ -30,18 +30,19 @@ class RemoteActionService: RemoteActionServiceProtocol {
         self.selectedCarService = selectedCarService
     }
     
-    func getDoorStatus() async -> CarDoorStatus? {
+    func getDoorStatus(errorType: ErrorSimulationType = .random) async -> CarDoorStatus? {
         let getStatusSpan = tracer.spanBuilder(spanName: "Remote-GetDoorStatus")
             .setSpanKind(spanKind: .server)
             .setActive(true)
             .startSpan()
         applySpanAttributes(span: getStatusSpan)
+        getStatusSpan.setAttribute(key: "ErrorSimulationType", value: errorType.headerValue.safeTracingName)
         defer {
             getStatusSpan.end()
         }
         
         do {
-            let doorStatus = try await apiClient.getDoorStatus()
+            let doorStatus = try await apiClient.getDoorStatus(errorType: errorType)
             getStatusSpan.setAttribute(key: "CurrentDoorStatus", value: doorStatus.status.safeTracingName)
             getStatusSpan.addEvent(name: "Successfully got status: \(doorStatus.status)")
             getStatusSpan.status = .ok
@@ -53,16 +54,16 @@ class RemoteActionService: RemoteActionServiceProtocol {
         }
     }
     
-    func lockDoors() async throws {
-        try await changeDoorStatus(action: LockDoorStatusRemoteAction())
+    func lockDoors(errorType: ErrorSimulationType = .random) async throws {
+        try await changeDoorStatus(action: LockDoorStatusRemoteAction(), errorType: errorType)
     }
     
-    func unlockDoors() async throws {
-        try await changeDoorStatus(action: UnlockDoorStatusRemoteAction())
+    func unlockDoors(errorType: ErrorSimulationType = .random) async throws {
+        try await changeDoorStatus(action: UnlockDoorStatusRemoteAction(), errorType: errorType)
     }
     
-    private func changeDoorStatus(action: ChangeDoorStatusRemoteAction) async throws {
-        logger.log("Sending request to OMC (observable-motor-command) to set door status to: \(action.status)", severity: .debug)
+    private func changeDoorStatus(action: ChangeDoorStatusRemoteAction, errorType: ErrorSimulationType) async throws {
+        logger.log("Sending request to OMC (observable-motor-command) to set door status to: \(action.status) with errorType: \(errorType.headerValue)", severity: .debug)
         
         let setStatusSpan = tracer.spanBuilder(spanName: "Remote-SetDoorStatus")
             .setSpanKind(spanKind: .server)
@@ -70,9 +71,10 @@ class RemoteActionService: RemoteActionServiceProtocol {
             .startSpan()
         applySpanAttributes(span: setStatusSpan)
         setStatusSpan.setAttribute(key: "ExpectedStatus", value: action.status.safeTracingName)
+        setStatusSpan.setAttribute(key: "ErrorSimulationType", value: errorType.headerValue.safeTracingName)
         
         do {
-            try await apiClient.setDoorStatus(action: action)
+            try await apiClient.setDoorStatus(action: action, errorType: errorType)
             setStatusSpan.addEvent(name: "Successfully did send set-request. Now polling..")
         } catch {
             let message = "DoorStatus failed to update with error: \(error)"
@@ -84,7 +86,7 @@ class RemoteActionService: RemoteActionServiceProtocol {
         }
 
         logger.log("Start to poll for status changes", severity: .info)
-        let didUpdateStatus = await pollForDoorStatus(toBe: action.status, parentSpan: setStatusSpan)
+        let didUpdateStatus = await pollForDoorStatus(toBe: action.status, errorType: errorType, parentSpan: setStatusSpan)
         if didUpdateStatus {
             let message = "DoorStatus did update! It is now: \(action.status)"
             logger.log(message, severity: .debug)
@@ -102,7 +104,7 @@ class RemoteActionService: RemoteActionServiceProtocol {
         }
     }
     
-    private func pollForDoorStatus(toBe status: String, parentSpan: Span, startTime: Date = Date()) async -> Bool {
+    private func pollForDoorStatus(toBe status: String, errorType: ErrorSimulationType, parentSpan: Span, startTime: Date = Date()) async -> Bool {
         guard !startTime.isOlderThan(seconds: 20) else {
             logger.log("Door status polling timed out. Status never changed to \(status)", severity: .error)
             return false
@@ -113,9 +115,10 @@ class RemoteActionService: RemoteActionServiceProtocol {
             .setSpanKind(spanKind: .server)
             .startSpan()
         applySpanAttributes(span: checkStatusSpan)
+        checkStatusSpan.setAttribute(key: "ErrorSimulationType", value: errorType.headerValue.safeTracingName)
         
         do {
-            let latestDoorStatus = try await apiClient.getDoorStatus()
+            let latestDoorStatus = try await apiClient.getDoorStatus(errorType: errorType)
             parentSpan.addEvent(name: "GotStatusUpdate", attributes: ["LatestDoorStatus": AttributeValue.string(latestDoorStatus.status.safeTracingName)])
             checkStatusSpan.setAttribute(key: "LatestDoorStatus", value: latestDoorStatus.status.safeTracingName)
             if latestDoorStatus.status == status {
@@ -135,7 +138,7 @@ class RemoteActionService: RemoteActionServiceProtocol {
         try? await Task.sleep(nanoseconds: 3 * 1_000_000_000)
 
         logger.log("Starting new poll", severity: .info)
-        return await pollForDoorStatus(toBe: status, parentSpan: parentSpan, startTime: startTime)
+        return await pollForDoorStatus(toBe: status, errorType: errorType, parentSpan: parentSpan, startTime: startTime)
     }
     
     private func applySpanAttributes(span: Span) {

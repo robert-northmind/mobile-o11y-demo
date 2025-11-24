@@ -10,21 +10,25 @@ import Combine
 import OpenTelemetryApi
 
 protocol RemoteActionApiClientProtocol {
-    func getDoorStatus() async throws -> CarDoorStatus
-    func setDoorStatus(action: ChangeDoorStatusRemoteAction) async throws
+    func getDoorStatus(errorType: ErrorSimulationType) async throws -> CarDoorStatus
+    func setDoorStatus(action: ChangeDoorStatusRemoteAction, errorType: ErrorSimulationType) async throws
 }
 
 class RemoteActionApiClient: RemoteActionApiClientProtocol {
     private let basePath = "http://localhost:3000"
 
-    func getDoorStatus() async throws -> CarDoorStatus {
-        logger.log("Fetching doorStatus", severity: .debug)
+    func getDoorStatus(errorType: ErrorSimulationType = .random) async throws -> CarDoorStatus {
+        logger.log("Fetching doorStatus with errorType: \(errorType.headerValue)", severity: .debug)
 
         guard let url = URL(string: "\(basePath)/door-status") else {
             throw ApiError.invalidUrl
         }
+        
+        var request = URLRequest(url: url)
+        request.setValue(errorType.headerValue, forHTTPHeaderField: "X-Debug-Error-Type")
+        
         do {
-            let (data, response) = try await URLSession.shared.data(from: url)
+            let (data, response) = try await URLSession.shared.data(for: request)
             let dataStr = String(data: data, encoding: .utf8)
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
@@ -43,8 +47,8 @@ class RemoteActionApiClient: RemoteActionApiClientProtocol {
         }
     }
     
-    func setDoorStatus(action: ChangeDoorStatusRemoteAction) async throws {
-        logger.log("Sending setDoorStatus to be status: \(action.status)", severity: .debug)
+    func setDoorStatus(action: ChangeDoorStatusRemoteAction, errorType: ErrorSimulationType = .random) async throws {
+        logger.log("Sending setDoorStatus to be status: \(action.status) with errorType: \(errorType.headerValue)", severity: .debug)
         
         guard let url = URL(string: "\(basePath)/set-door-status") else {
             return
@@ -52,6 +56,8 @@ class RemoteActionApiClient: RemoteActionApiClientProtocol {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(errorType.headerValue, forHTTPHeaderField: "X-Debug-Error-Type")
+        
         do {
             let jsonData = try JSONEncoder().encode(action)
             request.httpBody = jsonData
