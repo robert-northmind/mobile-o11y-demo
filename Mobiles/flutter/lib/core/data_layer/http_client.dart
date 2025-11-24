@@ -27,21 +27,29 @@ class HttpClient {
   final String _baseUrl;
   late final http.Client _client;
 
-  Future<HttpResponse> get(String endpoint) async {
+  Future<HttpResponse> get(
+    String endpoint, {
+    Map<String, String>? headers,
+  }) async {
     final uri = Uri.http(_baseUrl, endpoint);
-    final response = await _client.get(uri);
+    final response = await _client.get(uri, headers: headers);
     return HttpResponse(
       statusCode: response.statusCode,
       body: response.body,
     );
   }
 
-  Future<HttpResponse> post(String endpoint, dynamic body) async {
+  Future<HttpResponse> post(
+    String endpoint,
+    dynamic body, {
+    Map<String, String>? headers,
+  }) async {
     final uri = Uri.http(_baseUrl, endpoint);
-    final headers = <String, String>{
+    final allHeaders = <String, String>{
       'Content-Type': 'application/json',
+      ...?headers,
     };
-    final response = await _client.post(uri, body: body, headers: headers);
+    final response = await _client.post(uri, body: body, headers: allHeaders);
     return HttpResponse(
       statusCode: response.statusCode,
       body: response.body,

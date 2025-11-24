@@ -10,6 +10,7 @@ import 'package:flutter_mobile_o11y_demo/core/domain_layer/car/car_door_status.d
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/error_presenter.dart';
 import 'package:flutter_mobile_o11y_demo/core/presentation_layer/dialogs/providers.dart';
 import 'package:flutter_mobile_o11y_demo/features/car_actions/sub_features/remote_actions/data_layer/remote_car_action_remote_data_source.dart';
+import 'package:flutter_mobile_o11y_demo/features/car_actions/sub_features/remote_actions/domain/error_simulation_type.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -48,6 +49,13 @@ class RemoteCarActionService {
   Stream<bool> get isLoadingStream => _isLoadingSubject.stream;
   bool get isLoading => _isLoadingSubject.value;
 
+  final _errorSimulationTypeSubject =
+      BehaviorSubject<ErrorSimulationType>.seeded(ErrorSimulationType.random);
+  Stream<ErrorSimulationType> get errorSimulationTypeStream =>
+      _errorSimulationTypeSubject.stream;
+  ErrorSimulationType get errorSimulationType =>
+      _errorSimulationTypeSubject.value;
+
   // Add a helper method to safely set loading state
   void _setLoading(bool value) {
     if (!_isLoadingSubject.isClosed) {
@@ -55,8 +63,19 @@ class RemoteCarActionService {
     }
   }
 
+  void setErrorSimulationType(ErrorSimulationType type) {
+    if (!_errorSimulationTypeSubject.isClosed) {
+      _errorSimulationTypeSubject.value = type;
+      _logger.debug('Error simulation type changed', context: {
+        'service': 'RemoteCarActionService',
+        'errorType': type.toHeaderValue(),
+      });
+    }
+  }
+
   void dispose() {
     _isLoadingSubject.close();
+    _errorSimulationTypeSubject.close();
   }
 
   Future<void> lockDoors() async {
@@ -117,10 +136,12 @@ class RemoteCarActionService {
     required Car car,
     required bool shouldLock,
   }) async {
+    final errorType = errorSimulationType;
+    
     if (shouldLock) {
-      await _remoteDataSource.lockDoors();
+      await _remoteDataSource.lockDoors(errorType: errorType);
     } else {
-      await _remoteDataSource.unlockDoors();
+      await _remoteDataSource.unlockDoors(errorType: errorType);
     }
 
     await _pollForDoorStatusChange(expectedLockState: shouldLock);
@@ -140,7 +161,9 @@ class RemoteCarActionService {
     while (didComplete == false && numberAttempts < maxAttempts) {
       await _traces.startSpan('Remote-CheckDoorStatusPoller', (span) async {
         try {
-          final doorStatus = await _remoteDataSource.getDoorStatus();
+          final doorStatus = await _remoteDataSource.getDoorStatus(
+            errorType: errorSimulationType,
+          );
           if (doorStatus.isLocked == expectedLockState) {
             span.setStatus(SpanStatusCode.ok,
                 message: 'Door status got updated!');
