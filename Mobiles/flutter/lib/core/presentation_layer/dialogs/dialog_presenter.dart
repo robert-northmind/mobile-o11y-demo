@@ -10,8 +10,9 @@ class DialogPresenter {
   }
 
   void presentDialog(
-    WidgetBuilder builder,
-  ) {
+    WidgetBuilder builder, {
+    String? routeName,
+  }) {
     final navigatorKey = _navigatorKey;
     if (navigatorKey == null) {
       return;
@@ -20,6 +21,7 @@ class DialogPresenter {
     showDialog(
       context: navigatorKey.currentContext!,
       builder: builder,
+      routeSettings: routeName != null ? RouteSettings(name: routeName) : null,
     );
   }
 }
